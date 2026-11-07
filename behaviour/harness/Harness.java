@@ -493,7 +493,9 @@ public class Harness {
 
     public static void main(String[] a) throws Exception {
         Path bug = Path.of(a[0]);
-        boolean modelInputs = a.length > 1 && a[1].equals("B");
+        boolean modelInputs = Arrays.asList(a).contains("B"), json = Arrays.asList(a).contains("--json");
+        List<String[]> found = new ArrayList<>(); // method, call, old, new
+        List<String> notes = new ArrayList<>();
         int[] dropped = {0};
         ClassLoader oldL = loader(bug.resolve("old")), newL = loader(bug.resolve("new")), oldL2 = loader(bug.resolve("old"));
         PAIR.put(oldL, newL); PAIR.put(newL, oldL); PAIR.put(oldL2, newL);
@@ -506,23 +508,24 @@ public class Harness {
             String[] parts = line.trim().split("#");
             if (parts.length != 2 || parts[1].startsWith("<")) continue;
             Class<?> c;
-            try { c = Class.forName(parts[0], false, oldL); } catch (Throwable e) { examples.add("no class " + parts[0]); continue; }
+            try { c = Class.forName(parts[0], false, oldL); } catch (Throwable e) { note(examples, notes, "no class " + parts[0]); continue; }
             List<Member> targets = new ArrayList<>();
             if (parts[1].equals(c.getSimpleName())) targets.addAll(Arrays.asList(c.getDeclaredConstructors()));
             else for (Method m : c.getDeclaredMethods()) if (m.getName().equals(parts[1]) && !m.isSynthetic()) targets.add(m);
+            if (targets.isEmpty()) note(examples, notes, parts[1] + ": not in the old code");
             for (Member m : targets) {
-                if (m.getName().equals("main")) { examples.add("main: skipped, it may exit"); continue; }
-                try { relink(m, newL); } catch (Throwable e) { examples.add(parts[1] + ": signature changed, cannot compare"); continue; }
+                if (m.getName().equals("main")) { note(examples, notes, "main: skipped, it may exit"); continue; }
+                try { relink(m, newL); } catch (Throwable e) { note(examples, notes, parts[1] + ": signature changed, cannot compare"); continue; }
                 Class<?>[] ps = m instanceof Method mm ? mm.getParameterTypes() : ((Constructor<?>) m).getParameterTypes();
                 Type[] gs = m instanceof Method mm ? mm.getGenericParameterTypes() : ((Constructor<?>) m).getGenericParameterTypes();
                 List<List<Recipe>> choices = new ArrayList<>();
                 for (int i = 0; i < ps.length; i++) choices.add(values(ps[i], gs.length == ps.length ? gs[i] : ps[i], oldL, 1));
-                if (choices.stream().anyMatch(List::isEmpty)) { examples.add(parts[1] + ": no inputs for its parameters"); continue; }
+                if (choices.stream().anyMatch(List::isEmpty)) { note(examples, notes, parts[1] + ": no inputs for its parameters"); continue; }
                 List<Recipe> receivers = new ArrayList<>();
                 if (m instanceof Method mm && !Modifier.isStatic(mm.getModifiers())) {
                     receivers.addAll(instances(c, oldL, 1));
                     if (receivers.size() > MAX_RECEIVERS) receivers = receivers.subList(0, MAX_RECEIVERS);
-                    if (receivers.isEmpty()) { examples.add(parts[1] + ": no way to make a " + c.getSimpleName()); continue; }
+                    if (receivers.isEmpty()) { note(examples, notes, parts[1] + ": no way to make a " + c.getSimpleName()); continue; }
                 } else receivers.add(null);
                 List<Recipe[]> inputs;
                 if (modelInputs) inputs = suggested(bug, line.trim(), ps, choices, dropped);
@@ -547,16 +550,30 @@ public class Harness {
                         if (npe && NULL.matcher(shown).find()) { nullOnly++; continue; } // only because the harness passed null
                         {
                             diffs++;
-                            if (examples.size() < 6) {
-                                StringJoiner j = new StringJoiner(", ", parts[1] + "(", ")");
-                                for (Recipe r : in) j.add(r.show());
-                                examples.add((recv == null ? "" : recv.show() + ".") + j + "\n      old: " + cut(o.key()) + "\n      new: " + cut(n.key()));
-                            }
+                            StringJoiner j = new StringJoiner(", ", parts[1] + "(", ")");
+                            for (Recipe r : in) j.add(r.show());
+                            String shownCall = (recv == null ? "" : recv.show() + ".") + j;
+                            if (found.size() < 20) found.add(new String[]{parts[0] + "#" + parts[1], shownCall, cut(o.seen()), cut(n.seen())});
+                            if (examples.size() < 6) examples.add(shownCall + "\n      old: " + cut(o.key()) + "\n      new: " + cut(n.key()));
                         }
                     }
             }
         }
         System.setOut(realOut);
+        if (json) {
+            StringBuilder b = new StringBuilder();
+            b.append(String.format("{\"calls\":%d,\"ran\":%d,\"differ\":%d,\"flaky\":%d,\"stateOnly\":%d,\"nullOnly\":%d,\"differences\":[",
+                calls, ran, diffs, flaky, stateOnly, nullOnly));
+            for (int i = 0; i < found.size(); i++) {
+                String[] f = found.get(i);
+                b.append(i > 0 ? "," : "").append("{\"method\":").append(quote(f[0])).append(",\"call\":").append(quote(f[1]))
+                    .append(",\"old\":").append(quote(f[2])).append(",\"new\":").append(quote(f[3])).append('}');
+            }
+            b.append("],\"notes\":[");
+            for (int i = 0; i < notes.size(); i++) b.append(i > 0 ? "," : "").append(quote(notes.get(i)));
+            realOut.println(b.append("]}"));
+            System.exit(0);
+        }
         realOut.printf("calls=%d ran=%d differ=%d flaky=%d state-only=%d null-only=%d%s%n", calls, ran, diffs, flaky, stateOnly, nullOnly,
             modelInputs ? " dropped=" + dropped[0] : "");
         for (String e : examples) realOut.println("  " + e);
@@ -564,6 +581,26 @@ public class Harness {
     }
 
     static final java.util.regex.Pattern NULL = java.util.regex.Pattern.compile("(^|[\\s(,\\[])null([\\s),\\]]|$)");
+
+    static void note(List<String> examples, List<String> notes, String text) {
+        examples.add(text);
+        if (!notes.contains(text)) notes.add(text);
+    }
+
+    static String quote(String s) {
+        StringBuilder b = new StringBuilder("\"");
+        for (char c : s.toCharArray()) {
+            switch (c) {
+                case '"' -> b.append("\\\"");
+                case '\\' -> b.append("\\\\");
+                case '\n' -> b.append("\\n");
+                case '\r' -> b.append("\\r");
+                case '\t' -> b.append("\\t");
+                default -> { if (c < 0x20) b.append(String.format("\\u%04x", (int) c)); else b.append(c); }
+            }
+        }
+        return b.append('"').toString();
+    }
 
     static String cut(String s) { return s.length() > 220 ? s.substring(0, 220) + "…" : s; }
 }
