@@ -31,7 +31,7 @@ cloud, no subscription.
 
 ## What has been measured (honestly)
 
-- On 118 real bugs from open-source Java projects, the 14B local model clearly named 51 and was near 95.
+- On 118 real bugs from open-source Java projects, the 14B local model put a finding within 3 lines of 95 bugs, and clearly named 51 of them.
 - Running changed code before and after found the real difference in 5 of 10 sample bugs, with no false alarm on 22
   refactoring commits that should not change behaviour.
 - Speed: code checks take milliseconds per commit; the 14B model takes about 6 minutes per commit on a 16 GB laptop,
