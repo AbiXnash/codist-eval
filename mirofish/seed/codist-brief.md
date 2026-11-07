@@ -21,7 +21,12 @@ shows its findings in the browser. Nothing leaves the machine: the AI model runs
 - **Graph**: services, classes and methods, with Feign calls between services and what each commit can affect.
 - **Incidents**: paste production logs; Codist finds each Java error, the line of code, the commit that last changed
   it, and suggests a cause.
-- **Feedback**: developers mark findings useful or wrong; wrong ones are not reported again.
+- **Feedback**: developers mark findings useful or wrong; wrong ones are not reported again, and the AI is shown
+  the team's judgements as examples so it learns what this team considers a real problem.
+- **Risk ranking**: a small machine-learning model, trained on the repository's own history in seconds, learns which
+  kinds of commits needed fixes later and makes the AI read the riskiest commits first. It tests itself and is only
+  used when it ranks clearly better than chance (on the jsoup project it ranked a bug-bringing commit above a safe
+  one 82% of the time).
 
 ## How it is delivered
 
