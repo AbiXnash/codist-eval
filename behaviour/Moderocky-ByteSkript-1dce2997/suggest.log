@@ -1,0 +1,89 @@
+## Commit
+fix(debugging): print a newline after the last line too
+
+## Diff
+```diff
+diff --git a/src/main/java/org/byteskript/skript/compiler/DebugSkriptCompiler.java b/src/main/java/org/byteskript/skript/compiler/DebugSkriptCompiler.java
+index fec865f..2864b22 100644
+--- a/src/main/java/org/byteskript/skript/compiler/DebugSkriptCompiler.java
++++ b/src/main/java/org/byteskript/skript/compiler/DebugSkriptCompiler.java
+@@ -36,32 +36,31 @@ public class DebugSkriptCompiler extends SimpleSkriptCompiler {
+         context.currentEffect = null;
+         context.sectionHeader = false;
+     }
+     
+     @Override
+     public PostCompileClass[] compile(InputStream stream, Type path) {
+         this.stream.print("\n");
+         this.stream.print("--" + path.internalName());
+-        this.stream.print("\n");
++        this.stream.print("\n\n");
+         return super.compile(stream, path);
+     }
+     
+     @Override
+     public PostCompileClass[] compile(String source, Type path) {
+-        this.stream.print("\n\n");
+-        this.stream.print("--" + path.internalName());
+         this.stream.print("\n");
++        this.stream.print("--" + path.internalName());
++        this.stream.print("\n\n");
+         return super.compile(source, path);
+     }
+     
+     @Override
+     protected FileContext createContext(Type path) {
+         return new FileContext(path, 1);
+     }
+     
+     protected void debug(ElementTree tree, FileContext context) {
+-        this.stream.print("\n");
+         for (int i = 0; i < context.lineIndent; i++) this.stream.print("\t");
+-        this.stream.print(tree.toString(context));
++        this.stream.println(tree.toString(context));
+     }
+     
+ }
+
+```
+
+## Methods to call (Java signatures)
+- org.byteskript.skript.compiler.DebugSkriptCompiler#compile: public mx.kenzie.foundation.language.PostCompileClass[] compile(java.io.InputStream, mx.kenzie.foundation.Type)
+- org.byteskript.skript.compiler.DebugSkriptCompiler#compile: public mx.kenzie.foundation.language.PostCompileClass[] compile(java.lang.String, mx.kenzie.foundation.Type)
+- org.byteskript.skript.compiler.DebugSkriptCompiler#compileLine: protected void compileLine(java.lang.String, org.byteskript.skript.compiler.FileContext)
+- org.byteskript.skript.compiler.DebugSkriptCompiler#debug: protected void debug(org.byteskript.skript.compiler.ElementTree, org.byteskript.skript.compiler.FileContext)
+- org.byteskript.skript.compiler.SimpleSkriptCompiler#compileClass: public mx.kenzie.foundation.language.PostCompileClass compileClass(java.io.InputStream)
+- org.byteskript.skript.runtime.Skript#compileComplexScript: public java.util.Collection<java.io.File> compileComplexScript(java.io.InputStream, java.lang.String, java.io.File) throws java.io.IOException
+- org.byteskript.skript.runtime.Skript#compileComplexScript: public mx.kenzie.foundation.language.PostCompileClass[] compileComplexScript(java.io.InputStream, java.lang.String)
+- org.byteskript.skript.runtime.Skript#compileScript: public void compileScript(java.io.InputStream, java.lang.String, java.io.OutputStream) throws java.io.IOException
+- org.byteskript.skript.runtime.Skript#compileScript: public mx.kenzie.foundation.language.PostCompileClass compileScript(java.io.InputStream, java.lang.String)
+- org.byteskript.skript.runtime.Skript#compileScript: public mx.kenzie.foundation.language.PostCompileClass compileScript(java.lang.String, java.lang.String)
+- org.byteskript.skript.runtime.internal.ModifiableCompiler#compileAsync: public default org.byteskript.skript.runtime.internal.Promise<mx.kenzie.foundation.language.PostCompileClass[]> compileAsync(java.io.InputStream, mx.kenzie.foundation.Type, org.byteskript.skript.runtime.Skript)
+- org.byteskript.skript.runtime.internal.ModifiableCompiler#compileAsync: public default org.byteskript.skript.runtime.internal.Promise<mx.kenzie.foundation.language.PostCompileClass[]> compileAsync(java.io.InputStream, java.lang.String, org.byteskript.skript.runtime.Skript)
+- org.byteskript.skript.runtime.internal.ModifiableCompiler#compileAsync: public default org.byteskript.skript.runtime.internal.Promise<mx.kenzie.foundation.language.PostCompileClass[]> compileAsync(java.lang.String, mx.kenzie.foundation.Type, org.byteskript.skript.runtime.Skript)
+
+Reply as {"methods":[{"method":"pkg.Class#name","calls":[[arg, ...], ...]}]}
+
+## Reply
+{
+ "methods": [
+  {
+   "method": "org.byteskript.skript.compiler.DebugSkriptCompiler#compile",
+   "calls": [
+    [
+     "",
+     "mx.kenzie.foundation.Type"
+    ]
+   ]
+  },
+  {
+   "method": "org.byteskript.skript.compiler.DebugSkriptCompiler#compile",
+   "calls": [
+    [
+     "some source code",
+     "mx.kenzie.foundation.Type"
+    ]
+   ]
+  }
+ ]
+}

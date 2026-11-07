@@ -1,0 +1,137 @@
+## Commit
+Refactored to use ResponseStatus instead of returning a Void ResponseEntity for POSTs that return NO CONTENT
+
+## Diff
+```diff
+diff --git a/src/main/java/com/jitterted/mobreg/adapter/in/web/member/EnsembleTimerController.java b/src/main/java/com/jitterted/mobreg/adapter/in/web/member/EnsembleTimerController.java
+index 3e58f52..fa742e5 100644
+--- a/src/main/java/com/jitterted/mobreg/adapter/in/web/member/EnsembleTimerController.java
++++ b/src/main/java/com/jitterted/mobreg/adapter/in/web/member/EnsembleTimerController.java
+@@ -1,22 +1,23 @@
+ package com.jitterted.mobreg.adapter.in.web.member;
+ 
+ import com.jitterted.mobreg.adapter.in.web.admin.ParticipantsTransformer;
+ import com.jitterted.mobreg.application.EnsembleTimerHolder;
+ import com.jitterted.mobreg.domain.EnsembleId;
+ import com.jitterted.mobreg.domain.EnsembleTimer;
+ import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.http.ResponseEntity;
++import org.springframework.http.HttpStatus;
+ import org.springframework.stereotype.Controller;
+ import org.springframework.ui.Model;
+ import org.springframework.web.bind.annotation.GetMapping;
+ import org.springframework.web.bind.annotation.PathVariable;
+ import org.springframework.web.bind.annotation.PostMapping;
+ import org.springframework.web.bind.annotation.RequestMapping;
++import org.springframework.web.bind.annotation.ResponseStatus;
+ 
+ import java.time.Instant;
+ 
+ @Controller
+ @RequestMapping("/member")
+ public class EnsembleTimerController {
+     private final EnsembleTimerHolder ensembleTimerHolder;
+ 
+@@ -30,32 +31,37 @@ public class EnsembleTimerController {
+         EnsembleTimer ensembleTimer = ensembleTimerHolder.timerFor(EnsembleId.of(id));
+         model.addAttribute("ensembleId", id);
+         model.addAttribute("ensembleName", ensembleTimer.ensembleName());
+         model.addAllAttributes(ParticipantsTransformer.participantRolesToNames(ensembleTimer));
+         return "ensemble-timer";
+     }
+ 
+     @PostMapping("/start-timer/{ensembleId}")
+-    public ResponseEntity<Void> startTimer(@PathVariable("ensembleId") Long id) {
++    @ResponseStatus(HttpStatus.NO_CONTENT)
++    public void startTimer(@PathVariable("ensembleId") Long id) {
+         ensembleTimerHolder.startTimerFor(EnsembleId.of(id), Instant.now());
+-        return ResponseEntity.noContent().build();
++    }
++
++    @PostMapping("/reset-timer/{ensembleId}")
++    @ResponseStatus(HttpStatus.NO_CONTENT)
++    public void resetTimer(@PathVariable("ensembleId") Long id) {
+     }
+ 
+     @PostMapping("/rotate-timer/{ensembleId}")
+-    public ResponseEntity<Void> rotateTimer(@PathVariable("ensembleId") Long id) {
++    @ResponseStatus(HttpStatus.NO_CONTENT)
++    public void rotateTimer(@PathVariable("ensembleId") Long id) {
+         ensembleTimerHolder.rotateTimerFor(EnsembleId.of(id));
+-        return ResponseEntity.noContent().build();
+     }
+ 
+     @PostMapping("/pause-timer/{ensembleId}")
+-    public ResponseEntity<Void> pauseTimer(@PathVariable("ensembleId") Long id) {
++    @ResponseStatus(HttpStatus.NO_CONTENT)
++    public void pauseTimer(@PathVariable("ensembleId") Long id) {
+         ensembleTimerHolder.pauseTimerFor(EnsembleId.of(id));
+-        return ResponseEntity.noContent().build();
+     }
+ 
+     @PostMapping("/resume-timer/{ensembleId}")
+-    public ResponseEntity<Void> resumeTimer(@PathVariable("ensembleId") Long id) {
++    @ResponseStatus(HttpStatus.NO_CONTENT)
++    public void resumeTimer(@PathVariable("ensembleId") Long id) {
+         ensembleTimerHolder.resumeTimerFor(EnsembleId.of(id));
+-        return ResponseEntity.noContent().build();
+     }
+ 
+ }
+
+```
+
+## Methods to call (Java signatures)
+- com.jitterted.mobreg.adapter.in.web.member.EnsembleTimerController#pauseTimer: public void pauseTimer(java.lang.Long)
+- com.jitterted.mobreg.adapter.in.web.member.EnsembleTimerController#resetTimer: public void resetTimer(java.lang.Long)
+- com.jitterted.mobreg.adapter.in.web.member.EnsembleTimerController#resumeTimer: public void resumeTimer(java.lang.Long)
+- com.jitterted.mobreg.adapter.in.web.member.EnsembleTimerController#rotateTimer: public void rotateTimer(java.lang.Long)
+- com.jitterted.mobreg.adapter.in.web.member.EnsembleTimerController#startTimer: public void startTimer(java.lang.Long)
+
+Reply as {"methods":[{"method":"pkg.Class#name","calls":[[arg, ...], ...]}]}
+
+## Reply
+{
+ "methods": [
+  {
+   "method": "com.jitterted.mobreg.adapter.in.web.member.EnsembleTimerController#pauseTimer",
+   "calls": [
+    [
+     123456789
+    ]
+   ]
+  },
+  {
+   "method": "com.jitterted.mobreg.adapter.in.web.member.EnsembleTimerController#resetTimer",
+   "calls": [
+    [
+     987654321
+    ]
+   ]
+  },
+  {
+   "method": "com.jitterted.mobreg.adapter.in.web.member.EnsembleTimerController#resumeTimer",
+   "calls": [
+    [
+     111222333
+    ]
+   ]
+  },
+  {
+   "method": "com.jitterted.mobreg.adapter.in.web.member.EnsembleTimerController#rotateTimer",
+   "calls": [
+    [
+     444555666
+    ]
+   ]
+  },
+  {
+   "method": "com.jitterted.mobreg.adapter.in.web.member.EnsembleTimerController#startTimer",
+   "calls": [
+    [
+     777888999
+    ]
+   ]
+  }
+ ]
+}

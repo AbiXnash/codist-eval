@@ -1,0 +1,3 @@
+crawlercommons.filters.basic.BasicURLNormalizer#filter
+crawlercommons.filters.basic.BasicURLNormalizer#getFileWithNormalizedPath
+crawlercommons.filters.basic.BasicURLNormalizer#main

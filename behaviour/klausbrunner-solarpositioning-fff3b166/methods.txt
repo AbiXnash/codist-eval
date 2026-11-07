@@ -1,0 +1,4 @@
+net.e175.klaus.solarpositioning.SPA#<field>
+net.e175.klaus.solarpositioning.SPA#calculateSolarPosition
+net.e175.klaus.solarpositioning.SPA#calculateTopocentricSolarPosition
+net.e175.klaus.solarpositioning.SPA#calculateTopocentricZenithAngle

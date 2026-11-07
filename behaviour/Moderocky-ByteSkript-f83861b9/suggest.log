@@ -1,0 +1,74 @@
+## Commit
+Clean up language spec.
+
+## Diff
+```diff
+diff --git a/src/main/java/org/byteskript/skript/compiler/SkriptLangSpec.java b/src/main/java/org/byteskript/skript/compiler/SkriptLangSpec.java
+index d8ed4ac..f7927e4 100644
+--- a/src/main/java/org/byteskript/skript/compiler/SkriptLangSpec.java
++++ b/src/main/java/org/byteskript/skript/compiler/SkriptLangSpec.java
+@@ -207,17 +207,17 @@ public final class SkriptLangSpec extends ModifiableLibrary implements LanguageD
+         registerSyntax(CompileState.STATEMENT,
+             new NoneLiteral(),
+             new StringLiteral(),
+             new RegexLiteral(),
+             new IntegerLiteral(),
+             new LongLiteral(),
+             new FloatLiteral(),
+             new DoubleLiteral(),
+-            new DoubleLiteral()
++            new BooleanLiteral()
+         );
+         registerSyntax(CompileState.STATEMENT,
+             new ExprVariableThread(),
+             new ExprVariableAtomic(),
+             new ExprVariableGlobal(),
+             new ExprVariable()
+         );
+         registerSyntax(CompileState.STATEMENT,
+@@ -228,26 +228,19 @@ public final class SkriptLangSpec extends ModifiableLibrary implements LanguageD
+             new ExprLTEQ(),
+             new ExprGT(),
+             new ExprLT(),
+             new ExprNotEqual(),
+             new ExprIsEqual(),
+             new ExprContains(),
+             new ExprMatches()
+         );
+-        registerSyntax(CompileState.STATEMENT,
+-            new ExprVariableThread(),
+-            new ExprVariableAtomic(),
+-            new ExprVariableGlobal(),
+-            new ExprVariable()
+-        );
+         registerSyntax(CompileState.STATEMENT,
+             new ExprNewArray(),
+             new ExprBracket(),
+-            new BooleanLiteral(),
+             new ExprThisThing(),
+             new ExprTernaryOtherwise(),
+             new ExprBinaryOtherwise(),
+             new ExprSupplierSection(),
+             new ExprRunnableSection(),
+             new ExprThread(),
+             new ExprNewLine(),
+             new ExprResult(), // must try before property
+
+```
+
+## Methods to call (Java signatures)
+- org.byteskript.skript.compiler.SkriptLangSpec#SkriptLangSpec: private org.byteskript.skript.compiler.SkriptLangSpec()
+
+Reply as {"methods":[{"method":"pkg.Class#name","calls":[[arg, ...], ...]}]}
+
+## Reply
+{
+ "methods": [
+  {
+   "method": "org.byteskript.skript.compiler.SkriptLangSpec#SkriptLangSpec",
+   "calls": [
+    []
+   ]
+  }
+ ]
+}

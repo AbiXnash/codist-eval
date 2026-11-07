@@ -1,0 +1,15 @@
+{
+ "org.jsoup.helper.UrlBuilder#build": [
+  [
+   "http://example.com/path?query=123#fragment"
+  ]
+ ],
+ "org.jsoup.parser.TokenData#value": [
+  [
+   "initialValue"
+  ],
+  [
+   "anotherValue"
+  ]
+ ]
+}

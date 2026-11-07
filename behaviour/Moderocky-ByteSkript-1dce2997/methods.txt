@@ -1,0 +1,7 @@
+org.byteskript.skript.compiler.DebugSkriptCompiler#compile
+org.byteskript.skript.compiler.DebugSkriptCompiler#compileLine
+org.byteskript.skript.compiler.DebugSkriptCompiler#debug
+org.byteskript.skript.compiler.SimpleSkriptCompiler#compileClass
+org.byteskript.skript.runtime.Skript#compileComplexScript
+org.byteskript.skript.runtime.Skript#compileScript
+org.byteskript.skript.runtime.internal.ModifiableCompiler#compileAsync

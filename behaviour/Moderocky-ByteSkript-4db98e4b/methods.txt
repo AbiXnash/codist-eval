@@ -1,0 +1,9 @@
+org.byteskript.skript.lang.syntax.function.ExprFunction#createMatch
+org.byteskript.skript.lang.syntax.function.ExprFunction#match
+org.byteskript.skript.lang.syntax.function.ExprFunctionExternal#match
+org.byteskript.skript.lang.syntax.function.ExprFunctionProperty#match
+org.byteskript.skript.lang.syntax.list.ExprNewArray#match
+org.byteskript.skript.runtime.internal.Bootstrapper#bootstrapFunction
+org.byteskript.skript.runtime.internal.Bootstrapper#getBootstrap
+org.byteskript.skript.runtime.internal.Bootstrapper#getDescriptor
+org.byteskript.skript.runtime.internal.Bootstrapper#getHandle

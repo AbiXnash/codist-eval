@@ -1,0 +1,28 @@
+{
+ "crawlercommons.filters.basic.BasicURLNormalizer#filter": [
+  [
+   "http://example.com/../path/to/resource"
+  ],
+  [
+   "https://example.com/path/to/../resource"
+  ],
+  [
+   "ftp://example.com/path/to/./resource"
+  ],
+  [
+   "file:///path/to/./resource"
+  ],
+  [
+   "http://example.com/path/to/resource?query=1"
+  ],
+  [
+   "https://example.com/path/to/resource?query=1"
+  ],
+  [
+   "ftp://example.com/path/to/resource?query=1"
+  ],
+  [
+   "file:///path/to/resource?query=1"
+  ]
+ ]
+}

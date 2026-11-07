@@ -1,0 +1,6 @@
+behaviour/*/old
+behaviour/*/new
+behaviour/harness/*.class
+behaviour/changed/changed
+behaviour/setup*.log
+.DS_Store

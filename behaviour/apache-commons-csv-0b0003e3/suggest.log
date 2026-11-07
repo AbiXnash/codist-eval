@@ -1,0 +1,577 @@
+## Commit
+Simplify new API name and parameter names
+
+## Diff
+```diff
+diff --git a/src/main/java/org/apache/commons/csv/CSVParser.java b/src/main/java/org/apache/commons/csv/CSVParser.java
+index a7067657..1c88d9c7 100644
+--- a/src/main/java/org/apache/commons/csv/CSVParser.java
++++ b/src/main/java/org/apache/commons/csv/CSVParser.java
+@@ -150,54 +150,42 @@ public final class CSVParser implements Iterable<CSVRecord>, Closeable {
+      *
+      * @since 1.13.0
+      */
+     public static class Builder extends AbstractStreamBuilder<CSVParser, Builder> {
+ 
+         private CSVFormat format;
+         private long characterOffset;
+         private long recordNumber = 1;
+-        private boolean enableByteTracking;
++        private boolean trackBytes;
+ 
+         /**
+          * Constructs a new instance.
+          */
+         protected Builder() {
+             // empty
+         }
+ 
+         @SuppressWarnings("resource")
+         @Override
+         public CSVParser get() throws IOException {
+-            return new CSVParser(getReader(), format != null ? format : CSVFormat.DEFAULT, characterOffset, recordNumber, getCharset(), enableByteTracking);
++            return new CSVParser(getReader(), format != null ? format : CSVFormat.DEFAULT, characterOffset, recordNumber, getCharset(), trackBytes);
+         }
+ 
+         /**
+          * Sets the lexer offset when the parser does not start parsing at the beginning of the source.
+          *
+          * @param characterOffset the lexer offset.
+          * @return this instance.
+          */
+         public Builder setCharacterOffset(final long characterOffset) {
+             this.characterOffset = characterOffset;
+             return asThis();
+         }
+ 
+-        /**
+-         * Sets whether to enable byte tracking for the parser.
+-         *
+-         * @param enableByteTracking {@code true} to enable byte tracking; {@code false} to disable it.
+-         * @return this instance.
+-         * @since 1.13.0
+-         */
+-        public Builder setEnableByteTracking(final boolean enableByteTracking) {
+-            this.enableByteTracking = enableByteTracking;
+-            return asThis();
+-        }
+-
+         /**
+          * Sets the CSV format. A copy of the given format is kept.
+          *
+          * @param format the CSV format, null is equivalent to {@link CSVFormat#DEFAULT}.
+          * @return this instance.
+          */
+         public Builder setFormat(final CSVFormat format) {
+             this.format = CSVFormat.copy(format);
+@@ -210,16 +198,28 @@ public final class CSVParser implements Iterable<CSVRecord>, Closeable {
+          * @param recordNumber the next record number to assign.
+          * @return this instance.
+          */
+         public Builder setRecordNumber(final long recordNumber) {
+             this.recordNumber = recordNumber;
+             return asThis();
+         }
+ 
++        /**
++         * Sets whether to enable byte tracking for the parser.
++         *
++         * @param trackBytes {@code true} to enable byte tracking; {@code false} to disable it.
++         * @return this instance.
++         * @since 1.13.0
++         */
++        public Builder setTrackBytes(final boolean trackBytes) {
++            this.trackBytes = trackBytes;
++            return asThis();
++        }
++
+     }
+ 
+     final class CSVRecordIterator implements Iterator<CSVRecord> {
+         private CSVRecord current;
+ 
+         /**
+          * Gets the next record.
+          *
+@@ -539,31 +539,31 @@ public final class CSVParser implements Iterable<CSVRecord>, Closeable {
+      * @param format
+      *            the CSVFormat used for CSV parsing. Must not be null.
+      * @param characterOffset
+      *            Lexer offset when the parser does not start parsing at the beginning of the source.
+      * @param recordNumber
+      *            The next record number to assign.
+      * @param charset
+      *            The character encoding to be used for the reader when enableByteTracking is true.
+-     * @param enableByteTracking
++     * @param trackBytes
+      *           {@code true} to enable byte tracking for the parser; {@code false} to disable it.
+      * @throws IllegalArgumentException
+      *             If the parameters of the format are inconsistent or if either the reader or format is null.
+      * @throws IOException
+      *             If there is a problem reading the header or skipping the first record.
+      * @throws CSVException Thrown on invalid input.
+      */
+     private CSVParser(final Reader reader, final CSVFormat format, final long characterOffset, final long recordNumber,
+-        final Charset charset, final boolean enableByteTracking)
++        final Charset charset, final boolean trackBytes)
+         throws IOException {
+         Objects.requireNonNull(reader, "reader");
+         Objects.requireNonNull(format, "format");
+         this.format = format.copy();
+-        this.lexer = new Lexer(format, new ExtendedBufferedReader(reader, charset, enableByteTracking));
++        this.lexer = new Lexer(format, new ExtendedBufferedReader(reader, charset, trackBytes));
+         this.csvRecordIterator = new CSVRecordIterator();
+         this.headers = createHeaders();
+         this.characterOffset = characterOffset;
+         this.recordNumber = recordNumber - 1;
+     }
+ 
+     private void addRecordValue(final boolean lastRecord) {
+         final String input = format.trim(reusableToken.content.toString());
+diff --git a/src/main/java/org/apache/commons/csv/ExtendedBufferedReader.java b/src/main/java/org/apache/commons/csv/ExtendedBufferedReader.java
+index 957c78bb..3769ffa4 100644
+--- a/src/main/java/org/apache/commons/csv/ExtendedBufferedReader.java
++++ b/src/main/java/org/apache/commons/csv/ExtendedBufferedReader.java
+@@ -71,21 +71,21 @@ final class ExtendedBufferedReader extends UnsynchronizedBufferedReader {
+ 
+     /**
+      * Constructs a new instance with the specified reader, character set,
+      * and byte tracking option. Initializes an encoder if byte tracking is enabled
+      * and a character set is provided.
+      *
+      * @param reader the reader supports a look-ahead option.
+      * @param charset the character set for encoding, or {@code null} if not applicable.
+-     * @param enableByteTracking {@code true} to enable byte tracking; {@code false} to disable it.
++     * @param trackBytes {@code true} to enable byte tracking; {@code false} to disable it.
+      */
+-    ExtendedBufferedReader(final Reader reader, final Charset charset, final boolean enableByteTracking) {
++    ExtendedBufferedReader(final Reader reader, final Charset charset, final boolean trackBytes) {
+         super(reader);
+-        if (charset != null && enableByteTracking) {
++        if (charset != null && trackBytes) {
+             encoder = charset.newEncoder();
+         }
+     }
+ 
+     /**
+      * Closes the stream.
+      *
+      * @throws IOException
+
+```
+
+## Methods to call (Java signatures)
+- org.apache.commons.csv.CSVParser#CSVParser: public org.apache.commons.csv.CSVParser(java.io.Reader, org.apache.commons.csv.CSVFormat) throws java.io.IOException
+- org.apache.commons.csv.CSVParser#CSVParser: public org.apache.commons.csv.CSVParser(java.io.Reader, org.apache.commons.csv.CSVFormat, long, long) throws java.io.IOException
+- org.apache.commons.csv.CSVParser#CSVParser: private org.apache.commons.csv.CSVParser(java.io.Reader, org.apache.commons.csv.CSVFormat, long, long, java.nio.charset.Charset, boolean) throws java.io.IOException
+- org.apache.commons.csv.CSVParser#CSVParser: org.apache.commons.csv.CSVParser(java.io.Reader, org.apache.commons.csv.CSVFormat, long, long, java.nio.charset.Charset, boolean, org.apache.commons.csv.CSVParser$1) throws java.io.IOException
+- org.apache.commons.csv.CSVParser$Builder#get: public org.apache.commons.csv.CSVParser get() throws java.io.IOException
+- org.apache.commons.csv.CSVParser$Builder#get: public java.lang.Object get() throws java.io.IOException
+- org.apache.commons.csv.CSVParser$Builder#setTrackBytes: public org.apache.commons.csv.CSVParser$Builder setTrackBytes(boolean)
+- org.apache.commons.csv.ExtendedBufferedReader#ExtendedBufferedReader: org.apache.commons.csv.ExtendedBufferedReader(java.io.Reader)
+- org.apache.commons.csv.ExtendedBufferedReader#ExtendedBufferedReader: org.apache.commons.csv.ExtendedBufferedReader(java.io.Reader, java.nio.charset.Charset, boolean)
+
+Reply as {"methods":[{"method":"pkg.Class#name","calls":[[arg, ...], ...]}]}
+
+## Reply
+{
+ "methods": [
+  {
+   "method": "org.apache.commons.csv.CSVParser#CSVParser",
+   "calls": [
+    [
+     "",
+     "DEFAULT"
+    ],
+    [
+     "",
+     "RFC4180"
+    ],
+    [
+     "",
+     "EXCEL"
+    ],
+    [
+     "",
+     "INFORMIX_UNLOAD"
+    ],
+    [
+     "",
+     "MYSQL"
+    ],
+    [
+     "",
+     "ORACLE"
+    ],
+    [
+     "",
+     "POSTGRESQL"
+    ],
+    [
+     "",
+     "TDF"
+    ]
+   ]
+  },
+  {
+   "method": "org.apache.commons.csv.CSVParser#CSVParser",
+   "calls": [
+    [
+     "",
+     "DEFAULT",
+     0,
+     1
+    ],
+    [
+     "",
+     "RFC4180",
+     100,
+     2
+    ],
+    [
+     "",
+     "EXCEL",
+     200,
+     3
+    ],
+    [
+     "",
+     "INFORMIX_UNLOAD",
+     300,
+     4
+    ],
+    [
+     "",
+     "MYSQL",
+     400,
+     5
+    ],
+    [
+     "",
+     "ORACLE",
+     500,
+     6
+    ],
+    [
+     "",
+     "POSTGRESQL",
+     600,
+     7
+    ],
+    [
+     "",
+     "TDF",
+     700,
+     8
+    ]
+   ]
+  },
+  {
+   "method": "org.apache.commons.csv.CSVParser#CSVParser",
+   "calls": [
+    [
+     "",
+     "DEFAULT",
+     0,
+     1,
+     "UTF-8",
+     true
+    ],
+    [
+     "",
+     "RFC4180",
+     100,
+     2,
+     "ISO-8859-1",
+     false
+    ],
+    [
+     "",
+     "EXCEL",
+     200,
+     3,
+     "UTF-16",
+     true
+    ],
+    [
+     "",
+     "INFORMIX_UNLOAD",
+     300,
+     4,
+     "ASCII",
+     false
+    ],
+    [
+     "",
+     "MYSQL",
+     400,
+     5,
+     "UTF-8",
+     true
+    ],
+    [
+     "",
+     "ORACLE",
+     500,
+     6,
+     "ISO-8859-1",
+     false
+    ],
+    [
+     "",
+     "POSTGRESQL",
+     600,
+     7,
+     "UTF-16",
+     true
+    ],
+    [
+     "",
+     "TDF",
+     700,
+     8,
+     "ASCII",
+     false
+    ]
+   ]
+  },
+  {
+   "method": "org.apache.commons.csv.CSVParser#CSVParser",
+   "calls": [
+    [
+     "",
+     "DEFAULT",
+     0,
+     1,
+     "UTF-8",
+     true,
+     null
+    ],
+    [
+     "",
+     "RFC4180",
+     100,
+     2,
+     "ISO-8859-1",
+     false,
+     null
+    ],
+    [
+     "",
+     "EXCEL",
+     200,
+     3,
+     "UTF-16",
+     true,
+     null
+    ],
+    [
+     "",
+     "INFORMIX_UNLOAD",
+     300,
+     4,
+     "ASCII",
+     false,
+     null
+    ],
+    [
+     "",
+     "MYSQL",
+     400,
+     5,
+     "UTF-8",
+     true,
+     null
+    ],
+    [
+     "",
+     "ORACLE",
+     500,
+     6,
+     "ISO-8859-1",
+     false,
+     null
+    ],
+    [
+     "",
+     "POSTGRESQL",
+     600,
+     7,
+     "UTF-16",
+     true,
+     null
+    ],
+    [
+     "",
+     "TDF",
+     700,
+     8,
+     "ASCII",
+     false,
+     null
+    ]
+   ]
+  },
+  {
+   "method": "org.apache.commons.csv.CSVParser$Builder#get",
+   "calls": [
+    [
+     true
+    ],
+    [
+     false
+    ],
+    [
+     true
+    ],
+    [
+     false
+    ],
+    [
+     true
+    ],
+    [
+     false
+    ],
+    [
+     true
+    ],
+    [
+     false
+    ]
+   ]
+  },
+  {
+   "method": "org.apache.commons.csv.CSVParser$Builder#get",
+   "calls": [
+    [
+     true
+    ],
+    [
+     false
+    ],
+    [
+     true
+    ],
+    [
+     false
+    ],
+    [
+     true
+    ],
+    [
+     false
+    ],
+    [
+     true
+    ],
+    [
+     false
+    ]
+   ]
+  },
+  {
+   "method": "org.apache.commons.csv.CSVParser$Builder#setTrackBytes",
+   "calls": [
+    [
+     true
+    ],
+    [
+     false
+    ],
+    [
+     true
+    ],
+    [
+     false
+    ],
+    [
+     true
+    ],
+    [
+     false
+    ],
+    [
+     true
+    ],
+    [
+     false
+    ]
+   ]
+  },
+  {
+   "method": "org.apache.commons.csv.ExtendedBufferedReader#ExtendedBufferedReader",
+   "calls": [
+    [
+     ""
+    ],
+    [
+     ""
+    ],
+    [
+     ""
+    ],
+    [
+     ""
+    ],
+    [
+     ""
+    ],
+    [
+     ""
+    ],
+    [
+     ""
+    ],
+    [
+     ""
+    ]
+   ]
+  },
+  {
+   "method": "org.apache.commons.csv.ExtendedBufferedReader#ExtendedBufferedReader",
+   "calls": [
+    [
+     "",
+     "UTF-8",
+     true
+    ],
+    [
+     "",
+     "ISO-8859-1",
+     false
+    ],
+    [
+     "",
+     "UTF-16",
+     true
+    ],
+    [
+     "",
+     "ASCII",
+     false
+    ],
+    [
+     "",
+     "UTF-8",
+     true
+    ],
+    [
+     "",
+     "ISO-8859-1",
+     false
+    ],
+    [
+     "",
+     "UTF-16",
+     true
+    ],
+    [
+     "",
+     "ASCII",
+     false
+    ]
+   ]
+  }
+ ]
+}

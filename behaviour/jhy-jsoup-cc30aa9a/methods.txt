@@ -1,0 +1,15 @@
+org.jsoup.Connection$Base#url
+org.jsoup.helper.HttpConnection$Response#serialiseRequestUrl
+org.jsoup.helper.UrlBuilder#build
+org.jsoup.nodes.Comment#getData
+org.jsoup.parser.Tag#name
+org.jsoup.parser.Token$Character#getData
+org.jsoup.parser.Token$Character#normalizeNulls
+org.jsoup.parser.Token$Doctype#getInternalSubset
+org.jsoup.parser.Token$Doctype#getName
+org.jsoup.parser.Token$Doctype#getPublicIdentifier
+org.jsoup.parser.Token$Doctype#getSystemIdentifier
+org.jsoup.parser.Token$Tag#appendTagName
+org.jsoup.parser.Token$Tag#newAttribute
+org.jsoup.parser.Token$Tag#toStringName
+org.jsoup.parser.TokenData#value

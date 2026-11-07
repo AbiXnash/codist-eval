@@ -1,0 +1,8 @@
+org.jsoup.nodes.Attribute#htmlNoValidate
+org.jsoup.nodes.Entities#<field>
+org.jsoup.nodes.Entities#doEscape
+org.jsoup.nodes.Entities#escape
+org.jsoup.nodes.Entities#escapeString
+org.jsoup.nodes.Printer#addText
+org.jsoup.nodes.TextNode#outerHtmlHead
+org.jsoup.nodes.XmlDeclaration#getWholeDeclaration

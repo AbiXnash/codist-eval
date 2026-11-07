@@ -1,0 +1,85 @@
+## Commit
+Extract into final local variable.
+
+## Diff
+```diff
+diff --git a/src/main/java/org/apache/commons/cli/help/Util.java b/src/main/java/org/apache/commons/cli/help/Util.java
+index 76d584f..921f9ad 100644
+--- a/src/main/java/org/apache/commons/cli/help/Util.java
++++ b/src/main/java/org/apache/commons/cli/help/Util.java
+@@ -49,20 +49,21 @@ final class Util {
+      * @return The index of the first non whitespace character or -1 if non found.
+      */
+     static int indexOfNonWhitespace(final CharSequence text, final int startPos) {
+         if (isEmpty(text)) {
+             return NOT_FOUND;
+         }
+         // the line ends before the max wrap pos or a new line char found
+         int idx = startPos;
+-        while (idx < text.length() && isWhitespace(text.charAt(idx))) {
++        final int length = text.length();
++        while (idx < length && isWhitespace(text.charAt(idx))) {
+             idx++;
+         }
+-        return idx < text.length() ? idx : NOT_FOUND;
++        return idx < length ? idx : NOT_FOUND;
+     }
+ 
+     /**
+      * Tests whether the given string is null or empty.
+      *
+      * @param str The string to test.
+      * @return Whether the given string is null or empty.
+      */
+
+```
+
+## Methods to call (Java signatures)
+- org.apache.commons.cli.help.TextHelpAppendable#makeColumnQueue: protected java.util.Queue<java.lang.String> makeColumnQueue(java.lang.CharSequence, org.apache.commons.cli.help.TextStyle)
+- org.apache.commons.cli.help.Util#indexOfNonWhitespace: static int indexOfNonWhitespace(java.lang.CharSequence, int)
+- org.apache.commons.cli.help.Util#ltrim: static java.lang.String ltrim(java.lang.String)
+
+Reply as {"methods":[{"method":"pkg.Class#name","calls":[[arg, ...], ...]}]}
+
+## Reply
+{
+ "methods": [
+  {
+   "method": "org.apache.commons.cli.help.Util#indexOfNonWhitespace",
+   "calls": [
+    [
+     "\t   ",
+     0
+    ],
+    [
+     "   \t",
+     0
+    ],
+    [
+     "\n   ",
+     0
+    ],
+    [
+     "   \n",
+     0
+    ],
+    [
+     "\r   ",
+     0
+    ],
+    [
+     "   \r",
+     0
+    ],
+    [
+     "   ",
+     0
+    ],
+    [
+     "",
+     0
+    ]
+   ]
+  }
+ ]
+}

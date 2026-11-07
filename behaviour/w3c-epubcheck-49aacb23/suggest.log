@@ -1,0 +1,156 @@
+## Commit
+fix: make CLI return 0 for --version or --help options
+
+## Diff
+```diff
+diff --git a/src/main/java/com/adobe/epubcheck/tool/EpubChecker.java b/src/main/java/com/adobe/epubcheck/tool/EpubChecker.java
+index d92493ca..bd38ac8d 100644
+--- a/src/main/java/com/adobe/epubcheck/tool/EpubChecker.java
++++ b/src/main/java/com/adobe/epubcheck/tool/EpubChecker.java
+@@ -87,16 +87,17 @@ public class EpubChecker
+   boolean keep = false;
+   boolean jsonOutput = false;
+   boolean xmlOutput = false;
+   boolean xmpOutput = false;
+   File fileOut;
+   File listChecksOut;
+   File customMessageFile;
+   boolean listChecks = false;
++  boolean displayHelpOrVersion = false;
+   boolean useCustomMessageFile = false;
+   boolean failOnWarnings = false;
+   private Messages messages = Messages.getInstance();
+   private Locale locale = Locale.getDefault();
+   
+   int reportingLevel = ReportingLevel.Info;
+ 
+   private static final HashMap<OPSType, String> modeMimeTypeMap;
+@@ -133,16 +134,20 @@ public class EpubChecker
+       {
+         report = createReport();
+         report.initialize();
+         if (listChecks)
+         {
+           dumpMessageDictionary(report);
+           return 0;
+         }
++        if (displayHelpOrVersion)
++        {
++          return 0;
++        }
+         if (useCustomMessageFile)
+         {
+           report.setCustomMessageFile(customMessageFile.getAbsolutePath());
+         }
+         returnValue = processFile(report);
+         int returnValue2 = report.generate();
+         if (returnValue == 0)
+         {
+@@ -482,17 +487,17 @@ public class EpubChecker
+     {
+       System.err.println(messages.get("argument_needed"));
+       return false;
+     }
+ 
+     setCustomMessageFileFromEnvironment();
+ 
+     Pattern argPattern = Pattern.compile("--?(.*)");
+-
++    
+     for (int i = 0; i < args.length; i++)
+     {
+       Matcher argMatch = argPattern.matcher(args[i]);
+       if (argMatch.matches()){
+         switch (argMatch.group(1)) {
+           case "v": 
+               if (i + 1 < args.length)
+               {
+@@ -733,19 +738,21 @@ public class EpubChecker
+                   displayHelp();
+                   return false;
+               }
+               break;
+           case "h":
+           case "?":
+           case "help":
+               displayHelp(); // display help message
++              displayHelpOrVersion = true;
+             break;
+           case "version":
+             displayVersion();
++            displayHelpOrVersion = true;
+             break;
+           default:
+               System.err.println(String.format(messages.get("unrecognized_argument"), args[i]));
+               displayHelp();
+               return false;
+         }
+         
+         
+@@ -784,17 +791,17 @@ public class EpubChecker
+           sb.append(path.charAt(i));
+         }
+       }
+       path = sb.toString();
+     }
+ 
+     if (path == null)
+     {
+-      if (listChecks)
++      if (listChecks || displayHelpOrVersion)
+       {
+         return true;
+       }
+       else
+       {
+         System.err.println(messages.get("no_file_specified"));
+         return false;
+       }
+
+```
+
+## Methods to call (Java signatures)
+- com.adobe.epubcheck.tool.EpubChecker#processArguments: private boolean processArguments(java.lang.String[])
+- com.adobe.epubcheck.tool.EpubChecker#processEpubFile: public int processEpubFile(java.lang.String[])
+- com.adobe.epubcheck.tool.EpubChecker#run: public int run(java.lang.String[])
+
+Reply as {"methods":[{"method":"pkg.Class#name","calls":[[arg, ...], ...]}]}
+
+## Reply
+{
+ "methods": [
+  {
+   "method": "com.adobe.epubcheck.tool.EpubChecker#processArguments",
+   "calls": [
+    [
+     "--help"
+    ],
+    [
+     "--version"
+    ]
+   ]
+  },
+  {
+   "method": "com.adobe.epubcheck.tool.EpubChecker#processEpubFile",
+   "calls": [
+    [
+     "--help"
+    ],
+    [
+     "--version"
+    ]
+   ]
+  },
+  {
+   "method": "com.adobe.epubcheck.tool.EpubChecker#run",
+   "calls": [
+    [
+     "--help"
+    ],
+    [
+     "--version"
+    ]
+   ]
+  }
+ ]
+}

@@ -1,0 +1,181 @@
+Moderocky-ByteSkript-450c8d01 Moderocky__ByteSkript.git 450c8d0151 Clean up unboxing in bridge compiler.
+Moderocky-ByteSkript-4db98e4b Moderocky__ByteSkript.git 4db98e4bbe Clean up bootstrapper.
+Moderocky-ByteSkript-f83861b9 Moderocky__ByteSkript.git f83861b907 Clean up language spec.
+Moderocky-ByteSkript-4ccc1de9 Moderocky__ByteSkript.git 4ccc1de9e6 Clean up functions.
+apache-commons-cli-4dec263d apache__commons-cli.git 4dec263d68 Refactor stream processing
+apache-commons-cli-2fb8cb4e apache__commons-cli.git 2fb8cb4e80 Extract into final local variable.
+apache-commons-cli-ca6d3362 apache__commons-cli.git ca6d3362c4 Internal refactoring
+apache-commons-cli-bbc7001d apache__commons-cli.git bbc7001dee Internal refactoring
+apache-commons-cli-50b149a0 apache__commons-cli.git 50b149a00b Simplify and test MissingOptionException message construction
+apache-commons-cli-52cb4deb apache__commons-cli.git 52cb4debef Rename to match String style of naming
+apache-commons-cli-eefb1e20 apache__commons-cli.git eefb1e20b3 Internal refactoring
+apache-commons-cli-509f6e16 apache__commons-cli.git 509f6e1671 Simplify internal delegation
+apache-commons-cli-68844bf1 apache__commons-cli.git 68844bf1e0 Internal refactoring
+apache-commons-cli-2028b842 apache__commons-cli.git 2028b84219 Clean up exception message
+apache-commons-cli-e8665700 apache__commons-cli.git e86657008a Internal refactoring
+apache-commons-cli-43844146 apache__commons-cli.git 4384414639 Javadoc clean up
+apache-commons-cli-f2aa3089 apache__commons-cli.git f2aa308956 Rename some internals.
+apache-commons-cli-caf0b99c apache__commons-cli.git caf0b99cfa Simplify array initialization.
+apache-commons-cli-b106dee5 apache__commons-cli.git b106dee5f2 Document and cleanup throws clauses.
+apache-commons-cli-23df3834 apache__commons-cli.git 23df383408 Simplified the createPadding() method
+apache-commons-cli-05e7cd0a apache__commons-cli.git 05e7cd0a32 Simplified Options.helpOptions(), the loop looking into the lonOpts wa
+apache-commons-cli-d3c29775 apache__commons-cli.git d3c2977592 Minor simplification in GnuParser to make the token list local to the 
+apache-commons-cli-b3ca31bc apache__commons-cli.git b3ca31bc9e Renamed Leniant to Lenient - as noticed by James Ring in #37973
+apache-commons-cli-d7b3db12 apache__commons-cli.git d7b3db12be - minor code tidy
+apache-commons-cli-1314233d apache__commons-cli.git 1314233dde When extracting option values from properties, options with a single a
+apache-commons-csv-f25612ff apache__commons-csv.git f25612fff9 Internal parser ctor refactoring .
+apache-commons-csv-0b0003e3 apache__commons-csv.git 0b0003e3b3 Simplify new API name and parameter names
+apache-commons-csv-14d31b02 apache__commons-csv.git 14d31b0244 Rename internal methods
+apache-commons-csv-63da95a9 apache__commons-csv.git 63da95a9d9 Extract duplicated code into a method
+apache-commons-csv-50e56c64 apache__commons-csv.git 50e56c64b6 Internal refactoring for escape character
+apache-commons-csv-98f46ac6 apache__commons-csv.git 98f46ac661 Internal refactoring for delimiter
+apache-commons-csv-d3ef84e2 apache__commons-csv.git d3ef84e248 Rollback var extraction
+apache-commons-csv-6fce181a apache__commons-csv.git 6fce181abf Refactor duplicate code
+apache-commons-csv-3dad2eef apache__commons-csv.git 3dad2eef41 Refactor append calls into private methods for ongoing streaming work.
+apache-commons-csv-a0fcf9a5 apache__commons-csv.git a0fcf9a5a5 Use Stream.of() and rename new method to be like Collection#stream() i
+apache-commons-csv-0b01ea82 apache__commons-csv.git 0b01ea8211 Refactor and reuse constant.
+apache-commons-csv-cf1460b2 apache__commons-csv.git cf1460b21e Simplify boolean expression: emptyHeader will always be true when reac
+apache-commons-csv-2465f5e8 apache__commons-csv.git 2465f5e8f6 CSV-167 Rename method and update Javadoc to correspond with reality
+apache-commons-csv-040c2606 apache__commons-csv.git 040c2606eb Rename withCommentStart to withCommentMarker to avoid confusion becaus
+apache-commons-csv-85226d80 apache__commons-csv.git 85226d80e6 CSV-115: Simplify boolean expressions in CSVRecord. This also closes #
+apache-commons-csv-7b271062 apache__commons-csv.git 7b27106237 Internal refactoring. If we have a toMap, a toList makes sense (which 
+apache-commons-csv-5b2e5f80 apache__commons-csv.git 5b2e5f809b Simplify code so delimiter only printed in one place
+apache-commons-csv-4f61bd1a apache__commons-csv.git 4f61bd1aee Extract check for metaChar
+apache-commons-csv-7ac5dd3e apache__commons-csv.git 7ac5dd3ec6 Rename methods that create a builder newBuilder().
+apache-commons-csv-7c770e0b apache__commons-csv.git 7c770e0b53 Now that delimiter is a char, simplify API by removing withDelimiter(C
+apache-commons-csv-350d34d5 apache__commons-csv.git 350d34d5cf Rename encapsulator to quote char.
+apache-commons-csv-ddfe9df7 apache__commons-csv.git ddfe9df74f Rename encapsulator to quote char.
+apache-commons-csv-7fd16f35 apache__commons-csv.git 7fd16f353a Rename "encapsulator" to "quoteChar" so we have quoteChar and quotePol
+apache-commons-csv-0dbb4998 apache__commons-csv.git 0dbb499888 Rename "encapsulator" to "quoteChar" so we have quoteChar and quotePol
+apache-commons-csv-f80c5bd0 apache__commons-csv.git f80c5bd0ad Rename "encapsulator" to "quoteChar" so we have quoteChar and quotePol
+apache-commons-csv-ecea0c35 apache__commons-csv.git ecea0c3599 Rename "encapsulator" to "quoteChar" so we have quoteChar and quotePol
+apache-commons-csv-639e68e2 apache__commons-csv.git 639e68e253 Rename printSep() to printDelimiter().
+apache-commons-csv-2a8ce4a1 apache__commons-csv.git 2a8ce4a11c Rename method from "is" prefix to "read" prefix because it is not just
+apache-commons-csv-8c3aaee6 apache__commons-csv.git 8c3aaee61a Rename method from "is" prefix to "read" prefix because it is not just
+apache-commons-csv-9f6d3f54 apache__commons-csv.git 9f6d3f5413 Rename readAgain() to getLastChar()
+apache-commons-csv-0e8084ab apache__commons-csv.git 0e8084ab27 Rename getRecord() to nextRecord()
+apache-commons-csv-8f068b60 apache__commons-csv.git 8f068b60ed Rename method nullMeansDisabled() to mapNullToDisabled()
+apache-commons-csv-992c0645 apache__commons-csv.git 992c0645e0 Rename ivar to ignoreEmptyLines to match CSVFormat.
+apache-commons-csv-3655efce apache__commons-csv.git 3655efcedb Rename ivar to ignoreSurroundingSpaces to match CSVFormat.
+apache-commons-csv-dc7a7197 apache__commons-csv.git dc7a71979d Rename constant.
+apache-commons-csv-53fd86df apache__commons-csv.git 53fd86dfbc More constants clean ups.
+apache-commons-csv-9a27bb57 apache__commons-csv.git 9a27bb570d Refactor magic strings into constants.
+apache-commons-csv-66a56ee1 apache__commons-csv.git 66a56ee1a4 Refactor magic strings into constants.
+apache-commons-csv-5b6b1fa3 apache__commons-csv.git 5b6b1fa33c Refactor magic strings into constants.
+apache-commons-csv-3cd5c85e apache__commons-csv.git 3cd5c85e8a [CVS-92] Need a way to extract parsed headers, e.g. for use in formatt
+apache-commons-csv-473727be apache__commons-csv.git 473727be26 Rename ivar headerMapping -> headerMap.
+apache-commons-csv-8608520a apache__commons-csv.git 8608520aa1 Rename pname from 'tkn' to 'token'.
+apache-commons-csv-e235b2a6 apache__commons-csv.git e235b2a63c Refactor '\r' and '\n' into constants.
+apache-commons-csv-ba26844c apache__commons-csv.git ba26844c7b CSV-70 Improve readability of CSVLexer Simplify; remove while(true) lo
+apache-commons-csv-43987a7d apache__commons-csv.git 43987a7d78 Rename to avoid hiding class field
+apache-commons-csv-8033a710 apache__commons-csv.git 8033a710b0 Rename local variables to make them easier to read l (ell) looks rathe
+apache-commons-csv-2ec4c994 apache__commons-csv.git 2ec4c994c0 Renamed CSVParser.getLine() into getRecord() to avoid confusions since
+apache-commons-csv-a7bd28c4 apache__commons-csv.git a7bd28c496 Renamed CSVParser.getAllValues() to getRecords()
+apache-commons-csv-bf186393 apache__commons-csv.git bf186393db trivial cleanup of javadoc errors
+apache-commons-csv-87d5f878 apache__commons-csv.git 87d5f87806 CSVParser javadoc cleanup (and remove ref to M$ [sic])
+apache-commons-csv-a05816d2 apache__commons-csv.git a05816d2e7 [CSV] little javadoc cleanups
+apache-commons-jxpath-9e047325 apache__commons-jxpath.git 9e047325ba Simplify new interface ExceptionHandler
+apache-commons-jxpath-85fcf8c4 apache__commons-jxpath.git 85fcf8c424 Internal refactorings using generics
+apache-commons-jxpath-cdee2636 apache__commons-jxpath.git cdee263699 Internal refactorings using generics
+apache-commons-jxpath-42da558a apache__commons-jxpath.git 42da558a34 Some tests do not clean up after themselves and cause random failures
+apache-commons-jxpath-5c538c4e apache__commons-jxpath.git 5c538c4e51 refactor
+apache-commons-jxpath-161dab44 apache__commons-jxpath.git 161dab444d simplify empty string check
+apache-commons-jxpath-050ab0b0 apache__commons-jxpath.git 050ab0b02c simplify and bulletproof cache synchronization; thanks to Sebastian Ba
+apache-commons-jxpath-5badb574 apache__commons-jxpath.git 5badb57439 [JXPATH-133] use == or .equals on parent node comparison in compareTo(
+apache-commons-jxpath-e2c9d22b apache__commons-jxpath.git e2c9d22b8d refactoring to avoid constructing n intermediate strings
+apache-commons-jxpath-c44bc5b1 apache__commons-jxpath.git c44bc5b1c1 refactor NodeSet handling
+apache-commons-jxpath-10912156 apache__commons-jxpath.git 109121561f small refactoring
+apache-commons-jxpath-255910cf apache__commons-jxpath.git 255910cf78 loc refactor
+apache-commons-jxpath-fbc0337a apache__commons-jxpath.git fbc0337a68 extract ReverseComparator to its own class
+crawler-commons-crawler-commons-5f1f1e5c crawler-commons__crawler-commons.git 5f1f1e5c09 Refactor URL resolution logic in URLUtils to ensure consistent behavio
+crawler-commons-crawler-commons-175b861d crawler-commons__crawler-commons.git 175b861d67 Refactor method getFileWithNormalizedPath to void double conversion fr
+crawler-commons-crawler-commons-4653ced8 crawler-commons__crawler-commons.git 4653ced854 Minor formatting cleanup
+jhy-jsoup-cc30aa9a jhy__jsoup.git cc30aa9a26 Clean up StringBuilder use
+jhy-jsoup-b87fd364 jhy__jsoup.git b87fd364dc Clean up invalid XML handling
+jhy-jsoup-42dbaa00 jhy__jsoup.git 42dbaa00c5 Cleanup redundant Syntax parameter
+jhy-jsoup-76ea7b3e jhy__jsoup.git 76ea7b3e3e Clean up some warnings
+jhy-jsoup-18418114 jhy__jsoup.git 1841811422 Cleanup unused parameter
+jhy-jsoup-fe2d9e27 jhy__jsoup.git fe2d9e2798 Tidy up chompBalanced
+jhy-jsoup-c9695d66 jhy__jsoup.git c9695d66b4 Simplify Comment -> XmlDeclaration
+jhy-jsoup-68ab3cf1 jhy__jsoup.git 68ab3cf1ad Simplify charset
+jhy-jsoup-1a68cc9b jhy__jsoup.git 1a68cc9b81 Simplified request.body and bodyStream fields
+jhy-jsoup-a908dc9c jhy__jsoup.git a908dc9cc0 Clean up varargs compilation warning
+jhy-jsoup-515423d6 jhy__jsoup.git 515423d68b Simplified siblings() a little
+jhy-jsoup-0a2a2c48 jhy__jsoup.git 0a2a2c48e3 Simplified multi-root select dedupe
+jhy-jsoup-297ea4ff jhy__jsoup.git 297ea4ff7a Tiny tidy up
+jhy-jsoup-4840efb3 jhy__jsoup.git 4840efb3b9 Renamed to userData()
+jhy-jsoup-7925168e jhy__jsoup.git 7925168e94 Tidy imports
+jhy-jsoup-28335277 jhy__jsoup.git 283352773e Tidying up some javadoc
+jhy-jsoup-ef0065dc jhy__jsoup.git ef0065dcf1 Tidy up child node accessor
+jhy-jsoup-f4d00c29 jhy__jsoup.git f4d00c2903 Simplified TextNode.outerHtml a little
+jhy-jsoup-59201d92 jhy__jsoup.git 59201d92f5 Simplify traverse to lambda
+jhy-jsoup-ab1d80bb jhy__jsoup.git ab1d80bbe6 Simplified ownText evaluator
+jhy-jsoup-aaafac1a jhy__jsoup.git aaafac1ad0 Refactored fragment context state to use a switch
+jhy-jsoup-530c5b0f jhy__jsoup.git 530c5b0fcb Refactored fuzz tests to iterate all files in directory; run timeout t
+jhy-jsoup-bf0e74d7 jhy__jsoup.git bf0e74d7cc Minor code cleanup in flyweight
+jhy-jsoup-f0345613 jhy__jsoup.git f0345613a5 Code cleanup
+jhy-jsoup-0a5a7ef1 jhy__jsoup.git 0a5a7ef1c6 Minor cleanup
+jhy-jsoup-cedf83c4 jhy__jsoup.git cedf83c47f Cleanup UTF BOM recognition
+jhy-jsoup-fbd74e72 jhy__jsoup.git fbd74e7261 Doc hints for rename
+jhy-jsoup-c2ef8e97 jhy__jsoup.git c2ef8e9785 Simplified isContentForTagData
+jhy-jsoup-43c35a79 jhy__jsoup.git 43c35a792c Clean up sort test
+jhy-jsoup-4d104721 jhy__jsoup.git 4d104721d9 Simplify code a bit
+jhy-jsoup-6f9013be jhy__jsoup.git 6f9013beaf Comment cleanup
+jhy-jsoup-2b488261 jhy__jsoup.git 2b488261f6 Simplify
+jhy-jsoup-c221cc8a jhy__jsoup.git c221cc8ab0 Bit of a Tag cleanup
+jhy-jsoup-373ea35b jhy__jsoup.git 373ea35b2c Code cleanup
+jhy-jsoup-b831caaf jhy__jsoup.git b831caaff8 Code cleanup.
+jhy-jsoup-e981b5dd jhy__jsoup.git e981b5dd04 Methods renamed.
+jhy-jsoup-2bef2e7c jhy__jsoup.git 2bef2e7ce9 Simplify get by ID
+jhy-jsoup-e936b1b6 jhy__jsoup.git e936b1b664 Cleanup.
+jhy-jsoup-a0bd1689 jhy__jsoup.git a0bd168917 1. rename methods and variables 2. extend javaDoc
+jhy-jsoup-3c5061f0 jhy__jsoup.git 3c5061f03f Doc format cleanup
+jhy-jsoup-1e30a157 jhy__jsoup.git 1e30a15766 Tidy up javadoc one-liners for Element
+jhy-jsoup-35ba2dd2 jhy__jsoup.git 35ba2dd27d Cleanup datastream test.
+jhy-jsoup-4b9bd67f jhy__jsoup.git 4b9bd67fca Tidy
+jhy-jsoup-ad203677 jhy__jsoup.git ad203677d7 Tidy
+jhy-jsoup-c4bb2a49 jhy__jsoup.git c4bb2a4933 Simplifed Tag creator.
+jhy-jsoup-46e1e978 jhy__jsoup.git 46e1e97800 Doc tidy.
+jhy-jsoup-7a7419fb jhy__jsoup.git 7a7419fbc1 Selector cleanup
+jhy-jsoup-314fa9d2 jhy__jsoup.git 314fa9d235 Renamed Elements#select to Elements#filter.
+jhy-jsoup-9d3ab851 jhy__jsoup.git 9d3ab85127 Renamed JSoup -> Jsoup
+jitterted-ensembler-463b476c jitterted__ensembler.git 463b476c90 Refactored to use ResponseStatus instead of returning a Void ResponseE
+jitterted-ensembler-9b3f6894 jitterted__ensembler.git 9b3f689472 Prepare for multiple buttons in the button container by extracting par
+jitterted-ensembler-d159d528 jitterted__ensembler.git d159d5285d R - extracted timer control button HTML generation
+jitterted-ensembler-74bc7863 jitterted__ensembler.git 74bc78636f minor refactor rename
+jitterted-ensembler-c54c3359 jitterted__ensembler.git c54c335954 Extracted CountdownTimer with setter/getters
+jitterted-ensembler-e669d7e6 jitterted__ensembler.git e669d7e6f2 Minor change - before extracting timer into its own class
+jitterted-ensembler-c94387cf jitterted__ensembler.git c94387cf7f Refactored to extract pre-requisite of 3 or more participants
+jitterted-ensembler-086f5a37 jitterted__ensembler.git 086f5a3746 Extracted interface for the Tick Handler (look! an inbound PORT interf
+jitterted-ensembler-c691c215 jitterted__ensembler.git c691c215ed Refactor creation of ensemble summary views for a specific member into
+jitterted-ensembler-b266640c jitterted__ensembler.git b266640cb8 Minor refactor so that parameters to ParticipantAction.from() can neve
+jitterted-ensembler-7f0f43c7 jitterted__ensembler.git 7f0f43c729 Refactored EnsembleSummaryView, simplified the new code and broke up l
+jitterted-ensembler-c5aa8d39 jitterted__ensembler.git c5aa8d397b Use Cohere Method refactoring to move details of deletion of Conferenc
+jitterted-ensembler-c3227b92 jitterted__ensembler.git c3227b929f Extracted Status to be top-level Enum. Perhaps use "stage" instead of 
+jitterted-ensembler-21c50045 jitterted__ensembler.git 21c50045a7 Slight improvement refactoring.
+jitterted-ensembler-dab151f5 jitterted__ensembler.git dab151f5da Tiny refactor for trigger notification
+jitterted-ensembler-b716308c jitterted__ensembler.git b716308cde Renamed Huddle.register to acceptedBy.
+jitterted-ensembler-30f272f4 jitterted__ensembler.git 30f272f420 Rename sender name.
+jitterted-ensembler-57e5ac4a jitterted__ensembler.git 57e5ac4a6f refactor
+klausbrunner-solarpositioning-378d7a26 klausbrunner__solarpositioning.git 378d7a2606 refactor: unify refraction parameter checks
+klausbrunner-solarpositioning-fff3b166 klausbrunner__solarpositioning.git fff3b16665 chore: minor refactoring
+klausbrunner-solarpositioning-3c46ede1 klausbrunner__solarpositioning.git 3c46ede1b3 Minor cleanup (DRY)
+klausbrunner-solarpositioning-2756287e klausbrunner__solarpositioning.git 2756287e64 minor cleanups
+klausbrunner-solarpositioning-9511c687 klausbrunner__solarpositioning.git 9511c687b7 minor code cleanups
+w3c-epubcheck-1c0b93bd w3c__epubcheck.git 1c0b93bd78 refactor: improve formatting of date parsing errors
+w3c-epubcheck-9d5af07d w3c__epubcheck.git 9d5af07d3c refactor: normalize media type strings in model objects
+w3c-epubcheck-6564cae8 w3c__epubcheck.git 6564cae8ea refactor: remove internal method from the Report APi
+w3c-epubcheck-0a452a08 w3c__epubcheck.git 0a452a0803 refactor: simplify CSS location getters
+w3c-epubcheck-383fe4c8 w3c__epubcheck.git 383fe4c8f3 refactor: remove a useless import
+w3c-epubcheck-33b577a3 w3c__epubcheck.git 33b577a38c refactor: migrate from `Charsets` to `StandardCharsets`
+w3c-epubcheck-eb0cb779 w3c__epubcheck.git eb0cb779a7 refactor: remove primitive wrapper constructor
+w3c-epubcheck-699c5108 w3c__epubcheck.git 699c510881 refactor: remove some debugging messages printed to System streams
+w3c-epubcheck-bfd30b5e w3c__epubcheck.git bfd30b5e4b refactor: minor internal changes to OCFChecker
+w3c-epubcheck-688d30d3 w3c__epubcheck.git 688d30d3c7 refactor: remove XMLParser#getResourceName() method
+w3c-epubcheck-122a582d w3c__epubcheck.git 122a582dbc refactor: reimplement CSS-015 in core checkers
+w3c-epubcheck-db8d13c2 w3c__epubcheck.git db8d13c229 refactor: reimplement HTM-046 and HTM-047 in OPSHandler30
+w3c-epubcheck-5263887b w3c__epubcheck.git 5263887baa refactor: move HTM-053 check to OPSHandler
+w3c-epubcheck-92aa4c47 w3c__epubcheck.git 92aa4c47a3 refactor: suppress a couple compiler warnings
+w3c-epubcheck-fc7edfea w3c__epubcheck.git fc7edfea8b Rename the MetadataSet builder class
+w3c-epubcheck-8dcdf33a w3c__epubcheck.git 8dcdf33ac5 cleanup doctype checks
+w3c-epubcheck-134a7d49 w3c__epubcheck.git 134a7d4987 cleanup doctype checks

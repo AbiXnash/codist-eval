@@ -1,0 +1,2 @@
+com.jitterted.mobreg.adapter.in.web.admin.EnsembleSummaryView#toView
+com.jitterted.mobreg.adapter.in.web.member.ParticipantAction#from

@@ -1,0 +1,18 @@
+{
+ "org.apache.commons.jxpath.xml.DocumentContainer#getParser": [
+  [
+   "DOM"
+  ],
+  [
+   "JDOM"
+  ],
+  [
+   "UNKNOWN_MODEL"
+  ]
+ ],
+ "org.apache.commons.jxpath.xml.DocumentContainer#parseXML": [
+  [
+   "<xml content as string>"
+  ]
+ ]
+}

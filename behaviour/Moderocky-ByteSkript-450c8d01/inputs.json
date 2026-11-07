@@ -1,0 +1,44 @@
+{
+ "org.byteskript.skript.compiler.BridgeCompiler#unbox": [
+  [
+   "byte.class"
+  ],
+  [
+   "short.class"
+  ],
+  [
+   "int.class"
+  ],
+  [
+   "long.class"
+  ],
+  [
+   "float.class"
+  ],
+  [
+   "double.class"
+  ],
+  [
+   "boolean.class"
+  ],
+  [
+   "char.class"
+  ]
+ ],
+ "org.byteskript.skript.runtime.internal.OperatorHandler#unboxC": [
+  [
+   "null"
+  ],
+  [
+   "new Character('A')"
+  ]
+ ],
+ "org.byteskript.skript.runtime.internal.OperatorHandler#unboxZ": [
+  [
+   "null"
+  ],
+  [
+   "new Boolean(true)"
+  ]
+ ]
+}

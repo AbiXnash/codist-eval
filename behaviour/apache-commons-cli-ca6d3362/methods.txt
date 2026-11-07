@@ -1,0 +1,4 @@
+org.apache.commons.cli.help.AbstractHelpFormatter#printHelp
+org.apache.commons.cli.help.AbstractHelpFormatter#printOptions
+org.apache.commons.cli.help.HelpFormatter#<field>
+org.apache.commons.cli.help.HelpFormatter#getTableDefinition

@@ -1,0 +1,8 @@
+org.apache.commons.csv.CSVParser#<field>
+org.apache.commons.csv.CSVParser#CSVParser
+org.apache.commons.csv.CSVParser$Builder#<field>
+org.apache.commons.csv.CSVParser$Builder#get
+org.apache.commons.csv.CSVParser$Builder#setEnableByteTracking
+org.apache.commons.csv.CSVParser$Builder#setTrackBytes
+org.apache.commons.csv.ExtendedBufferedReader#<field>
+org.apache.commons.csv.ExtendedBufferedReader#ExtendedBufferedReader

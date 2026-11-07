@@ -1,0 +1,19 @@
+calls=15 ran=15 differ=9 flaky=0 state-only=0 null-only=0 dropped=0
+  estimate(2005-01-01)
+      old: 64.68633720312503 | args [2005-01-01] | state null
+      new: 64.70220833333336 | args [2005-01-01] | state null
+  estimate(2014-01-01)
+      old: 68.54577795312504 | args [2014-01-01] | state null
+      new: 67.33920833333335 | args [2014-01-01] | state null
+  estimate(2015-01-01)
+      old: 69.03049470312504 | args [2015-01-01] | state null
+      new: 67.63519440190976 | args [2015-01-01] | state null
+  estimate(2050-01-01)
+      old: 93.0847888888886 | args [2050-01-01] | state null
+      new: 85.27427711024296 | args [2050-01-01] | state null
+  estimate(2100-01-01)
+      old: 202.8381222222219 | args [2100-01-01] | state null
+      new: 127.36884169357623 | args [2100-01-01] | state null
+  estimate(2150-01-01)
+      old: 328.56800555555526 | args [2150-01-01] | state null
+      new: 189.3409062769095 | args [2150-01-01] | state null

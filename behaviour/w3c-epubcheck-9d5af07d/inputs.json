@@ -1,0 +1,129 @@
+{
+ "com.adobe.epubcheck.opf.OPFItem$Builder#mimetype": [
+  [
+   "text/html"
+  ],
+  [
+   "application/xhtml+xml"
+  ],
+  [
+   "image/jpeg"
+  ],
+  [
+   "image/png"
+  ],
+  [
+   "application/pdf"
+  ],
+  [
+   "application/epub+zip"
+  ],
+  [
+   "text/css"
+  ],
+  [
+   "application/javascript"
+  ],
+  [
+   "undefined"
+  ],
+  [
+   "null"
+  ],
+  [
+   "  "
+  ],
+  [
+   "text/html; charset=utf-8"
+  ],
+  [
+   "application/xhtml+xml; charset=UTF-8"
+  ],
+  [
+   "image/jpeg; quality=0.85"
+  ],
+  [
+   "image/png; depth=8"
+  ],
+  [
+   "application/pdf; version=1.7"
+  ]
+ ],
+ "org.w3c.epubcheck.core.references.Resource$Builder#mimetype": [
+  [
+   "text/html"
+  ],
+  [
+   "application/xhtml+xml"
+  ],
+  [
+   "image/jpeg"
+  ],
+  [
+   "image/png"
+  ],
+  [
+   "application/pdf"
+  ],
+  [
+   "application/epub+zip"
+  ],
+  [
+   "text/css"
+  ],
+  [
+   "application/javascript"
+  ],
+  [
+   "undefined"
+  ],
+  [
+   "null"
+  ],
+  [
+   "  "
+  ],
+  [
+   "text/html; charset=utf-8"
+  ],
+  [
+   "application/xhtml+xml; charset=UTF-8"
+  ],
+  [
+   "image/jpeg; quality=0.85"
+  ],
+  [
+   "image/png; depth=8"
+  ],
+  [
+   "application/pdf; version=1.7"
+  ]
+ ],
+ "org.w3c.epubcheck.util.mime.MIMEType#filterParameters": [
+  [
+   "charset"
+  ],
+  [
+   "quality"
+  ],
+  [
+   "depth"
+  ],
+  [
+   "version"
+  ],
+  [
+   "boundary"
+  ],
+  [
+   "name"
+  ],
+  [
+   "filename"
+  ],
+  [
+   "p1",
+   "p2"
+  ]
+ ]
+}

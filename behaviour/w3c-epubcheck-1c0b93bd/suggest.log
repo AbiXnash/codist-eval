@@ -1,0 +1,149 @@
+## Commit
+refactor: improve formatting of date parsing errors
+
+## Diff
+```diff
+diff --git a/src/main/java/com/adobe/epubcheck/opf/OPFHandler.java b/src/main/java/com/adobe/epubcheck/opf/OPFHandler.java
+index a2ead205..2c42ab03 100755
+--- a/src/main/java/com/adobe/epubcheck/opf/OPFHandler.java
++++ b/src/main/java/com/adobe/epubcheck/opf/OPFHandler.java
+@@ -731,17 +731,17 @@ public class OPFHandler extends XMLHandler
+       {
+         String dateval = (String) e.getPrivateData(TEXT);
+         boolean valid = true;
+         String detail = null;
+ 
+         if (dateval == null || "".equals(dateval))
+         {
+           valid = false;
+-          detail = "zero-length string";
++          detail = " zero-length string";
+         }
+         else
+         {
+           DateParser dateParser = new DateParser();
+           try
+           {
+             Date date = dateParser.parse(dateval.trim());
+             /*
+@@ -752,17 +752,21 @@ public class OPFHandler extends XMLHandler
+             if (year.length() > 4)
+             {
+               throw new InvalidDateException(year);
+             }
+             report.info(null, FeatureEnum.DC_DATE, dateval);
+           } catch (InvalidDateException d)
+           {
+             valid = false;
+-            detail = d.getMessage();
++            detail = " " + d.getMessage();
++            if (detail.endsWith("."))
++            {
++              detail = detail.substring(0, detail.length() - 1);
++            }
+           }
+         }
+ 
+         if (!valid)
+         {
+           if (context.version == EPUBVersion.VERSION_3)
+           {
+             report.message(MessageId.OPF_053, location(), (dateval == null ? "" : dateval), detail);
+
+```
+
+## Methods to call (Java signatures)
+- com.adobe.epubcheck.opf.OPFHandler#endElement: public void endElement()
+
+Reply as {"methods":[{"method":"pkg.Class#name","calls":[[arg, ...], ...]}]}
+
+## Reply
+{
+ "methods": [
+  {
+   "method": "com.adobe.epubcheck.opf.OPFHandler#endElement",
+   "calls": [
+    [
+     "",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "2023-01-01",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "2023-13-01",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "2023-01-32",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "2023-02-29",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "2020-02-29",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "2023-01-01T00:00:00Z",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "2023-01-01T24:00:00Z",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ]
+  }
+ ]
+}

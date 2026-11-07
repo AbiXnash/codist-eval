@@ -1,0 +1,178 @@
+## Commit
+Applying Brian Egge's improvement from CLI-132
+
+## Diff
+```diff
+diff --git a/src/java/org/apache/commons/cli/Parser.java b/src/java/org/apache/commons/cli/Parser.java
+index 3bd0a60..2843ef1 100644
+--- a/src/java/org/apache/commons/cli/Parser.java
++++ b/src/java/org/apache/commons/cli/Parser.java
+@@ -290,17 +290,20 @@ public abstract class Parser implements CommandLineParser {
+     private void checkRequiredOptions()
+         throws MissingOptionException
+     {
+         // if there are required options that have not been
+         // processsed
+         if (requiredOptions.size() > 0)
+         {
+             Iterator iter = requiredOptions.iterator();
+-            StringBuffer buff = new StringBuffer();
++            StringBuffer buff = new StringBuffer("Missing required option");
++            buff.append(requiredOptions.size() == 1 ? "" : "s");
++            buff.append(": ");
++
+ 
+             // loop through the required options
+             while (iter.hasNext())
+             {
+                 buff.append(iter.next());
+             }
+ 
+             throw new MissingOptionException(buff.toString());
+
+```
+
+## Methods to call (Java signatures)
+- org.apache.commons.cli.Parser#checkRequiredOptions: private void checkRequiredOptions() throws org.apache.commons.cli.MissingOptionException
+- org.apache.commons.cli.Parser#parse: public org.apache.commons.cli.CommandLine parse(org.apache.commons.cli.Options, java.lang.String[]) throws org.apache.commons.cli.ParseException
+- org.apache.commons.cli.Parser#parse: public org.apache.commons.cli.CommandLine parse(org.apache.commons.cli.Options, java.lang.String[], java.util.Properties) throws org.apache.commons.cli.ParseException
+- org.apache.commons.cli.Parser#parse: public org.apache.commons.cli.CommandLine parse(org.apache.commons.cli.Options, java.lang.String[], boolean) throws org.apache.commons.cli.ParseException
+- org.apache.commons.cli.Parser#parse: public org.apache.commons.cli.CommandLine parse(org.apache.commons.cli.Options, java.lang.String[], java.util.Properties, boolean) throws org.apache.commons.cli.ParseException
+
+Reply as {"methods":[{"method":"pkg.Class#name","calls":[[arg, ...], ...]}]}
+
+## Reply
+{
+ "methods": [
+  {
+   "method": "org.apache.commons.cli.Parser#checkRequiredOptions",
+   "calls": [
+    []
+   ]
+  },
+  {
+   "method": "org.apache.commons.cli.Parser#parse",
+   "calls": [
+    [
+     {
+      "options": {
+       "requiredOptions": [
+        "a",
+        "b"
+       ]
+      }
+     },
+     [
+      "-a"
+     ]
+    ],
+    [
+     {
+      "options": {
+       "requiredOptions": [
+        "a"
+       ]
+      }
+     },
+     []
+    ],
+    [
+     {
+      "options": {
+       "requiredOptions": [
+        "a",
+        "b"
+       ]
+      }
+     },
+     [
+      "-a",
+      "-b"
+     ]
+    ],
+    [
+     {
+      "options": {
+       "requiredOptions": [
+        "a",
+        "b"
+       ]
+      }
+     },
+     [
+      "-b"
+     ]
+    ],
+    [
+     {
+      "options": {
+       "requiredOptions": [
+        "a"
+       ]
+      }
+     },
+     [
+      "-a"
+     ],
+     {
+      "properties": {
+       "key": "value"
+      }
+     }
+    ],
+    [
+     {
+      "options": {
+       "requiredOptions": [
+        "a"
+       ]
+      }
+     },
+     [],
+     {
+      "properties": {
+       "key": "value"
+      }
+     }
+    ],
+    [
+     {
+      "options": {
+       "requiredOptions": [
+        "a",
+        "b"
+       ]
+      }
+     },
+     [
+      "-a",
+      "-b"
+     ],
+     {
+      "properties": {
+       "key": "value"
+      }
+     }
+    ],
+    [
+     {
+      "options": {
+       "requiredOptions": [
+        "a",
+        "b"
+       ]
+      }
+     },
+     [
+      "-b"
+     ],
+     {
+      "properties": {
+       "key": "value"
+      }
+     }
+    ]
+   ]
+  }
+ ]
+}

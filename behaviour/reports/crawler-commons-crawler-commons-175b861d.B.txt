@@ -1,0 +1,3 @@
+calls=24 ran=16 differ=0 flaky=0 state-only=0 null-only=0 dropped=0
+  getFileWithNormalizedPath: signature changed, cannot compare
+  main: skipped, it may exit

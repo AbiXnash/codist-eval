@@ -1,0 +1,370 @@
+## Commit
+Prepare for multiple buttons in the button container by extracting parameter object
+
+## Diff
+```diff
+diff --git a/src/main/java/com/jitterted/mobreg/adapter/TimerToHtmlTransformer.java b/src/main/java/com/jitterted/mobreg/adapter/TimerToHtmlTransformer.java
+index 9ed1ddd..c7ce81e 100644
+--- a/src/main/java/com/jitterted/mobreg/adapter/TimerToHtmlTransformer.java
++++ b/src/main/java/com/jitterted/mobreg/adapter/TimerToHtmlTransformer.java
+@@ -14,42 +14,42 @@ public class TimerToHtmlTransformer {
+             case WAITING_TO_START -> htmlForWaitingToStart(ensembleTimer);
+             case RUNNING -> htmlForRunning(ensembleTimer);
+             case PAUSED -> htmlForPaused(ensembleTimer);
+             case FINISHED -> htmlForFinished(ensembleTimer);
+         };
+     }
+ 
+     private static String htmlForPaused(EnsembleTimer ensembleTimer) {
+-        return htmlForTimerControlButtonContainer(ensembleTimer, "/member/resume-timer", "Resume Timer")
++        return htmlForTimerControlButtonContainer(ensembleTimer, new Button("/member/resume-timer", "Resume Timer"))
+                + htmlForTimerContainer(ensembleTimer.timeRemaining(), "paused");
+     }
+ 
+     private static String htmlForWaitingToStart(EnsembleTimer ensembleTimer) {
+-        return htmlForTimerControlButtonContainer(ensembleTimer, "/member/start-timer", "Start Timer")
++        return htmlForTimerControlButtonContainer(ensembleTimer, new Button("/member/start-timer", "Start Timer"))
+                + htmlForTimerContainer(ensembleTimer.timeRemaining(), "running")
+                + htmlForSwappingInRotationMembers(ensembleTimer.rotation());
+     }
+ 
+-    private static String htmlForTimerControlButtonContainer(EnsembleTimer ensembleTimer,
+-                                                             String buttonEndpointUrl,
+-                                                             String buttonLabel) {
++    private static String htmlForTimerControlButtonContainer(
++            EnsembleTimer ensembleTimer,
++            Button button) {
+         // language=html
+         return """
+                <swap id="timer-control-container"
+                      hx-swap-oob="innerHTML"
+                      hx-swap="none">
+                    <button hx-post="%s/%s"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        %s
+                    </button>
+                </swap>
+-               """.formatted(buttonEndpointUrl,
++               """.formatted(button.buttonEndpointUrl(),
+                              ensembleTimer.ensembleId().id(),
+-                             buttonLabel);
++                             button.buttonLabel());
+     }
+ 
+     public static String htmlForSwappingInRotationMembers(Rotation rotation) {
+         return """
+                <swap-container id="%s" hx-swap-oob="innerHTML">
+                    %s
+                </swap-container>
+                <swap-container id="%s" hx-swap-oob="innerHTML">
+@@ -77,17 +77,17 @@ public class TimerToHtmlTransformer {
+                                  .map(Member::firstName)
+                                  .map("    <p>%s</p>"::formatted)
+                                  .reduce((left, right) -> left + "\n" + right)
+                                  .orElse("    <p class=\"text-xl\">(no other participants)</p>");
+     }
+ 
+     // language=html
+     private static String htmlForRunning(EnsembleTimer ensembleTimer) {
+-        return htmlForTimerControlButtonContainer(ensembleTimer, "/member/pause-timer", "Pause Timer")
++        return htmlForTimerControlButtonContainer(ensembleTimer, new Button("/member/pause-timer", "Pause Timer"))
+                + htmlForTimerContainer(ensembleTimer.timeRemaining(), "running");
+     }
+ 
+     // language=html
+     private static String htmlForTimerContainer(TimeRemaining timeRemaining, String cssState) {
+         double percentRemaining = timeRemaining.percent();
+         return """
+                <div id="timer-container"
+@@ -106,22 +106,22 @@ public class TimerToHtmlTransformer {
+                              cssState,
+                              timeRemaining.minutes(),
+                              timeRemaining.seconds());
+     }
+ 
+     // language=html
+     private static String htmlForFinished(EnsembleTimer ensembleTimer) {
+         return htmlForTimerControlButtonContainer(ensembleTimer,
+-                                                  "/member/rotate-timer",
+-                                                  "Next Rotation")
++                                                  new Button("/member/rotate-timer", "Next Rotation"))
+                +
+                """ 
+                <div id="timer-container"
+                     class="circle circle-finished">
+                    <div class="timer-text-container timer-finished">
+                        <div class="timer-text">next</div>
+                    </div>
+                </div>
+                """;
+     }
+ 
++    private record Button(String buttonEndpointUrl, String buttonLabel) {}
+ }
+diff --git a/src/main/java/com/jitterted/mobreg/domain/EnsembleTimer.java b/src/main/java/com/jitterted/mobreg/domain/EnsembleTimer.java
+index 63ebe56..296554e 100644
+--- a/src/main/java/com/jitterted/mobreg/domain/EnsembleTimer.java
++++ b/src/main/java/com/jitterted/mobreg/domain/EnsembleTimer.java
+@@ -6,17 +6,17 @@ import java.time.Duration;
+ import java.time.Instant;
+ import java.util.List;
+ import java.util.StringJoiner;
+ import java.util.stream.Stream;
+ 
+ import static com.jitterted.mobreg.domain.CountdownTimer.TimerState.FINISHED;
+ 
+ public class EnsembleTimer {
+-    public static final Duration DEFAULT_TIMER_DURATION = Duration.ofSeconds(4);
++    public static final Duration DEFAULT_TIMER_DURATION = Duration.ofMinutes(4);
+ 
+     private final EnsembleId ensembleId;
+     private final String ensembleName;
+     private final List<Member> participants;
+     private final Rotation rotation;
+     private CountdownTimer turnTimer;
+     private final Duration turnDuration;
+ 
+
+```
+
+## Methods to call (Java signatures)
+- com.jitterted.mobreg.adapter.TimerToHtmlTransformer#htmlFor: public static java.lang.String htmlFor(com.jitterted.mobreg.domain.EnsembleTimer)
+- com.jitterted.mobreg.adapter.TimerToHtmlTransformer#htmlForFinished: private static java.lang.String htmlForFinished(com.jitterted.mobreg.domain.EnsembleTimer)
+- com.jitterted.mobreg.adapter.TimerToHtmlTransformer#htmlForPaused: private static java.lang.String htmlForPaused(com.jitterted.mobreg.domain.EnsembleTimer)
+- com.jitterted.mobreg.adapter.TimerToHtmlTransformer#htmlForRunning: private static java.lang.String htmlForRunning(com.jitterted.mobreg.domain.EnsembleTimer)
+- com.jitterted.mobreg.adapter.TimerToHtmlTransformer#htmlForTimerControlButtonContainer: private static java.lang.String htmlForTimerControlButtonContainer(com.jitterted.mobreg.domain.EnsembleTimer, com.jitterted.mobreg.adapter.TimerToHtmlTransformer$Button)
+- com.jitterted.mobreg.adapter.TimerToHtmlTransformer#htmlForWaitingToStart: private static java.lang.String htmlForWaitingToStart(com.jitterted.mobreg.domain.EnsembleTimer)
+
+Reply as {"methods":[{"method":"pkg.Class#name","calls":[[arg, ...], ...]}]}
+
+## Reply
+{
+ "methods": [
+  {
+   "method": "com.jitterted.mobreg.adapter.TimerToHtmlTransformer#htmlFor",
+   "calls": [
+    [
+     {
+      "ensembleId": {
+       "id": "1"
+      },
+      "ensembleName": "Test Ensemble",
+      "participants": [
+       {
+        "firstName": "Alice"
+       },
+       {
+        "firstName": "Bob"
+       }
+      ],
+      "rotation": {
+       "currentMember": {
+        "firstName": "Alice"
+       },
+       "nextMembers": [
+        {
+         "firstName": "Bob"
+        }
+       ]
+      },
+      "turnTimer": {
+       "state": "FINISHED",
+       "startTime": "2023-01-01T00:00:00Z",
+       "duration": 240
+      },
+      "turnDuration": 240
+     }
+    ]
+   ]
+  },
+  {
+   "method": "com.jitterted.mobreg.adapter.TimerToHtmlTransformer#htmlForFinished",
+   "calls": [
+    [
+     {
+      "ensembleId": {
+       "id": "1"
+      },
+      "ensembleName": "Test Ensemble",
+      "participants": [
+       {
+        "firstName": "Alice"
+       },
+       {
+        "firstName": "Bob"
+       }
+      ],
+      "rotation": {
+       "currentMember": {
+        "firstName": "Alice"
+       },
+       "nextMembers": [
+        {
+         "firstName": "Bob"
+        }
+       ]
+      },
+      "turnTimer": {
+       "state": "FINISHED",
+       "startTime": "2023-01-01T00:00:00Z",
+       "duration": 240
+      },
+      "turnDuration": 240
+     }
+    ]
+   ]
+  },
+  {
+   "method": "com.jitterted.mobreg.adapter.TimerToHtmlTransformer#htmlForPaused",
+   "calls": [
+    [
+     {
+      "ensembleId": {
+       "id": "1"
+      },
+      "ensembleName": "Test Ensemble",
+      "participants": [
+       {
+        "firstName": "Alice"
+       },
+       {
+        "firstName": "Bob"
+       }
+      ],
+      "rotation": {
+       "currentMember": {
+        "firstName": "Alice"
+       },
+       "nextMembers": [
+        {
+         "firstName": "Bob"
+        }
+       ]
+      },
+      "turnTimer": {
+       "state": "PAUSED",
+       "startTime": "2023-01-01T00:00:00Z",
+       "duration": 240
+      },
+      "turnDuration": 240
+     }
+    ]
+   ]
+  },
+  {
+   "method": "com.jitterted.mobreg.adapter.TimerToHtmlTransformer#htmlForRunning",
+   "calls": [
+    [
+     {
+      "ensembleId": {
+       "id": "1"
+      },
+      "ensembleName": "Test Ensemble",
+      "participants": [
+       {
+        "firstName": "Alice"
+       },
+       {
+        "firstName": "Bob"
+       }
+      ],
+      "rotation": {
+       "currentMember": {
+        "firstName": "Alice"
+       },
+       "nextMembers": [
+        {
+         "firstName": "Bob"
+        }
+       ]
+      },
+      "turnTimer": {
+       "state": "RUNNING",
+       "startTime": "2023-01-01T00:00:00Z",
+       "duration": 240
+      },
+      "turnDuration": 240
+     }
+    ]
+   ]
+  },
+  {
+   "method": "com.jitterted.mobreg.adapter.TimerToHtmlTransformer#htmlForTimerControlButtonContainer",
+   "calls": [
+    [
+     {
+      "ensembleId": {
+       "id": "1"
+      },
+      "ensembleName": "Test Ensemble",
+      "participants": [
+       {
+        "firstName": "Alice"
+       },
+       {
+        "firstName": "Bob"
+       }
+      ],
+      "rotation": {
+       "currentMember": {
+        "firstName": "Alice"
+       },
+       "nextMembers": [
+        {
+         "firstName": "Bob"
+        }
+       ]
+      },
+      "turnTimer": {
+       "state": "RUNNING",
+       "startTime": "2023-01-01T00:00:00Z",
+       "duration": 240
+      },
+      "turnDuration": 240
+     },
+     {
+      "buttonEndpointUrl": "/member/pause-timer",
+      "buttonLabel": "Pause Timer"
+     }
+    ]
+   ]
+  },
+  {
+   "method": "com.jitterted.mobreg.adapter.TimerToHtmlTransformer#htmlForWaitingToStart",
+   "calls": [
+    [
+     {
+      "ensembleId": {
+       "id": "1"
+      },
+      "ensembleName": "Test Ensemble",
+      "participants": [
+       {
+        "firstName": "Alice"
+       },
+       {
+        "firstName": "Bob"
+       }
+      ],
+      "rotation": {
+       "currentMember": {
+        "firstName": "Alice"
+       },
+       "nextMembers": [
+        {
+         "firstName": "Bob"
+        }
+       ]
+      },
+      "turnTimer": {
+       "state": "WAITING_TO_START",
+       "startTime": "2023-01-01T00:00:00Z",
+       "duration": 240
+      },
+      "turnDuration": 240
+     }
+    ]
+   ]
+  }
+ ]
+}

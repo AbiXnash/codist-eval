@@ -1,0 +1,9 @@
+org.apache.commons.jxpath.ri.axes.AncestorContext#nextNode
+org.apache.commons.jxpath.ri.axes.DescendantContext#nextNode
+org.apache.commons.jxpath.ri.axes.ParentContext#nextNode
+org.apache.commons.jxpath.ri.axes.PrecedingOrFollowingContext#nextNode
+org.apache.commons.jxpath.ri.axes.SelfContext#setPosition
+org.apache.commons.jxpath.ri.model.dom.DOMNodeIterator#testChild
+org.apache.commons.jxpath.ri.model.dom.DOMNodePointer#testNode
+org.apache.commons.jxpath.ri.model.jdom.JDOMNodeIterator#testChild
+org.apache.commons.jxpath.ri.model.jdom.JDOMNodePointer#testNode

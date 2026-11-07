@@ -1,0 +1,47 @@
+{
+ "com.adobe.epubcheck.api.MasterReport#MasterReport": [
+  [
+   true
+  ],
+  [
+   false
+  ]
+ ],
+ "com.adobe.epubcheck.api.MasterReport#setLocale": [
+  [
+   "en_US"
+  ],
+  [
+   "fr_FR"
+  ],
+  [
+   "de_DE"
+  ]
+ ],
+ "com.adobe.epubcheck.api.MasterReport#message": [
+  [
+   "ERROR_001",
+   {
+    "line": 1,
+    "column": 1
+   },
+   "arg1",
+   "arg2"
+  ],
+  [
+   "WARNING_002",
+   {
+    "line": 2,
+    "column": 2
+   },
+   "arg3"
+  ],
+  [
+   "INFO_003",
+   {
+    "line": 3,
+    "column": 3
+   }
+  ]
+ ]
+}

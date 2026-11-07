@@ -1,0 +1,201 @@
+## Commit
+R - extracted timer control button HTML generation
+
+## Diff
+```diff
+diff --git a/src/main/java/com/jitterted/mobreg/adapter/out/websocket/TimerToHtmlTransformer.java b/src/main/java/com/jitterted/mobreg/adapter/out/websocket/TimerToHtmlTransformer.java
+index 56f4d35..ca6394d 100644
+--- a/src/main/java/com/jitterted/mobreg/adapter/out/websocket/TimerToHtmlTransformer.java
++++ b/src/main/java/com/jitterted/mobreg/adapter/out/websocket/TimerToHtmlTransformer.java
+@@ -14,27 +14,33 @@ public class TimerToHtmlTransformer {
+             case WAITING_TO_START -> htmlForWaitingToStart(ensembleTimer);
+             case RUNNING -> htmlForRunning(ensembleTimer);
+             case FINISHED -> htmlForFinished(ensembleTimer);
+         };
+     }
+ 
+     // language=html
+     private static String htmlForWaitingToStart(EnsembleTimer ensembleTimer) {
++        return htmlForTimerControlButton(ensembleTimer, "/admin/start-timer", "Start Timer")
++               + htmlForTimerContainer(ensembleTimer.timeRemaining())
++               + htmlForSwappingInRotationMembers(ensembleTimer.rotation());
++    }
++
++    private static String htmlForTimerControlButton(EnsembleTimer ensembleTimer, String buttonEndpointUrl, String buttonLabel) {
+         return """
+                <button id="timer-control-button"
+                        hx-swap-oob="outerHTML"
+                        hx-swap="none"
+-                       hx-post="/admin/start-timer/%s"
++                       hx-post="%s/%s"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+-                   Start Timer
++                   %s
+                </button>
+-               """.formatted(ensembleTimer.ensembleId().id())
+-               + htmlForTimerContainer(ensembleTimer.timeRemaining())
+-               + htmlForSwappingInRotationMembers(ensembleTimer.rotation());
++               """.formatted(buttonEndpointUrl,
++                             ensembleTimer.ensembleId().id(),
++                             buttonLabel);
+     }
+ 
+     public static String htmlForSwappingInRotationMembers(Rotation rotation) {
+         return """
+                <swap-container id="%s" hx-swap-oob="innerHTML">
+                    <p>%s</p>
+                </swap-container>
+                <swap-container id="%s" hx-swap-oob="innerHTML">
+
+```
+
+## Methods to call (Java signatures)
+- com.jitterted.mobreg.adapter.out.websocket.TimerToHtmlTransformer#htmlFor: public static java.lang.String htmlFor(com.jitterted.mobreg.domain.EnsembleTimer)
+- com.jitterted.mobreg.adapter.out.websocket.TimerToHtmlTransformer#htmlForTimerControlButton: private static java.lang.String htmlForTimerControlButton(com.jitterted.mobreg.domain.EnsembleTimer, java.lang.String, java.lang.String)
+- com.jitterted.mobreg.adapter.out.websocket.TimerToHtmlTransformer#htmlForWaitingToStart: private static java.lang.String htmlForWaitingToStart(com.jitterted.mobreg.domain.EnsembleTimer)
+
+Reply as {"methods":[{"method":"pkg.Class#name","calls":[[arg, ...], ...]}]}
+
+## Reply
+{
+ "methods": [
+  {
+   "method": "com.jitterted.mobreg.adapter.out.websocket.TimerToHtmlTransformer#htmlFor",
+   "calls": [
+    [
+     {
+      "ensembleId": {
+       "id": "123"
+      },
+      "status": "WAITING_TO_START",
+      "timeRemaining": 60,
+      "rotation": {
+       "id": "rotation1",
+       "members": [
+        "Alice",
+        "Bob"
+       ]
+      }
+     }
+    ],
+    [
+     {
+      "ensembleId": {
+       "id": "456"
+      },
+      "status": "RUNNING",
+      "timeRemaining": 30,
+      "rotation": {
+       "id": "rotation2",
+       "members": [
+        "Charlie",
+        "David"
+       ]
+      }
+     }
+    ],
+    [
+     {
+      "ensembleId": {
+       "id": "789"
+      },
+      "status": "FINISHED",
+      "timeRemaining": 0,
+      "rotation": {
+       "id": "rotation3",
+       "members": [
+        "Eve",
+        "Frank"
+       ]
+      }
+     }
+    ]
+   ]
+  },
+  {
+   "method": "com.jitterted.mobreg.adapter.out.websocket.TimerToHtmlTransformer#htmlForTimerControlButton",
+   "calls": [
+    [
+     {
+      "ensembleId": {
+       "id": "123"
+      }
+     },
+     "/admin/start-timer",
+     "Start Timer"
+    ],
+    [
+     {
+      "ensembleId": {
+       "id": "456"
+      }
+     },
+     "/admin/stop-timer",
+     "Stop Timer"
+    ],
+    [
+     {
+      "ensembleId": {
+       "id": "789"
+      }
+     },
+     "/admin/pause-timer",
+     "Pause Timer"
+    ]
+   ]
+  },
+  {
+   "method": "com.jitterted.mobreg.adapter.out.websocket.TimerToHtmlTransformer#htmlForWaitingToStart",
+   "calls": [
+    [
+     {
+      "ensembleId": {
+       "id": "123"
+      },
+      "status": "WAITING_TO_START",
+      "timeRemaining": 60,
+      "rotation": {
+       "id": "rotation1",
+       "members": [
+        "Alice",
+        "Bob"
+       ]
+      }
+     }
+    ],
+    [
+     {
+      "ensembleId": {
+       "id": "456"
+      },
+      "status": "WAITING_TO_START",
+      "timeRemaining": 30,
+      "rotation": {
+       "id": "rotation2",
+       "members": [
+        "Charlie",
+        "David"
+       ]
+      }
+     }
+    ],
+    [
+     {
+      "ensembleId": {
+       "id": "789"
+      },
+      "status": "WAITING_TO_START",
+      "timeRemaining": 0,
+      "rotation": {
+       "id": "rotation3",
+       "members": [
+        "Eve",
+        "Frank"
+       ]
+      }
+     }
+    ]
+   ]
+  }
+ ]
+}

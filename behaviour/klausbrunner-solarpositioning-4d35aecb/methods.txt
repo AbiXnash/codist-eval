@@ -1,0 +1,2 @@
+net.e175.klaus.solarpositioning.DeltaT#<field>
+net.e175.klaus.solarpositioning.DeltaT#estimate

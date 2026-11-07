@@ -1,0 +1,1 @@
+com.adobe.epubcheck.opf.OPFHandler#endElement

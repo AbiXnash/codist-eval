@@ -1,0 +1,23 @@
+calls=6 ran=5 differ=5 flaky=0 state-only=0 null-only=0
+  new CSVParser(reader(""), CSVFormat.DEFAULT).getHeaderMap()
+      old: throws java.lang.NullPointerException | state 
+      new: null | args [] | state []
+  new CSVParser(reader("a,b
+1,2
+"), CSVFormat.DEFAULT).getHeaderMap()
+      old: throws java.lang.NullPointerException | state 
+      new: null | args [] | state [["a", "b"], ["1", "2"]]
+  new CSVParser(reader("h1,h2
+x,y
+"), CSVFormat.DEFAULT).getHeaderMap()
+      old: throws java.lang.NullPointerException | state 
+      new: null | args [] | state [["h1", "h2"], ["x", "y"]]
+  new CSVParser(reader(""a
+b",c
+"), CSVFormat.DEFAULT).getHeaderMap()
+      old: throws java.lang.NullPointerException | state 
+      new: null | args [] | state [["a
+b", "c"]]
+  new CSVParser(reader(""), CSVFormat.RFC4180).getHeaderMap()
+      old: throws java.lang.NullPointerException | state 
+      new: null | args [] | state []

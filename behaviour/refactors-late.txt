@@ -1,0 +1,5 @@
+klausbrunner-solarpositioning-fff3b166 klausbrunner__solarpositioning.git fff3b16665
+klausbrunner-solarpositioning-3c46ede1 klausbrunner__solarpositioning.git 3c46ede1b3
+w3c-epubcheck-1c0b93bd w3c__epubcheck.git 1c0b93bd78
+w3c-epubcheck-9d5af07d w3c__epubcheck.git 9d5af07d3c
+w3c-epubcheck-6564cae8 w3c__epubcheck.git 6564cae8ea

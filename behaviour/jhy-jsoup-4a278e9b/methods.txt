@@ -1,0 +1,5 @@
+org.jsoup.helper.W3CDom#<field>
+org.jsoup.helper.W3CDom$W3CBuilder#<field>
+org.jsoup.helper.W3CDom$W3CBuilder#W3CBuilder
+org.jsoup.helper.W3CDom$W3CBuilder#head
+org.jsoup.select.NodeTraversor#traverse

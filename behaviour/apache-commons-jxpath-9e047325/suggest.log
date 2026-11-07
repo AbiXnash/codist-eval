@@ -1,0 +1,95 @@
+## Commit
+Simplify new interface ExceptionHandler
+
+## Diff
+```diff
+diff --git a/src/main/java/org/apache/commons/jxpath/ExceptionHandler.java b/src/main/java/org/apache/commons/jxpath/ExceptionHandler.java
+index e03a214..d9e13e5 100644
+--- a/src/main/java/org/apache/commons/jxpath/ExceptionHandler.java
++++ b/src/main/java/org/apache/commons/jxpath/ExceptionHandler.java
+@@ -12,23 +12,19 @@
+  * distributed under the License is distributed on an "AS IS" BASIS,
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
+ 
+ package org.apache.commons.jxpath;
+ 
++import java.util.function.BiConsumer;
++
+ /**
+  * Exception handler interface. Actually handles Throwables.
+  *
+  * @since 1.4.0
+  */
+-public interface ExceptionHandler {
+-
+-    /**
+-     * Handle an encountered Throwable.
+-     *
+-     * @param t   to handle
+-     * @param ptr specific context
+-     */
+-    void handle(Throwable t, Pointer ptr);
++@FunctionalInterface
++public interface ExceptionHandler extends BiConsumer<Throwable, Pointer> {
++    // empty
+ }
+diff --git a/src/main/java/org/apache/commons/jxpath/ri/model/NodePointer.java b/src/main/java/org/apache/commons/jxpath/ri/model/NodePointer.java
+index 76ba5ce..47f5440 100644
+--- a/src/main/java/org/apache/commons/jxpath/ri/model/NodePointer.java
++++ b/src/main/java/org/apache/commons/jxpath/ri/model/NodePointer.java
+@@ -680,17 +680,17 @@ public abstract class NodePointer implements Pointer {
+      * Handle a Throwable using an installed ExceptionHandler, if available. Public to facilitate calling for RI support; not truly intended for public
+      * consumption.
+      *
+      * @param t          to handle
+      * @param originator context
+      */
+     public void handle(final Throwable t, final NodePointer originator) {
+         if (exceptionHandler != null) {
+-            exceptionHandler.handle(t, originator);
++            exceptionHandler.accept(t, originator);
+             return;
+         }
+         if (parent != null) {
+             parent.handle(t, originator);
+         }
+     }
+ 
+     /**
+
+```
+
+## Methods to call (Java signatures)
+- org.apache.commons.jxpath.ri.model.NodePointer#handle: public void handle(java.lang.Throwable)
+- org.apache.commons.jxpath.ri.model.NodePointer#handle: public void handle(java.lang.Throwable, org.apache.commons.jxpath.ri.model.NodePointer)
+- org.apache.commons.jxpath.ri.model.beans.PropertyIterator#getLength: private int getLength()
+- org.apache.commons.jxpath.ri.model.beans.PropertyIterator#getNodePointer: public org.apache.commons.jxpath.ri.model.NodePointer getNodePointer()
+
+Reply as {"methods":[{"method":"pkg.Class#name","calls":[[arg, ...], ...]}]}
+
+## Reply
+{
+ "methods": [
+  {
+   "method": "org.apache.commons.jxpath.ri.model.NodePointer#handle",
+   "calls": [
+    [
+     {
+      "java.lang.Throwable": "java.lang.RuntimeException"
+     }
+    ],
+    [
+     {
+      "java.lang.Throwable": "java.lang.RuntimeException"
+     },
+     {
+      "org.apache.commons.jxpath.ri.model.NodePointer": null
+     }
+    ]
+   ]
+  }
+ ]
+}

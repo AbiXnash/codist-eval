@@ -1,0 +1,55 @@
+## Commit
+Fixed wrong emoji/unicode character for Switch to Participant button text
+
+## Diff
+```diff
+diff --git a/src/main/java/com/jitterted/mobreg/adapter/in/web/member/EnsembleSummaryView.java b/src/main/java/com/jitterted/mobreg/adapter/in/web/member/EnsembleSummaryView.java
+index a733adb..f2285ea 100644
+--- a/src/main/java/com/jitterted/mobreg/adapter/in/web/member/EnsembleSummaryView.java
++++ b/src/main/java/com/jitterted/mobreg/adapter/in/web/member/EnsembleSummaryView.java
+@@ -124,16 +124,16 @@ record ParticipantAction(String actionUrl, String buttonText, boolean disabled)
+                     "Participate in Rotation &#x2328;",
+                     disabled);
+             case PARTICIPANT -> new ParticipantAction(
+                     "/member/decline",
+                     "Leave Rotation &#x1f44b;",
+                     false); // can always leave
+             case SPECTATOR -> new ParticipantAction(
+                     "/member/accept",
+-                    "Switch to Participant &#x1f44b;",
++                    "Switch to Participant &#x2328;",
+                     disabled);
+         };
+     }
+ }
+ 
+ record DisplayLink(String url, String text) {
+ }
+\ No newline at end of file
+
+```
+
+## Methods to call (Java signatures)
+- com.jitterted.mobreg.adapter.in.web.admin.EnsembleSummaryView#toView: public static com.jitterted.mobreg.adapter.in.web.admin.EnsembleSummaryView toView(com.jitterted.mobreg.domain.Ensemble)
+- com.jitterted.mobreg.adapter.in.web.member.ParticipantAction#from: public static com.jitterted.mobreg.adapter.in.web.member.ParticipantAction from(com.jitterted.mobreg.domain.MemberStatus, boolean)
+
+Reply as {"methods":[{"method":"pkg.Class#name","calls":[[arg, ...], ...]}]}
+
+## Reply
+{
+ "methods": [
+  {
+   "method": "com.jitterted.mobreg.adapter.in.web.member.ParticipantAction#from",
+   "calls": [
+    [
+     "SPECTATOR",
+     true
+    ],
+    [
+     "SPECTATOR",
+     false
+    ]
+   ]
+  }
+ ]
+}

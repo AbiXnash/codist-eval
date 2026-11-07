@@ -1,0 +1,68 @@
+{
+ "org.apache.commons.cli.help.AbstractHelpFormatter#printHelp": [
+  [
+   "command",
+   "description",
+   [
+    {
+     "opt": "a",
+     "longOpt": "alpha",
+     "description": "Option A"
+    },
+    {
+     "opt": "b",
+     "longOpt": "beta",
+     "description": "Option B"
+    }
+   ],
+   "footer",
+   true
+  ],
+  [
+   "command",
+   "description",
+   {
+    "opt": "a",
+    "longOpt": "alpha",
+    "description": "Option A"
+   },
+   "footer",
+   true
+  ]
+ ],
+ "org.apache.commons.cli.help.AbstractHelpFormatter#printOptions": [
+  [
+   {
+    "opt": "a",
+    "longOpt": "alpha",
+    "description": "Option A"
+   },
+   {
+    "opt": "b",
+    "longOpt": "beta",
+    "description": "Option B"
+   }
+  ],
+  [
+   {
+    "opt": "c",
+    "longOpt": "charlie",
+    "description": "Option C"
+   }
+  ]
+ ],
+ "org.apache.commons.cli.help.HelpFormatter#getTableDefinition": [
+  [
+   {
+    "opt": "a",
+    "longOpt": "alpha",
+    "description": "Option A"
+   },
+   {
+    "opt": "b",
+    "longOpt": "beta",
+    "description": "Option B"
+   }
+  ]
+ ]
+}

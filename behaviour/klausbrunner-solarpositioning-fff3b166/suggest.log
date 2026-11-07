@@ -1,0 +1,122 @@
+## Commit
+chore: minor refactoring
+
+## Diff
+```diff
+diff --git a/src/main/java/net/e175/klaus/solarpositioning/SPA.java b/src/main/java/net/e175/klaus/solarpositioning/SPA.java
+index 4d0c993..f403d8e 100644
+--- a/src/main/java/net/e175/klaus/solarpositioning/SPA.java
++++ b/src/main/java/net/e175/klaus/solarpositioning/SPA.java
+@@ -514,40 +514,44 @@ public final class SPA {
+       final double p,
+       final double t,
+       final double phi,
+       final double deltaPrime,
+       final double hPrime) {
+     // calculate topocentric zenith angle
+     final double eZero =
+         asin(sin(phi) * sin(deltaPrime) + cos(phi) * cos(deltaPrime) * cos(hPrime));
++    final double topocentricZenithAngle = calculateTopocentricZenithAngle(p, t, eZero);
++
++    // Calculate the topocentric azimuth angle
++    final double gamma = atan2(sin(hPrime), cos(hPrime) * sin(phi) - tan(deltaPrime) * cos(phi));
++    final double gammaDegrees = limitDegreesTo360(toDegrees(gamma));
++    final double topocentricAzimuthAngle = limitDegreesTo360(gammaDegrees + 180);
++
++    return new SolarPosition(topocentricAzimuthAngle, topocentricZenithAngle);
++  }
++
++  private static double calculateTopocentricZenithAngle(double p, double t, double eZero) {
+     final double eZeroDegrees = toDegrees(eZero);
+ 
+     // refraction correction.
+     // 1) extremely silly values for p and t are silently ignored, disabling correction
+     // 2) only apply refraction correction when the sun is visible
+     double deltaEdegrees = 0;
+     if (p > 0.0 && p < 3000.0 && t > -273 && t < 273 && eZeroDegrees > SUNRISE_SUNSET) {
+       deltaEdegrees =
+           (p / 1010.0)
+               * (283.0 / (273.0 + t))
+               * 1.02
+               / (60.0 * tan(toRadians(eZeroDegrees + 10.3 / (eZeroDegrees + 5.11))));
+     }
+ 
+     final double correctedEZeroDegrees = eZeroDegrees + deltaEdegrees;
+ 
+-    final double topocentricZenithAngle = 90 - correctedEZeroDegrees;
+-
+-    // Calculate the topocentric azimuth angle
+-    final double gamma = atan2(sin(hPrime), cos(hPrime) * sin(phi) - tan(deltaPrime) * cos(phi));
+-    final double gammaDegrees = limitDegreesTo360(toDegrees(gamma));
+-    final double topocentricAzimuthAngle = limitDegreesTo360(gammaDegrees + 180);
+-
+-    return new SolarPosition(topocentricAzimuthAngle, topocentricZenithAngle);
++    return 90 - correctedEZeroDegrees;
+   }
+ 
+   private static double calculateGeocentricSunDeclination(
+       final double betaRad, final double epsilonRad, final double lambdaRad) {
+     return asin(sin(betaRad) * cos(epsilonRad) + cos(betaRad) * sin(epsilonRad) * sin(lambdaRad));
+   }
+ 
+   private static double calculateGeocentricSunRightAscension(
+
+```
+
+## Methods to call (Java signatures)
+- net.e175.klaus.solarpositioning.SPA#calculateSolarPosition: public static net.e175.klaus.solarpositioning.SolarPosition calculateSolarPosition(java.time.ZonedDateTime, double, double, double, double, double, double)
+- net.e175.klaus.solarpositioning.SPA#calculateSolarPosition: public static net.e175.klaus.solarpositioning.SolarPosition calculateSolarPosition(java.time.ZonedDateTime, double, double, double, double)
+- net.e175.klaus.solarpositioning.SPA#calculateTopocentricSolarPosition: private static net.e175.klaus.solarpositioning.SolarPosition calculateTopocentricSolarPosition(double, double, double, double, double)
+- net.e175.klaus.solarpositioning.SPA#calculateTopocentricZenithAngle: private static double calculateTopocentricZenithAngle(double, double, double)
+
+Reply as {"methods":[{"method":"pkg.Class#name","calls":[[arg, ...], ...]}]}
+
+## Reply
+{
+ "methods": [
+  {
+   "method": "net.e175.klaus.solarpositioning.SPA#calculateSolarPosition",
+   "calls": [
+    [
+     "2023-10-01T12:00:00Z",
+     1000.0,
+     20.0,
+     45.0,
+     30.0,
+     60.0,
+     90.0
+    ],
+    [
+     "2023-10-01T12:00:00Z",
+     1000.0,
+     20.0,
+     45.0,
+     30.0,
+     60.0
+    ]
+   ]
+  },
+  {
+   "method": "net.e175.klaus.solarpositioning.SPA#calculateTopocentricSolarPosition",
+   "calls": [
+    [
+     1000.0,
+     20.0,
+     45.0,
+     30.0,
+     60.0
+    ]
+   ]
+  },
+  {
+   "method": "net.e175.klaus.solarpositioning.SPA#calculateTopocentricZenithAngle",
+   "calls": [
+    [
+     1000.0,
+     20.0,
+     45.0
+    ]
+   ]
+  }
+ ]
+}

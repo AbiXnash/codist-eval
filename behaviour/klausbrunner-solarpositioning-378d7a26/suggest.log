@@ -1,0 +1,255 @@
+## Commit
+refactor: unify refraction parameter checks
+
+## Diff
+```diff
+diff --git a/src/main/java/net/e175/klaus/solarpositioning/Grena3.java b/src/main/java/net/e175/klaus/solarpositioning/Grena3.java
+index 6217756..28532a0 100644
+--- a/src/main/java/net/e175/klaus/solarpositioning/Grena3.java
++++ b/src/main/java/net/e175/klaus/solarpositioning/Grena3.java
+@@ -122,23 +122,17 @@ public final class Grena3 {
+     final double cH = cos(H);
+ 
+     final double sEpsilon0 = sPhi * sDelta + cPhi * cDelta * cH;
+     final double eP = asin(sEpsilon0) - 4.26e-5 * sqrt(1.0 - sEpsilon0 * sEpsilon0);
+     final double gamma = atan2(sH, cH * sPhi - sDelta * cPhi / cDelta);
+ 
+     // refraction correction (disabled for silly parameter values)
+     final boolean doCorrect =
+-        Double.isFinite(pressure)
+-            && Double.isFinite(temperature)
+-            && pressure > 0.0
+-            && pressure < 3000.0
+-            && temperature > -273
+-            && temperature < 273
+-            && eP > 0.0;
++        MathUtil.checkRefractionParamsUsable(pressure, temperature) && eP > 0.0;
+ 
+     final double deltaRe =
+         doCorrect
+             ? (0.08422 * (pressure / 1000))
+                 / ((273.0 + temperature) * tan(eP + 0.003138 / (eP + 0.08919)))
+             : 0.0;
+ 
+     final double z = PI / 2 - eP - deltaRe;
+diff --git a/src/main/java/net/e175/klaus/solarpositioning/MathUtil.java b/src/main/java/net/e175/klaus/solarpositioning/MathUtil.java
+index ddd3662..88babbf 100644
+--- a/src/main/java/net/e175/klaus/solarpositioning/MathUtil.java
++++ b/src/main/java/net/e175/klaus/solarpositioning/MathUtil.java
+@@ -24,9 +24,18 @@ final class MathUtil {
+     return sum;
+   }
+ 
+   static void checkLatLonRange(double latitude, double longitude) {
+     if (latitude < -90.0 || latitude > 90.0 || longitude < -180.0 || longitude > 180.0) {
+       throw new IllegalArgumentException("latitude/longitude out of range");
+     }
+   }
++
++  static boolean checkRefractionParamsUsable(double pressure, double temperature) {
++    return Double.isFinite(pressure)
++        && Double.isFinite(temperature)
++        && pressure > 0.0
++        && pressure < 3000.0
++        && temperature > -273
++        && temperature < 273;
++  }
+ }
+diff --git a/src/main/java/net/e175/klaus/solarpositioning/SPA.java b/src/main/java/net/e175/klaus/solarpositioning/SPA.java
+index 2f7891f..87a98c1 100644
+--- a/src/main/java/net/e175/klaus/solarpositioning/SPA.java
++++ b/src/main/java/net/e175/klaus/solarpositioning/SPA.java
+@@ -531,24 +531,17 @@ public final class SPA {
+   }
+ 
+   private static double calculateTopocentricZenithAngle(double p, double t, double eZero) {
+     final double eZeroDegrees = toDegrees(eZero);
+ 
+     // refraction correction.
+     // 1) extremely silly values for p and t are silently ignored, disabling correction
+     // 2) only apply refraction correction when the sun is visible
+-    boolean doCorrect =
+-        Double.isFinite(p)
+-            && Double.isFinite(t)
+-            && p > 0.0
+-            && p < 3000.0
+-            && t > -273
+-            && t < 273
+-            && eZeroDegrees > SUNRISE_SUNSET;
++    boolean doCorrect = MathUtil.checkRefractionParamsUsable(p, t) && eZeroDegrees > SUNRISE_SUNSET;
+ 
+     if (doCorrect) {
+       return 90
+           - eZeroDegrees
+           - (p / 1010.0)
+               * (283.0 / (273.0 + t))
+               * 1.02
+               / (60.0 * tan(toRadians(eZeroDegrees + 10.3 / (eZeroDegrees + 5.11))));
+
+```
+
+## Methods to call (Java signatures)
+- net.e175.klaus.solarpositioning.Grena3#calculateSolarPosition: public static net.e175.klaus.solarpositioning.SolarPosition calculateSolarPosition(java.time.ZonedDateTime, double, double, double)
+- net.e175.klaus.solarpositioning.Grena3#calculateSolarPosition: public static net.e175.klaus.solarpositioning.SolarPosition calculateSolarPosition(java.time.ZonedDateTime, double, double, double, double, double)
+- net.e175.klaus.solarpositioning.MathUtil#checkRefractionParamsUsable: static boolean checkRefractionParamsUsable(double, double)
+- net.e175.klaus.solarpositioning.SPA#calculateTopocentricSolarPosition: private static net.e175.klaus.solarpositioning.SolarPosition calculateTopocentricSolarPosition(double, double, double, double, double)
+- net.e175.klaus.solarpositioning.SPA#calculateTopocentricZenithAngle: private static double calculateTopocentricZenithAngle(double, double, double)
+
+Reply as {"methods":[{"method":"pkg.Class#name","calls":[[arg, ...], ...]}]}
+
+## Reply
+{
+ "methods": [
+  {
+   "method": "net.e175.klaus.solarpositioning.Grena3#calculateSolarPosition",
+   "calls": [
+    [
+     "2023-10-01T12:00:00Z",
+     40.7128,
+     -74.006,
+     1013.25,
+     15.0,
+     10.0
+    ],
+    [
+     "2023-10-01T12:00:00Z",
+     40.7128,
+     -74.006,
+     1013.25,
+     -300.0,
+     10.0
+    ],
+    [
+     "2023-10-01T12:00:00Z",
+     40.7128,
+     -74.006,
+     1013.25,
+     15.0,
+     -300.0
+    ],
+    [
+     "2023-10-01T12:00:00Z",
+     40.7128,
+     -74.006,
+     1013.25,
+     3100.0,
+     10.0
+    ],
+    [
+     "2023-10-01T12:00:00Z",
+     40.7128,
+     -74.006,
+     1013.25,
+     15.0,
+     3100.0
+    ],
+    [
+     "2023-10-01T12:00:00Z",
+     40.7128,
+     -74.006,
+     1013.25,
+     -274.0,
+     10.0
+    ],
+    [
+     "2023-10-01T12:00:00Z",
+     40.7128,
+     -74.006,
+     1013.25,
+     15.0,
+     274.0
+    ],
+    [
+     "2023-10-01T12:00:00Z",
+     40.7128,
+     -74.006,
+     1013.25,
+     -273.0,
+     10.0
+    ]
+   ]
+  },
+  {
+   "method": "net.e175.klaus.solarpositioning.MathUtil#checkRefractionParamsUsable",
+   "calls": [
+    [
+     1013.25,
+     15.0
+    ],
+    [
+     -300.0,
+     15.0
+    ],
+    [
+     1013.25,
+     -300.0
+    ],
+    [
+     3100.0,
+     15.0
+    ],
+    [
+     1013.25,
+     3100.0
+    ],
+    [
+     -274.0,
+     15.0
+    ],
+    [
+     1013.25,
+     274.0
+    ],
+    [
+     -273.0,
+     15.0
+    ]
+   ]
+  },
+  {
+   "method": "net.e175.klaus.solarpositioning.SPA#calculateTopocentricZenithAngle",
+   "calls": [
+    [
+     1013.25,
+     15.0,
+     0.5236
+    ],
+    [
+     -300.0,
+     15.0,
+     0.5236
+    ],
+    [
+     1013.25,
+     -300.0,
+     0.5236
+    ],
+    [
+     3100.0,
+     15.0,
+     0.5236
+    ],
+    [
+     1013.25,
+     3100.0,
+     0.5236
+    ],
+    [
+     -274.0,
+     15.0,
+     0.5236
+    ],
+    [
+     1013.25,
+     274.0,
+     0.5236
+    ],
+    [
+     -273.0,
+     15.0,
+     0.5236
+    ]
+   ]
+  }
+ ]
+}

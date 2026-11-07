@@ -1,0 +1,56 @@
+{
+ "crawlercommons.robots.SimpleRobotRulesParser#parseContent": [
+  [
+   "http://example.com",
+   "Disallow: /path/with/unicode/😊",
+   "UTF-8",
+   null
+  ],
+  [
+   "http://example.com",
+   "Disallow: /path/with/unicode/😊",
+   "US-ASCII",
+   null
+  ],
+  [
+   "http://example.com",
+   "Disallow: /path/with/unicode/😊",
+   "UTF-8",
+   [
+    "user-agent"
+   ]
+  ],
+  [
+   "http://example.com",
+   "Disallow: /path/with/unicode/😊",
+   "US-ASCII",
+   [
+    "user-agent"
+   ]
+  ],
+  [
+   "http://example.com",
+   "Disallow: /path/with/unicode/😊",
+   "UTF-8",
+   "user-agent"
+  ],
+  [
+   "http://example.com",
+   "Disallow: /path/with/unicode/😊",
+   "US-ASCII",
+   "user-agent"
+  ],
+  [
+   "http://example.com",
+   "Disallow: /path/with/unicode/😊",
+   "UTF-8",
+   null
+  ],
+  [
+   "http://example.com",
+   "Disallow: /path/with/unicode/😊",
+   "US-ASCII",
+   null
+  ]
+ ]
+}

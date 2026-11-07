@@ -1,0 +1,5 @@
+org.apache.commons.jxpath.FunctionLibrary#<field>
+org.apache.commons.jxpath.FunctionLibrary#functionCache
+org.apache.commons.jxpath.FunctionLibrary#getFunction
+org.apache.commons.jxpath.FunctionLibrary#getUsedNamespaces
+org.apache.commons.jxpath.ri.JXPathContextReferenceImpl#getFunction

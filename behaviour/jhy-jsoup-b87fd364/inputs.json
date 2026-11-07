@@ -1,0 +1,34 @@
+{
+ "org.jsoup.helper.W3CDom$W3CBuilder#head": [
+  [
+   {
+    "tagName": "invalid-tag",
+    "attributes": {
+     "xmlns": "http://example.com"
+    }
+   },
+   0
+  ]
+ ],
+ "org.jsoup.helper.W3CDom$W3CBuilder#tail": [
+  [
+   {
+    "tagName": "invalid-tag",
+    "attributes": {
+     "xmlns": "http://example.com"
+    }
+   },
+   0
+  ]
+ ],
+ "org.jsoup.parser.XmlTreeBuilder#insertElementFor": [
+  [
+   {
+    "tagName": "invalid-tag",
+    "attributes": {
+     "xmlns": "http://example.com"
+    }
+   }
+  ]
+ ]
+}

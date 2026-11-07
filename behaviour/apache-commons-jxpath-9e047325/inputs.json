@@ -1,0 +1,17 @@
+{
+ "org.apache.commons.jxpath.ri.model.NodePointer#handle": [
+  [
+   {
+    "java.lang.Throwable": "java.lang.RuntimeException"
+   }
+  ],
+  [
+   {
+    "java.lang.Throwable": "java.lang.RuntimeException"
+   },
+   {
+    "org.apache.commons.jxpath.ri.model.NodePointer": null
+   }
+  ]
+ ]
+}

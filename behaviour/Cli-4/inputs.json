@@ -1,0 +1,126 @@
+{
+ "org.apache.commons.cli.Parser#checkRequiredOptions": [
+  []
+ ],
+ "org.apache.commons.cli.Parser#parse": [
+  [
+   {
+    "options": {
+     "requiredOptions": [
+      "a",
+      "b"
+     ]
+    }
+   },
+   [
+    "-a"
+   ]
+  ],
+  [
+   {
+    "options": {
+     "requiredOptions": [
+      "a"
+     ]
+    }
+   },
+   []
+  ],
+  [
+   {
+    "options": {
+     "requiredOptions": [
+      "a",
+      "b"
+     ]
+    }
+   },
+   [
+    "-a",
+    "-b"
+   ]
+  ],
+  [
+   {
+    "options": {
+     "requiredOptions": [
+      "a",
+      "b"
+     ]
+    }
+   },
+   [
+    "-b"
+   ]
+  ],
+  [
+   {
+    "options": {
+     "requiredOptions": [
+      "a"
+     ]
+    }
+   },
+   [
+    "-a"
+   ],
+   {
+    "properties": {
+     "key": "value"
+    }
+   }
+  ],
+  [
+   {
+    "options": {
+     "requiredOptions": [
+      "a"
+     ]
+    }
+   },
+   [],
+   {
+    "properties": {
+     "key": "value"
+    }
+   }
+  ],
+  [
+   {
+    "options": {
+     "requiredOptions": [
+      "a",
+      "b"
+     ]
+    }
+   },
+   [
+    "-a",
+    "-b"
+   ],
+   {
+    "properties": {
+     "key": "value"
+    }
+   }
+  ],
+  [
+   {
+    "options": {
+     "requiredOptions": [
+      "a",
+      "b"
+     ]
+    }
+   },
+   [
+    "-b"
+   ],
+   {
+    "properties": {
+     "key": "value"
+    }
+   }
+  ]
+ ]
+}

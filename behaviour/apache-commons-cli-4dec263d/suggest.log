@@ -1,0 +1,124 @@
+## Commit
+Refactor stream processing
+
+## Diff
+```diff
+diff --git a/src/main/java/org/apache/commons/cli/Options.java b/src/main/java/org/apache/commons/cli/Options.java
+index 9d76967..9088a38 100644
+--- a/src/main/java/org/apache/commons/cli/Options.java
++++ b/src/main/java/org/apache/commons/cli/Options.java
+@@ -20,16 +20,17 @@ package org.apache.commons.cli;
+ import java.io.Serializable;
+ import java.util.ArrayList;
+ import java.util.Collection;
+ import java.util.Collections;
+ import java.util.HashSet;
+ import java.util.LinkedHashMap;
+ import java.util.List;
+ import java.util.Map;
++import java.util.stream.Collectors;
+ 
+ /**
+  * Main entry-point into the library.
+  * <p>
+  * Options represents a collection of {@link Option} objects, which describe the possible options for a command-line.
+  * </p>
+  * <p>
+  * It may flexibly parse long and short options, with or without values. Additionally, it may parse only a portion of a
+@@ -222,22 +223,17 @@ public class Options implements Serializable {
+         // a null or empty name is not a partial name; empty would match every long option
+         if (Util.isEmpty(clean)) {
+             return matchingOpts;
+         }
+         // for a perfect match return the single option only
+         if (longOpts.containsKey(clean)) {
+             return Collections.singletonList(clean);
+         }
+-        longOpts.keySet().forEach(longOpt -> {
+-            if (longOpt.startsWith(clean)) {
+-                matchingOpts.add(longOpt);
+-            }
+-        });
+-        return matchingOpts;
++        return longOpts.keySet().stream().filter(s -> s.startsWith(clean)).collect(Collectors.toList());
+     }
+ 
+     /**
+      * Gets the {@link Option} matching the long or short name specified.
+      * <p>
+      * The leading hyphens in the name are ignored (up to 2).
+      * </p>
+      *
+
+```
+
+## Methods to call (Java signatures)
+- org.apache.commons.cli.DefaultParser#getMatchingLongOptions: private java.util.List<java.lang.String> getMatchingLongOptions(java.lang.String)
+- org.apache.commons.cli.Options#getMatchingOptions: public java.util.List<java.lang.String> getMatchingOptions(java.lang.String)
+- org.apache.commons.cli.PosixParser#flatten: protected java.lang.String[] flatten(org.apache.commons.cli.Options, java.lang.String[], boolean) throws org.apache.commons.cli.ParseException
+
+Reply as {"methods":[{"method":"pkg.Class#name","calls":[[arg, ...], ...]}]}
+
+## Reply
+{
+ "methods": [
+  {
+   "method": "org.apache.commons.cli.Options#getMatchingOptions",
+   "calls": [
+    [
+     "a"
+    ],
+    [
+     "ab"
+    ],
+    [
+     "abc"
+    ],
+    [
+     "abcd"
+    ],
+    [
+     "abcde"
+    ],
+    [
+     "abcdef"
+    ],
+    [
+     "abcdefg"
+    ],
+    [
+     "abcdefgh"
+    ]
+   ]
+  },
+  {
+   "method": "org.apache.commons.cli.DefaultParser#getMatchingLongOptions",
+   "calls": [
+    [
+     "a"
+    ],
+    [
+     "ab"
+    ],
+    [
+     "abc"
+    ],
+    [
+     "abcd"
+    ],
+    [
+     "abcde"
+    ],
+    [
+     "abcdef"
+    ],
+    [
+     "abcdefg"
+    ],
+    [
+     "abcdefgh"
+    ]
+   ]
+  }
+ ]
+}

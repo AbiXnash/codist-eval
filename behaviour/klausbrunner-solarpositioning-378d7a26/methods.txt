@@ -1,0 +1,5 @@
+net.e175.klaus.solarpositioning.Grena3#calculateSolarPosition
+net.e175.klaus.solarpositioning.MathUtil#<field>
+net.e175.klaus.solarpositioning.MathUtil#checkRefractionParamsUsable
+net.e175.klaus.solarpositioning.SPA#calculateTopocentricSolarPosition
+net.e175.klaus.solarpositioning.SPA#calculateTopocentricZenithAngle

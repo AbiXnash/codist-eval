@@ -1,0 +1,12 @@
+{
+ "org.byteskript.skript.compiler.DebugSkriptCompiler#compile": [
+  [
+   "",
+   "mx.kenzie.foundation.Type"
+  ],
+  [
+   "some source code",
+   "mx.kenzie.foundation.Type"
+  ]
+ ]
+}

@@ -1,0 +1,7 @@
+calls=23 ran=23 differ=2 flaky=0 state-only=0 null-only=0
+  from(MemberStatus.SPECTATOR, true)
+      old: ParticipantAction{actionUrl="/member/accept", buttonText="Switch to Participant &#x1f44b;", disabled=true} | args [SPECTATOR, true] | state null
+      new: ParticipantAction{actionUrl="/member/accept", buttonText="Switch to Participant &#x2328;", disabled=true} | args [SPECTATOR, true] | state null
+  from(MemberStatus.SPECTATOR, false)
+      old: ParticipantAction{actionUrl="/member/accept", buttonText="Switch to Participant &#x1f44b;", disabled=false} | args [SPECTATOR, false] | state null
+      new: ParticipantAction{actionUrl="/member/accept", buttonText="Switch to Participant &#x2328;", disabled=false} | args [SPECTATOR, false] | state null

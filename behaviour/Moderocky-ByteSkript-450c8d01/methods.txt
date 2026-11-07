@@ -1,0 +1,8 @@
+org.byteskript.skript.compiler.BridgeCompiler#createClass
+org.byteskript.skript.compiler.BridgeCompiler#extractSimpleArguments
+org.byteskript.skript.compiler.BridgeCompiler#extractVarArguments
+org.byteskript.skript.compiler.BridgeCompiler#unbox
+org.byteskript.skript.compiler.BridgeCompiler#wideIndexOffset
+org.byteskript.skript.runtime.internal.OperatorHandler#unbox
+org.byteskript.skript.runtime.internal.OperatorHandler#unboxC
+org.byteskript.skript.runtime.internal.OperatorHandler#unboxZ

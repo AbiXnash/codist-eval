@@ -1,0 +1,36 @@
+{
+ "crawlercommons.utils.URLUtils#resolve": [
+  [
+   "http://example.com",
+   "/path/to/resource"
+  ],
+  [
+   "https://example.com/",
+   "/path/to/resource"
+  ],
+  [
+   "http://example.com/path/to",
+   "/resource"
+  ],
+  [
+   "http://example.com/path/to/",
+   "resource"
+  ],
+  [
+   "http://example.com/path/to/",
+   "/resource/"
+  ],
+  [
+   "http://example.com/path/to/",
+   "//resource"
+  ],
+  [
+   "http://example.com/path/to/",
+   "http://another.com/resource"
+  ],
+  [
+   "http://example.com/path/to/",
+   "https://another.com/resource"
+  ]
+ ]
+}

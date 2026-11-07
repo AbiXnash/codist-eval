@@ -1,0 +1,37 @@
+{
+ "net.e175.klaus.solarpositioning.SPA#calculateSolarPosition": [
+  [
+   "2023-10-01T12:00:00Z",
+   1000.0,
+   20.0,
+   45.0,
+   30.0,
+   60.0,
+   90.0
+  ],
+  [
+   "2023-10-01T12:00:00Z",
+   1000.0,
+   20.0,
+   45.0,
+   30.0,
+   60.0
+  ]
+ ],
+ "net.e175.klaus.solarpositioning.SPA#calculateTopocentricSolarPosition": [
+  [
+   1000.0,
+   20.0,
+   45.0,
+   30.0,
+   60.0
+  ]
+ ],
+ "net.e175.klaus.solarpositioning.SPA#calculateTopocentricZenithAngle": [
+  [
+   1000.0,
+   20.0,
+   45.0
+  ]
+ ]
+}

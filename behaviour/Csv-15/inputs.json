@@ -1,0 +1,28 @@
+{
+ "org.apache.commons.csv.CSVFormat#print": [
+  [
+   "中文,English,123"
+  ],
+  [
+   "English,中文,123"
+  ],
+  [
+   "123,中文,English"
+  ],
+  [
+   "中文,English,123,Special!@#"
+  ],
+  [
+   "English,中文,123,Special!@#"
+  ],
+  [
+   "123,中文,English,Special!@#"
+  ],
+  [
+   "中文,English,123,Special!@#,"
+  ],
+  [
+   "English,中文,123,Special!@#,"
+  ]
+ ]
+}

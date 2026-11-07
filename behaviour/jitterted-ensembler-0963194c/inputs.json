@@ -1,0 +1,12 @@
+{
+ "com.jitterted.mobreg.adapter.in.web.member.ParticipantAction#from": [
+  [
+   "SPECTATOR",
+   true
+  ],
+  [
+   "SPECTATOR",
+   false
+  ]
+ ]
+}

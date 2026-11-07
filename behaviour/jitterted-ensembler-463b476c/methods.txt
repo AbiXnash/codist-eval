@@ -1,0 +1,6 @@
+com.jitterted.mobreg.adapter.in.web.member.EnsembleTimerController#<field>
+com.jitterted.mobreg.adapter.in.web.member.EnsembleTimerController#pauseTimer
+com.jitterted.mobreg.adapter.in.web.member.EnsembleTimerController#resetTimer
+com.jitterted.mobreg.adapter.in.web.member.EnsembleTimerController#resumeTimer
+com.jitterted.mobreg.adapter.in.web.member.EnsembleTimerController#rotateTimer
+com.jitterted.mobreg.adapter.in.web.member.EnsembleTimerController#startTimer

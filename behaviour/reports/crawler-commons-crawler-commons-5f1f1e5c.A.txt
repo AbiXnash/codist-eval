@@ -1,0 +1,10 @@
+calls=88 ran=88 differ=3 flaky=0 state-only=0 null-only=0
+  resolve(http://example.com/, "http://example.com/a/../b?x=1#f")
+      old: http://example.com/b?x=1#f | args [http://example.com/, "http://example.com/a/../b?x=1#f"] | state null
+      new: http://example.com/a/../b?x=1#f | args [http://example.com/, "http://example.com/a/../b?x=1#f"] | state null
+  resolve(https://a.b/c?d=e, "http://example.com/a/../b?x=1#f")
+      old: http://example.com/b?x=1#f | args [https://a.b/c?d=e, "http://example.com/a/../b?x=1#f"] | state null
+      new: http://example.com/a/../b?x=1#f | args [https://a.b/c?d=e, "http://example.com/a/../b?x=1#f"] | state null
+  resolve(http://example.com/robots.txt, "http://example.com/a/../b?x=1#f")
+      old: http://example.com/b?x=1#f | args [http://example.com/robots.txt, "http://example.com/a/../b?x=1#f"] | state null
+      new: http://example.com/a/../b?x=1#f | args [http://example.com/robots.txt, "http://example.com/a/../b?x=1#f"] | state null

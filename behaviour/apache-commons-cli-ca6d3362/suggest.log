@@ -1,0 +1,171 @@
+## Commit
+Internal refactoring
+
+## Diff
+```diff
+diff --git a/src/main/java/org/apache/commons/cli/help/HelpFormatter.java b/src/main/java/org/apache/commons/cli/help/HelpFormatter.java
+index f072370..c9d5080 100644
+--- a/src/main/java/org/apache/commons/cli/help/HelpFormatter.java
++++ b/src/main/java/org/apache/commons/cli/help/HelpFormatter.java
+@@ -13,17 +13,16 @@
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  */
+ 
+ package org.apache.commons.cli.help;
+ 
+ import java.util.ArrayList;
+-import java.util.Arrays;
+ import java.util.List;
+ 
+ import org.apache.commons.cli.Option;
+ 
+ /**
+  * A default formatter implementation for standard usage.
+  * <p>
+  * Example:
+@@ -57,16 +56,31 @@ import org.apache.commons.cli.Option;
+  * Please report issues at https://example.com/issues
+  * }
+  * </pre>
+  *
+  * @since 1.10.0
+  */
+ public class HelpFormatter extends AbstractHelpFormatter {
+ 
++    /**
++     * The default "Since" column label.
++     */
++    private static final String LABEL_SINCE = "Since";
++
++    /**
++     * The default "Description" column label.
++     */
++    private static final String LABEL_DESCRIPTION = "Description";
++
++    /**
++     * The default "Options" column label.
++     */
++    private static final String LABEL_OPTIONS = "Options";
++
+     /**
+      * A builder for the HelpFormatter. Intended to make more complex uses of the HelpFormatter class easier. Default values are:
+      * <ul>
+      * <li>showSince = true</li>
+      * <li>helpAppendable = a {@link TextHelpAppendable} writing to {@code System.out}</li>
+      * <li>optionFormatter.Builder = the default {@link OptionFormatter.Builder}</li>
+      * </ul>
+      */
+@@ -179,11 +193,17 @@ public class HelpFormatter extends AbstractHelpFormatter {
+             if (showSince) {
+                 row.add(formatter.getSince());
+             }
+             // add the option description
+             row.add(formatter.getDescription());
+             rows.add(row);
+         });
+         // return the TableDefinition with the proper column headers.
+-        return TableDefinition.from("", styles, showSince ? Arrays.asList("Options", "Since", "Description") : Arrays.asList("Options", "Description"), rows);
++        List<String> headers = new ArrayList<>(3);
++        headers.add(LABEL_OPTIONS);
++        if (showSince) {
++            headers.add(LABEL_SINCE);
++        }
++        headers.add(LABEL_DESCRIPTION);
++        return TableDefinition.from("", styles, headers, rows);
+     }
+ }
+
+```
+
+## Methods to call (Java signatures)
+- org.apache.commons.cli.help.AbstractHelpFormatter#printHelp: public void printHelp(java.lang.String, java.lang.String, java.lang.Iterable<org.apache.commons.cli.Option>, java.lang.String, boolean) throws java.io.IOException
+- org.apache.commons.cli.help.AbstractHelpFormatter#printHelp: public void printHelp(java.lang.String, java.lang.String, org.apache.commons.cli.Options, java.lang.String, boolean) throws java.io.IOException
+- org.apache.commons.cli.help.AbstractHelpFormatter#printOptions: public final void printOptions(java.lang.Iterable<org.apache.commons.cli.Option>) throws java.io.IOException
+- org.apache.commons.cli.help.AbstractHelpFormatter#printOptions: public final void printOptions(org.apache.commons.cli.Options) throws java.io.IOException
+- org.apache.commons.cli.help.AbstractHelpFormatter#printOptions: public final void printOptions(org.apache.commons.cli.help.TableDefinition) throws java.io.IOException
+- org.apache.commons.cli.help.HelpFormatter#getTableDefinition: public org.apache.commons.cli.help.TableDefinition getTableDefinition(java.lang.Iterable<org.apache.commons.cli.Option>)
+
+Reply as {"methods":[{"method":"pkg.Class#name","calls":[[arg, ...], ...]}]}
+
+## Reply
+{
+ "methods": [
+  {
+   "method": "org.apache.commons.cli.help.AbstractHelpFormatter#printHelp",
+   "calls": [
+    [
+     "command",
+     "description",
+     [
+      {
+       "opt": "a",
+       "longOpt": "alpha",
+       "description": "Option A"
+      },
+      {
+       "opt": "b",
+       "longOpt": "beta",
+       "description": "Option B"
+      }
+     ],
+     "footer",
+     true
+    ],
+    [
+     "command",
+     "description",
+     {
+      "opt": "a",
+      "longOpt": "alpha",
+      "description": "Option A"
+     },
+     "footer",
+     true
+    ]
+   ]
+  },
+  {
+   "method": "org.apache.commons.cli.help.AbstractHelpFormatter#printOptions",
+   "calls": [
+    [
+     {
+      "opt": "a",
+      "longOpt": "alpha",
+      "description": "Option A"
+     },
+     {
+      "opt": "b",
+      "longOpt": "beta",
+      "description": "Option B"
+     }
+    ],
+    [
+     {
+      "opt": "c",
+      "longOpt": "charlie",
+      "description": "Option C"
+     }
+    ]
+   ]
+  },
+  {
+   "method": "org.apache.commons.cli.help.HelpFormatter#getTableDefinition",
+   "calls": [
+    [
+     {
+      "opt": "a",
+      "longOpt": "alpha",
+      "description": "Option A"
+     },
+     {
+      "opt": "b",
+      "longOpt": "beta",
+      "description": "Option B"
+     }
+    ]
+   ]
+  }
+ ]
+}

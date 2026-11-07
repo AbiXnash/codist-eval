@@ -1,0 +1,26 @@
+{
+ "com.adobe.epubcheck.tool.EpubChecker#processArguments": [
+  [
+   "--help"
+  ],
+  [
+   "--version"
+  ]
+ ],
+ "com.adobe.epubcheck.tool.EpubChecker#processEpubFile": [
+  [
+   "--help"
+  ],
+  [
+   "--version"
+  ]
+ ],
+ "com.adobe.epubcheck.tool.EpubChecker#run": [
+  [
+   "--help"
+  ],
+  [
+   "--version"
+  ]
+ ]
+}

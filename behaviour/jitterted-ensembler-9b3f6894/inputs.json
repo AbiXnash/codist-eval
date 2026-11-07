@@ -1,0 +1,210 @@
+{
+ "com.jitterted.mobreg.adapter.TimerToHtmlTransformer#htmlFor": [
+  [
+   {
+    "ensembleId": {
+     "id": "1"
+    },
+    "ensembleName": "Test Ensemble",
+    "participants": [
+     {
+      "firstName": "Alice"
+     },
+     {
+      "firstName": "Bob"
+     }
+    ],
+    "rotation": {
+     "currentMember": {
+      "firstName": "Alice"
+     },
+     "nextMembers": [
+      {
+       "firstName": "Bob"
+      }
+     ]
+    },
+    "turnTimer": {
+     "state": "FINISHED",
+     "startTime": "2023-01-01T00:00:00Z",
+     "duration": 240
+    },
+    "turnDuration": 240
+   }
+  ]
+ ],
+ "com.jitterted.mobreg.adapter.TimerToHtmlTransformer#htmlForFinished": [
+  [
+   {
+    "ensembleId": {
+     "id": "1"
+    },
+    "ensembleName": "Test Ensemble",
+    "participants": [
+     {
+      "firstName": "Alice"
+     },
+     {
+      "firstName": "Bob"
+     }
+    ],
+    "rotation": {
+     "currentMember": {
+      "firstName": "Alice"
+     },
+     "nextMembers": [
+      {
+       "firstName": "Bob"
+      }
+     ]
+    },
+    "turnTimer": {
+     "state": "FINISHED",
+     "startTime": "2023-01-01T00:00:00Z",
+     "duration": 240
+    },
+    "turnDuration": 240
+   }
+  ]
+ ],
+ "com.jitterted.mobreg.adapter.TimerToHtmlTransformer#htmlForPaused": [
+  [
+   {
+    "ensembleId": {
+     "id": "1"
+    },
+    "ensembleName": "Test Ensemble",
+    "participants": [
+     {
+      "firstName": "Alice"
+     },
+     {
+      "firstName": "Bob"
+     }
+    ],
+    "rotation": {
+     "currentMember": {
+      "firstName": "Alice"
+     },
+     "nextMembers": [
+      {
+       "firstName": "Bob"
+      }
+     ]
+    },
+    "turnTimer": {
+     "state": "PAUSED",
+     "startTime": "2023-01-01T00:00:00Z",
+     "duration": 240
+    },
+    "turnDuration": 240
+   }
+  ]
+ ],
+ "com.jitterted.mobreg.adapter.TimerToHtmlTransformer#htmlForRunning": [
+  [
+   {
+    "ensembleId": {
+     "id": "1"
+    },
+    "ensembleName": "Test Ensemble",
+    "participants": [
+     {
+      "firstName": "Alice"
+     },
+     {
+      "firstName": "Bob"
+     }
+    ],
+    "rotation": {
+     "currentMember": {
+      "firstName": "Alice"
+     },
+     "nextMembers": [
+      {
+       "firstName": "Bob"
+      }
+     ]
+    },
+    "turnTimer": {
+     "state": "RUNNING",
+     "startTime": "2023-01-01T00:00:00Z",
+     "duration": 240
+    },
+    "turnDuration": 240
+   }
+  ]
+ ],
+ "com.jitterted.mobreg.adapter.TimerToHtmlTransformer#htmlForTimerControlButtonContainer": [
+  [
+   {
+    "ensembleId": {
+     "id": "1"
+    },
+    "ensembleName": "Test Ensemble",
+    "participants": [
+     {
+      "firstName": "Alice"
+     },
+     {
+      "firstName": "Bob"
+     }
+    ],
+    "rotation": {
+     "currentMember": {
+      "firstName": "Alice"
+     },
+     "nextMembers": [
+      {
+       "firstName": "Bob"
+      }
+     ]
+    },
+    "turnTimer": {
+     "state": "RUNNING",
+     "startTime": "2023-01-01T00:00:00Z",
+     "duration": 240
+    },
+    "turnDuration": 240
+   },
+   {
+    "buttonEndpointUrl": "/member/pause-timer",
+    "buttonLabel": "Pause Timer"
+   }
+  ]
+ ],
+ "com.jitterted.mobreg.adapter.TimerToHtmlTransformer#htmlForWaitingToStart": [
+  [
+   {
+    "ensembleId": {
+     "id": "1"
+    },
+    "ensembleName": "Test Ensemble",
+    "participants": [
+     {
+      "firstName": "Alice"
+     },
+     {
+      "firstName": "Bob"
+     }
+    ],
+    "rotation": {
+     "currentMember": {
+      "firstName": "Alice"
+     },
+     "nextMembers": [
+      {
+       "firstName": "Bob"
+      }
+     ]
+    },
+    "turnTimer": {
+     "state": "WAITING_TO_START",
+     "startTime": "2023-01-01T00:00:00Z",
+     "duration": 240
+    },
+    "turnDuration": 240
+   }
+  ]
+ ]
+}

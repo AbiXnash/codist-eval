@@ -1,0 +1,103 @@
+## Commit
+Clean up StringBuilder use
+
+## Diff
+```diff
+diff --git a/src/main/java/org/jsoup/helper/UrlBuilder.java b/src/main/java/org/jsoup/helper/UrlBuilder.java
+index b0e9d13a..67d71548 100644
+--- a/src/main/java/org/jsoup/helper/UrlBuilder.java
++++ b/src/main/java/org/jsoup/helper/UrlBuilder.java
+@@ -40,17 +40,19 @@ final class UrlBuilder {
+                 u.getPort(),
+                 null, null, null // path, query and fragment appended later so as not to encode
+             );
+ 
+             StringBuilder normUrl = StringUtil.borrowBuilder().append(uri.toASCIIString());
+             appendToAscii(u.getPath(), false, normUrl);
+             if (q != null) {
+                 normUrl.append('?');
+-                appendToAscii(StringUtil.releaseBuilder(q), true, normUrl);
++                String query = StringUtil.releaseBuilder(q);
++                q = null; // don't retain the released builder
++                appendToAscii(query, true, normUrl);
+             }
+             if (u.getRef() != null) {
+                 normUrl.append('#');
+                 appendToAscii(u.getRef(), false, normUrl);
+             }
+             u = new URL(StringUtil.releaseBuilder(normUrl));
+             return u;
+         } catch (MalformedURLException | URISyntaxException | UnsupportedEncodingException e) {
+diff --git a/src/main/java/org/jsoup/parser/TokenData.java b/src/main/java/org/jsoup/parser/TokenData.java
+index df144409..19058442 100644
+--- a/src/main/java/org/jsoup/parser/TokenData.java
++++ b/src/main/java/org/jsoup/parser/TokenData.java
+@@ -69,18 +69,17 @@ class TokenData {
+             builder = null;
+         }
+         value = null;
+     }
+ 
+     String value() {
+         if (builder != null) {
+             // in rare case we get hit twice, don't toString the builder twice
+-            value = builder.toString();
+-            StringUtil.releaseBuilder(builder);
++            value = StringUtil.releaseBuilder(builder);
+             builder = null;
+             return value;
+         }
+         return value != null ? value : "";
+     }
+ 
+     @Override
+     public String toString() {
+
+```
+
+## Methods to call (Java signatures)
+- org.jsoup.Connection$Base#url: public abstract java.net.URL url()
+- org.jsoup.Connection$Base#url: public abstract T url(java.net.URL)
+- org.jsoup.helper.HttpConnection$Response#serialiseRequestUrl: private static void serialiseRequestUrl(org.jsoup.Connection$Request) throws java.io.IOException
+- org.jsoup.helper.UrlBuilder#build: java.net.URL build()
+- org.jsoup.nodes.Comment#getData: public java.lang.String getData()
+- org.jsoup.parser.Tag#name: public java.lang.String name()
+- org.jsoup.parser.Tag#name: public org.jsoup.parser.Tag name(java.lang.String)
+- org.jsoup.parser.Token$Character#getData: java.lang.String getData()
+- org.jsoup.parser.Token$Character#normalizeNulls: public void normalizeNulls(boolean)
+- org.jsoup.parser.Token$Doctype#getInternalSubset: java.lang.String getInternalSubset()
+- org.jsoup.parser.Token$Doctype#getName: java.lang.String getName()
+- org.jsoup.parser.Token$Doctype#getPublicIdentifier: java.lang.String getPublicIdentifier()
+- org.jsoup.parser.Token$Doctype#getSystemIdentifier: public java.lang.String getSystemIdentifier()
+- org.jsoup.parser.Token$Tag#appendTagName: final void appendTagName(java.lang.String)
+- org.jsoup.parser.Token$Tag#appendTagName: final void appendTagName(char)
+- org.jsoup.parser.Token$Tag#newAttribute: final void newAttribute()
+- org.jsoup.parser.Token$Tag#toStringName: final java.lang.String toStringName()
+- org.jsoup.parser.TokenData#value: java.lang.String value()
+
+Reply as {"methods":[{"method":"pkg.Class#name","calls":[[arg, ...], ...]}]}
+
+## Reply
+{
+ "methods": [
+  {
+   "method": "org.jsoup.helper.UrlBuilder#build",
+   "calls": [
+    [
+     "http://example.com/path?query=123#fragment"
+    ]
+   ]
+  },
+  {
+   "method": "org.jsoup.parser.TokenData#value",
+   "calls": [
+    [
+     "initialValue"
+    ],
+    [
+     "anotherValue"
+    ]
+   ]
+  }
+ ]
+}

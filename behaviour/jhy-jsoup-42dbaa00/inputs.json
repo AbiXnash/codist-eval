@@ -1,0 +1,68 @@
+{
+ "org.jsoup.nodes.Entities#escape": [
+  [
+   "<script>alert('xss')</script>"
+  ],
+  [
+   "&lt;script&gt;alert('xss')&lt;/script&gt;"
+  ],
+  [
+   "<div>hello & world</div>"
+  ],
+  [
+   "<div>hello &amp; world</div>"
+  ]
+ ],
+ "org.jsoup.nodes.Entities#escapeString": [
+  [
+   "<script>alert('xss')</script>",
+   "base",
+   "UTF-8"
+  ],
+  [
+   "&lt;script&gt;alert('xss')&lt;/script&gt;",
+   "base",
+   "UTF-8"
+  ],
+  [
+   "<div>hello & world</div>",
+   "base",
+   "UTF-8"
+  ],
+  [
+   "<div>hello &amp; world</div>",
+   "base",
+   "UTF-8"
+  ]
+ ],
+ "org.jsoup.nodes.Entities#doEscape": [
+  [
+   "<script>alert('xss')</script>",
+   "QuietAppendable",
+   "base",
+   "UTF-8",
+   0
+  ],
+  [
+   "&lt;script&gt;alert('xss')&lt;/script&gt;",
+   "QuietAppendable",
+   "base",
+   "UTF-8",
+   0
+  ],
+  [
+   "<div>hello & world</div>",
+   "QuietAppendable",
+   "base",
+   "UTF-8",
+   0
+  ],
+  [
+   "<div>hello &amp; world</div>",
+   "QuietAppendable",
+   "base",
+   "UTF-8",
+   0
+  ]
+ ]
+}

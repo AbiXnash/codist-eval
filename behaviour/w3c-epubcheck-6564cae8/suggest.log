@@ -1,0 +1,310 @@
+## Commit
+refactor: remove internal method from the Report APi
+
+## Diff
+```diff
+diff --git a/src/main/java/com/adobe/epubcheck/api/MasterReport.java b/src/main/java/com/adobe/epubcheck/api/MasterReport.java
+index 69e85dab..c271c076 100644
+--- a/src/main/java/com/adobe/epubcheck/api/MasterReport.java
++++ b/src/main/java/com/adobe/epubcheck/api/MasterReport.java
+@@ -1,27 +1,26 @@
+ package com.adobe.epubcheck.api;
+ 
+ import java.io.File;
+ import java.util.HashSet;
++import java.util.Locale;
+ import java.util.Set;
+ 
+-import com.adobe.epubcheck.messages.Message;
+ import com.adobe.epubcheck.messages.LocaleHolder;
+ import com.adobe.epubcheck.messages.LocalizedMessageDictionary;
++import com.adobe.epubcheck.messages.Message;
+ import com.adobe.epubcheck.messages.MessageDictionary;
+ import com.adobe.epubcheck.messages.MessageId;
+ import com.adobe.epubcheck.messages.OverriddenMessageDictionary;
+ import com.adobe.epubcheck.messages.Severity;
+ import com.adobe.epubcheck.util.Messages;
+ import com.adobe.epubcheck.util.ReportingLevel;
+ import com.fasterxml.jackson.annotation.JsonProperty;
+ 
+-import java.util.Locale;
+-
+ /**
+  * Reports are derived from this so that we can test for message Id coverage as
+  * well as have a centralized location for severity reporting level testing.
+  */
+ public abstract class MasterReport implements LocalizableReport
+ {
+   public static Set<MessageId> allReportedMessageIds = new HashSet<MessageId>();
+   private int errorCount, warningCount, fatalErrorCount, usageCount, infoCount = 0;
+@@ -39,71 +38,71 @@ public abstract class MasterReport implements LocalizableReport
+   /**
+    * Creates a report with a new {@code Messages} instance and sets the locale
+    * held in {@code LocaleHolder} to the default locale.
+    */
+   protected MasterReport()
+   {
+     this(true);
+   }
+-  
++
+   /**
+    * Creates a report with a new {@code Messages} instance and sets the locale
+-   * held in {@code LocaleHolder} to the default locale only if the given flag is
+-   * <code>true</code>.
++   * held in {@code LocaleHolder} to the default locale only if the given flag
++   * is <code>true</code>.
+    * 
+    * @param setLocale
+-   *          whether to update the locale held in {@code LocaleHolder}
++   *        whether to update the locale held in {@code LocaleHolder}
+    */
+   protected MasterReport(boolean setLocale)
+   {
+-      messages = Messages.getInstance();
++    messages = Messages.getInstance();
+     if (setLocale)
+     {
+       LocaleHolder.set(Locale.getDefault());
+     }
+   }
+ 
+   @Override
+   public void setLocale(Locale locale)
+   {
+-      dictionary = new LocalizedMessageDictionary(locale);
+-      messages = Messages.getInstance(locale);
+-      // Note: we also store the locale statically (thread local) for libraries
+-      // which are not locale-context aware (like Jing).
+-      LocaleHolder.set(locale);
++    dictionary = new LocalizedMessageDictionary(locale);
++    messages = Messages.getInstance(locale);
++    // Note: we also store the locale statically (thread local) for libraries
++    // which are not locale-context aware (like Jing).
++    LocaleHolder.set(locale);
+   }
+-  
++
+   @Override
+   public Locale getLocale()
+   {
+     return messages.getLocale();
+   }
+-  
++
+   public Messages getMessages()
+   {
+-      return messages;
++    return messages;
+   }
+-  
++
+   @Override
+   public void setOverrideFile(File overrideFile)
+   {
+     dictionary = new OverriddenMessageDictionary(overrideFile, this);
+   }
+ 
+   @JsonProperty
+   String customMessageFileName = null;
+ 
+   private void reportMessageId(MessageId id)
+   {
+     allReportedMessageIds.add(id);
+   }
+ 
+   @Override
+-  public void message(MessageId id, EPUBLocation location, Object... args)
++  public final void message(MessageId id, EPUBLocation location, Object... args)
+   {
+     Message message = getDictionary().getMessage(id);
+     assert (message != null);
+     Severity severity = message.getSeverity();
+     if (ReportingLevel.getReportingLevel(severity) >= getReportingLevel())
+     {
+       if (severity.equals(Severity.ERROR))
+       {
+@@ -124,17 +123,19 @@ public abstract class MasterReport implements LocalizableReport
+       else if (severity.equals(Severity.INFO))
+       {
+         infoCount++;
+       }
+       this.message(message, location, args);
+     }
+     reportMessageId(id);
+   }
+-  
++
++  protected abstract void message(Message message, EPUBLocation location, Object... args);
++
+   @Override
+   public void setCustomMessageFile(String customMessageFileName)
+   {
+     this.customMessageFileName = customMessageFileName;
+   }
+ 
+   @Override
+   public String getCustomMessageFile()
+diff --git a/src/main/java/com/adobe/epubcheck/api/Report.java b/src/main/java/com/adobe/epubcheck/api/Report.java
+index 0ec2a8a8..ec1ff4e4 100755
+--- a/src/main/java/com/adobe/epubcheck/api/Report.java
++++ b/src/main/java/com/adobe/epubcheck/api/Report.java
+@@ -17,48 +17,37 @@
+  *  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+  *  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  *  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  *
+  */
+ 
+ package com.adobe.epubcheck.api;
+ 
+-import com.adobe.epubcheck.messages.Message;
++import java.io.File;
++
+ import com.adobe.epubcheck.messages.MessageDictionary;
+ import com.adobe.epubcheck.messages.MessageId;
+ import com.adobe.epubcheck.util.FeatureEnum;
+ 
+-import java.io.File;
+-
+ /**
+  * Interface that is used to report issues found in epub.
+  */
+ public interface Report
+ {
+   /**
+    * Called when a violation of the standard is found in epub.
+    *
+    * @param id       Id of the message being reported
+    * @param location location information for the message
+    * @param args     Arguments referenced by the format
+    *                 string for the message.
+    */
+   public void message(MessageId id, EPUBLocation location, Object... args);
+ 
+-  /**
+-   * Called when a violation of the standard is found in epub.
+-   *
+-   * @param message  The message being reported
+-   * @param location location information for the message
+-   * @param args     Arguments referenced by the format
+-   *                 string for the message.
+-   */
+-  void message(Message message, EPUBLocation location, Object... args);
+-
+   /**
+    * Called when when a feature is found in epub.
+    *
+    * @param resource name of the resource in the epub zip container that has this feature
+    *                 or null if the feature is on the container level.
+    * @param feature  a keyword to know what kind of feature has been found
+    * @param value    value found
+    */
+
+```
+
+## Methods to call (Java signatures)
+- com.adobe.epubcheck.api.EpubCheck#doValidate: public int doValidate()
+- com.adobe.epubcheck.api.MasterReport#MasterReport: protected com.adobe.epubcheck.api.MasterReport()
+- com.adobe.epubcheck.api.MasterReport#MasterReport: protected com.adobe.epubcheck.api.MasterReport(boolean)
+- com.adobe.epubcheck.api.MasterReport#getMessages: public com.adobe.epubcheck.util.Messages getMessages()
+- com.adobe.epubcheck.api.MasterReport#message: public final void message(com.adobe.epubcheck.messages.MessageId, com.adobe.epubcheck.api.EPUBLocation, java.lang.Object...)
+- com.adobe.epubcheck.api.MasterReport#message: protected abstract void message(com.adobe.epubcheck.messages.Message, com.adobe.epubcheck.api.EPUBLocation, java.lang.Object...)
+- com.adobe.epubcheck.api.MasterReport#setLocale: public void setLocale(java.util.Locale)
+- com.adobe.epubcheck.api.Report#message: public abstract void message(com.adobe.epubcheck.messages.MessageId, com.adobe.epubcheck.api.EPUBLocation, java.lang.Object...)
+- com.adobe.epubcheck.css.CSSHandler#checkProperties: protected void checkProperties()
+- com.adobe.epubcheck.css.CSSHandler#declaration: public void declaration(org.idpf.epubcheck.util.css.CssGrammar$CssDeclaration)
+- com.adobe.epubcheck.css.CSSHandler#endAtRule: public void endAtRule(java.lang.String)
+- com.adobe.epubcheck.css.CSSHandler#error: public void error(org.idpf.epubcheck.util.css.CssExceptions$CssException) throws org.idpf.epubcheck.util.css.CssExceptions$CssException
+- com.adobe.epubcheck.css.CSSHandler#resolveAndRegister: private void resolveAndRegister(java.lang.String, int, int, java.lang.String, org.w3c.epubcheck.core.references.Reference$Type)
+- com.adobe.epubcheck.css.CSSHandler#selectors: public void selectors(java.util.List<org.idpf.epubcheck.util.css.CssGrammar$CssSelector>)
+- com.adobe.epubcheck.messages.OverriddenMessages#getParameterCount: private int getParameterCount(int, int, java.lang.String)
+- com.adobe.epubcheck.messages.OverriddenMessages#loadOverriddenMessageSeverities: private void loadOverriddenMessageSeverities()
+- com.adobe.epubcheck.ocf.OCFExtensionChecker#check: public void check()
+- com.adobe.epubcheck.ocf.OCFFilenameChecker#check: public void check()
+- com.adobe.epubcheck.ocf.OCFZipChecker#check: public void check()
+- com.adobe.epubcheck.opf.FallbackChainResolver#resolve: public java.util.List<com.adobe.epubcheck.opf.OPFItem> resolve()
+- com.adobe.epubcheck.tool.EpubChecker#createReport: private com.adobe.epubcheck.api.Report createReport() throws java.io.IOException
+- com.adobe.epubcheck.util.DefaultReportImpl#info: public void info(java.lang.String, com.adobe.epubcheck.util.FeatureEnum, java.lang.String)
+- com.adobe.epubcheck.util.WriterReportImpl#info: public void info(java.lang.String, com.adobe.epubcheck.util.FeatureEnum, java.lang.String)
+- com.adobe.epubcheck.vocab.PrefixDeclarationParser#parsePrefixMappings: public static java.util.Map<java.lang.String, java.lang.String> parsePrefixMappings(java.lang.String, com.adobe.epubcheck.api.Report, com.adobe.epubcheck.api.EPUBLocation)
+- com.adobe.epubcheck.vocab.VocabUtil#parsePrefixDeclaration: public static java.util.Map<java.lang.String, com.adobe.epubcheck.vocab.Vocab> parsePrefixDeclaration(java.lang.String, java.util.Map<java.lang.String, ? extends com.adobe.epubcheck.vocab.Vocab>, java.util.Map<java.lang.String, ? extends com.adobe.epubcheck.vocab.Vocab>, java.util.Set<java.lang.String>, com.adobe.epubcheck.api.Report, com.adobe.epubcheck.api.EPUBLocation)
+- com.adobe.epubcheck.xml.XMLParser#process: public void process()
+- com.adobe.epubcheck.xml.handlers.DeclarationHandler#externalEntityDecl: public void externalEntityDecl(java.lang.String, java.lang.String, java.lang.String) throws org.xml.sax.SAXException
+- com.adobe.epubcheck.xml.handlers.DeclarationHandler#handleDocTypeUserInfo: private void handleDocTypeUserInfo(java.lang.String, java.lang.String, java.lang.String)
+- com.adobe.epubcheck.xml.handlers.DeclarationHandler#matchDoctypeId: private boolean matchDoctypeId(java.lang.String, java.lang.String, java.lang.String)
+- com.adobe.epubcheck.xml.handlers.DeclarationHandler#startEntity: public void startEntity(java.lang.String) throws org.xml.sax.SAXException
+- com.adobe.epubcheck.xml.handlers.ReportingErrorHandler#error: public void error(org.xml.sax.SAXParseException) throws org.xml.sax.SAXException
+- com.adobe.epubcheck.xml.handlers.ReportingErrorHandler#fatalError: public void fatalError(org.xml.sax.SAXParseException) throws org.xml.sax.SAXException
+- com.adobe.epubcheck.xml.handlers.ReportingErrorHandler#warning: public void warning(org.xml.sax.SAXParseException) throws org.xml.sax.SAXException
+- com.adobe.epubcheck.xml.handlers.XMLHandler#checkXMLVersion: private void checkXMLVersion()
+- org.w3c.epubcheck.core.references.ResourceReferencesChecker#checkFallbacks: private void checkFallbacks(org.w3c.epubcheck.core.references.Reference, org.w3c.epubcheck.core.references.Resource)
+- org.w3c.epubcheck.core.references.ResourceReferencesChecker#checkFragment: private void checkFragment(org.w3c.epubcheck.core.references.Reference, org.w3c.epubcheck.core.references.Resource, org.w3c.epubcheck.util.url.URLFragment) throws org.w3c.epubcheck.core.CheckAbortException
+- org.w3c.epubcheck.core.references.ResourceReferencesChecker#checkReadingOrder: private void checkReadingOrder(java.util.Queue<org.w3c.epubcheck.core.references.Reference>)
+- org.w3c.epubcheck.core.references.ResourceReferencesChecker#checkReferenceType: private void checkReferenceType(org.w3c.epubcheck.core.references.Reference, org.w3c.epubcheck.core.references.Resource, org.w3c.epubcheck.util.url.URLFragment) throws org.w3c.epubcheck.core.CheckAbortException
+- org.w3c.epubcheck.core.references.ResourceReferencesChecker#checkRegionBasedNav: private void checkRegionBasedNav(org.w3c.epubcheck.core.references.Reference)
+- org.w3c.epubcheck.core.references.ResourceReferencesChecker#checkRemoteReference: private void checkRemoteReference(org.w3c.epubcheck.core.references.Reference, java.util.Optional<org.w3c.epubcheck.core.references.Resource>) throws org.w3c.epubcheck.core.CheckAbortException
+- org.w3c.epubcheck.core.references.ResourceReferencesChecker#checkUndeclaredReference: private void checkUndeclaredReference(org.w3c.epubcheck.core.references.Reference) throws org.w3c.epubcheck.core.CheckAbortException
+- org.w3c.epubcheck.core.references.URLChecker#resolveURL: private io.mola.galimatias.URL resolveURL(java.lang.String, boolean, com.adobe.epubcheck.api.EPUBLocation)
+
+Reply as {"methods":[{"method":"pkg.Class#name","calls":[[arg, ...], ...]}]}
+
+## Reply
+{
+ "methods": [
+  {
+   "method": "com.adobe.epubcheck.api.MasterReport#MasterReport",
+   "calls": [
+    [
+     true
+    ],
+    [
+     false
+    ]
+   ]
+  },
+  {
+   "method": "com.adobe.epubcheck.api.MasterReport#setLocale",
+   "calls": [
+    [
+     "en_US"
+    ],
+    [
+     "fr_FR"
+    ],
+    [
+     "de_DE"
+    ]
+   ]
+  },
+  {
+   "method": "com.adobe.epubcheck.api.MasterReport#message",
+   "calls": [
+    [
+     "ERROR_001",
+     {
+      "line": 1,
+      "column": 1
+     },
+     "arg1",
+     "arg2"
+    ],
+    [
+     "WARNING_002",
+     {
+      "line": 2,
+      "column": 2
+     },
+     "arg3"
+    ],
+    [
+     "INFO_003",
+     {
+      "line": 3,
+      "column": 3
+     }
+    ]
+   ]
+  }
+ ]
+}

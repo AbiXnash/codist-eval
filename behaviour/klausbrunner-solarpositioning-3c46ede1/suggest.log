@@ -1,0 +1,185 @@
+## Commit
+Minor cleanup (DRY)
+
+## Diff
+```diff
+diff --git a/src/main/java/net/e175/klaus/solarpositioning/SPA.java b/src/main/java/net/e175/klaus/solarpositioning/SPA.java
+index 8971979..04789f1 100644
+--- a/src/main/java/net/e175/klaus/solarpositioning/SPA.java
++++ b/src/main/java/net/e175/klaus/solarpositioning/SPA.java
+@@ -109,20 +109,20 @@ public final class SPA {
+         // Calculate the topocentric sun right ascension and sun declination
+         final double xiDegrees = 8.794 / (3600 * r);
+         final double xi = toRadians(xiDegrees);
+         final double phi = toRadians(latitude);
+         final double delta = toRadians(deltaDegrees);
+         final double u = atan(0.99664719 * tan(phi));
+         final double x = cos(u) + elevation * cos(phi) / 6378140;
+         final double y = 0.99664719 * sin(u) + (elevation * sin(phi)) / 6378140;
+-        final double deltaAlphaDegrees = toDegrees(atan2(-x * sin(xi) * sin(h), cos(delta) - x * sin(xi) * cos(h)));
+ 
+-        final double deltaPrime = atan2((sin(delta) - y * sin(xi)) * cos(toRadians(deltaAlphaDegrees)), cos(delta) - x
+-                * sin(xi) * cos(h));
++        final double x1 = cos(delta) - x * sin(xi) * cos(h);
++        final double deltaAlphaDegrees = toDegrees(atan2(-x * sin(xi) * sin(h), x1));
++        final double deltaPrime = atan2((sin(delta) - y * sin(xi)) * cos(toRadians(deltaAlphaDegrees)), x1);
+ 
+         // Calculate the topocentric local hour angle,
+         final double hPrimeDegrees = hDegrees - deltaAlphaDegrees;
+         final double hPrime = toRadians(hPrimeDegrees);
+ 
+         return calculateTopocentricSolarPosition(pressure, temperature, phi, deltaPrime, hPrime);
+     }
+ 
+
+```
+
+## Methods to call (Java signatures)
+- net.e175.klaus.solarpositioning.SPA#calculateSolarPosition: public static net.e175.klaus.solarpositioning.AzimuthZenithAngle calculateSolarPosition(java.time.ZonedDateTime, double, double, double, double, double, double)
+- net.e175.klaus.solarpositioning.SPA#calculateSolarPosition: public static net.e175.klaus.solarpositioning.AzimuthZenithAngle calculateSolarPosition(java.time.ZonedDateTime, double, double, double, double)
+
+Reply as {"methods":[{"method":"pkg.Class#name","calls":[[arg, ...], ...]}]}
+
+## Reply
+{
+ "methods": [
+  {
+   "method": "net.e175.klaus.solarpositioning.SPA#calculateSolarPosition",
+   "calls": [
+    [
+     "2023-10-01T12:00:00Z",
+     40.7128,
+     -74.006,
+     1013.25,
+     15.0,
+     0.0,
+     0.0
+    ],
+    [
+     "2023-10-01T12:00:00Z",
+     40.7128,
+     -74.006,
+     1013.25,
+     15.0,
+     0.0,
+     1.0
+    ],
+    [
+     "2023-10-01T12:00:00Z",
+     40.7128,
+     -74.006,
+     1013.25,
+     15.0,
+     1.0,
+     0.0
+    ],
+    [
+     "2023-10-01T12:00:00Z",
+     40.7128,
+     -74.006,
+     1013.25,
+     15.0,
+     1.0,
+     1.0
+    ],
+    [
+     "2023-10-01T12:00:00Z",
+     40.7128,
+     -74.006,
+     1013.25,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     "2023-10-01T12:00:00Z",
+     40.7128,
+     -74.006,
+     1013.25,
+     0.0,
+     0.0,
+     1.0
+    ],
+    [
+     "2023-10-01T12:00:00Z",
+     40.7128,
+     -74.006,
+     1013.25,
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     "2023-10-01T12:00:00Z",
+     40.7128,
+     -74.006,
+     1013.25,
+     0.0,
+     1.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "method": "net.e175.klaus.solarpositioning.SPA#calculateSolarPosition",
+   "calls": [
+    [
+     "2023-10-01T12:00:00Z",
+     40.7128,
+     -74.006,
+     1013.25,
+     15.0
+    ],
+    [
+     "2023-10-01T12:00:00Z",
+     40.7128,
+     -74.006,
+     1013.25,
+     0.0
+    ],
+    [
+     "2023-10-01T12:00:00Z",
+     40.7128,
+     -74.006,
+     1013.25,
+     1.0
+    ],
+    [
+     "2023-10-01T12:00:00Z",
+     40.7128,
+     -74.006,
+     1013.25,
+     -1.0
+    ],
+    [
+     "2023-10-01T12:00:00Z",
+     40.7128,
+     -74.006,
+     1013.25,
+     10.0
+    ],
+    [
+     "2023-10-01T12:00:00Z",
+     40.7128,
+     -74.006,
+     1013.25,
+     -10.0
+    ],
+    [
+     "2023-10-01T12:00:00Z",
+     40.7128,
+     -74.006,
+     1013.25,
+     30.0
+    ],
+    [
+     "2023-10-01T12:00:00Z",
+     40.7128,
+     -74.006,
+     1013.25,
+     -30.0
+    ]
+   ]
+  }
+ ]
+}

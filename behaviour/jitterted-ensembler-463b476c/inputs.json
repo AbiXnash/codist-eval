@@ -1,0 +1,27 @@
+{
+ "com.jitterted.mobreg.adapter.in.web.member.EnsembleTimerController#pauseTimer": [
+  [
+   123456789
+  ]
+ ],
+ "com.jitterted.mobreg.adapter.in.web.member.EnsembleTimerController#resetTimer": [
+  [
+   987654321
+  ]
+ ],
+ "com.jitterted.mobreg.adapter.in.web.member.EnsembleTimerController#resumeTimer": [
+  [
+   111222333
+  ]
+ ],
+ "com.jitterted.mobreg.adapter.in.web.member.EnsembleTimerController#rotateTimer": [
+  [
+   444555666
+  ]
+ ],
+ "com.jitterted.mobreg.adapter.in.web.member.EnsembleTimerController#startTimer": [
+  [
+   777888999
+  ]
+ ]
+}

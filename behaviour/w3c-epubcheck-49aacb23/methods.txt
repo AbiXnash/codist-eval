@@ -1,0 +1,5 @@
+com.adobe.epubcheck.tool.Checker#main
+com.adobe.epubcheck.tool.EpubChecker#<field>
+com.adobe.epubcheck.tool.EpubChecker#processArguments
+com.adobe.epubcheck.tool.EpubChecker#processEpubFile
+com.adobe.epubcheck.tool.EpubChecker#run

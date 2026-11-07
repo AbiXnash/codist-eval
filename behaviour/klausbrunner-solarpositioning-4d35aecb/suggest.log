@@ -1,0 +1,124 @@
+## Commit
+Update delta t polynomials. #24 #25
+
+## Diff
+```diff
+diff --git a/src/main/java/net/e175/klaus/solarpositioning/DeltaT.java b/src/main/java/net/e175/klaus/solarpositioning/DeltaT.java
+index ff60ea7..5e382ac 100644
+--- a/src/main/java/net/e175/klaus/solarpositioning/DeltaT.java
++++ b/src/main/java/net/e175/klaus/solarpositioning/DeltaT.java
+@@ -8,17 +8,18 @@ import static java.lang.Math.pow;
+  * Finding values for Delta T, the difference between Terrestrial Time (TT) and Universal Time (UT1).
+  */
+ public final class DeltaT {
+     private DeltaT() {
+     }
+ 
+     /**
+      * Estimate Delta T for the given date. This is based on Espenak and Meeus, "Five Millennium Canon of
+-     * Solar Eclipses: -1999 to +3000" (NASA/TP-2006-214141).
++     * Solar Eclipses: -1999 to +3000" (NASA/TP-2006-214141) and updated by Espenak in 2014 at
++     * <a href="https://www.eclipsewise.com/help/deltatpoly2014.html">Eclipsewise</a>.
+      *
+      * @param forDate date and time
+      * @return estimated delta T value (seconds)
+      */
+     public static double estimate(final LocalDate forDate) {
+         final double year = decimalYear(forDate);
+         final double deltaT;
+ 
+@@ -58,24 +59,24 @@ public final class DeltaT {
+             deltaT = 29.07 + 0.407 * t - pow(t, 2) / 233 + pow(t, 3) / 2547;
+         } else if (year < 1986) {
+             double t = year - 1975;
+             deltaT = 45.45 + 1.067 * t - pow(t, 2) / 260 - pow(t, 3) / 718;
+         } else if (year < 2005) {
+             double t = year - 2000;
+             deltaT = 63.86 + 0.3345 * t - 0.060374 * pow(t, 2) + 0.0017275 * pow(t, 3) + 0.000651814 * pow(t, 4)
+                     + 0.00002373599 * pow(t, 5);
+-        } else if (year < 2050) {
+-            double t = year - 2000;
+-            deltaT = 62.92 + 0.32217 * t + 0.005589 * pow(t, 2);
+-        } else if (year < 2150) {
+-            deltaT = -20 + 32 * pow(((year - 1820) / 100), 2) - 0.5628 * (2150 - year);
++        } else if (year < 2015) {
++            double t = year - 2005;
++            deltaT = 64.69 + 0.2930 * t;
++        } else if (year <= 3000) {
++            double t = year - 2015;
++            deltaT = 67.62 + 0.3645 * t + 0.0039755 * pow(t, 2);
+         } else {
+-            double u = (year - 1820) / 100;
+-            deltaT = -20 + 32 * pow(u, 2);
++            throw new IllegalArgumentException("no estimates possible for this time");
+         }
+ 
+         return deltaT;
+     }
+ 
+     private static double decimalYear(LocalDate forDate) {
+         return forDate.getYear() + (forDate.getMonthValue() - 0.5) / 12;
+     }
+
+```
+
+## Methods to call (Java signatures)
+- net.e175.klaus.solarpositioning.DeltaT#estimate: public static double estimate(java.time.LocalDate)
+
+Reply as {"methods":[{"method":"pkg.Class#name","calls":[[arg, ...], ...]}]}
+
+## Reply
+{
+ "methods": [
+  {
+   "method": "net.e175.klaus.solarpositioning.DeltaT#estimate",
+   "calls": [
+    [
+     "1900-01-01"
+    ],
+    [
+     "1950-01-01"
+    ],
+    [
+     "1975-01-01"
+    ],
+    [
+     "1985-01-01"
+    ],
+    [
+     "2000-01-01"
+    ],
+    [
+     "2004-01-01"
+    ],
+    [
+     "2005-01-01"
+    ],
+    [
+     "2014-01-01"
+    ],
+    [
+     "2015-01-01"
+    ],
+    [
+     "2050-01-01"
+    ],
+    [
+     "2100-01-01"
+    ],
+    [
+     "2150-01-01"
+    ],
+    [
+     "2500-01-01"
+    ],
+    [
+     "3000-01-01"
+    ],
+    [
+     "3001-01-01"
+    ]
+   ]
+  }
+ ]
+}

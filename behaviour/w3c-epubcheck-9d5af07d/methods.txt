@@ -1,0 +1,4 @@
+com.adobe.epubcheck.opf.OPFItem$Builder#mimetype
+org.w3c.epubcheck.core.references.Resource$Builder#mimetype
+org.w3c.epubcheck.util.mime.MIMEType#filter
+org.w3c.epubcheck.util.mime.MIMEType#filterParameters

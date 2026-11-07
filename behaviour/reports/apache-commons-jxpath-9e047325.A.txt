@@ -1,0 +1,2 @@
+calls=108 ran=96 differ=0 flaky=0 state-only=0 null-only=0
+  handle: signature changed, cannot compare

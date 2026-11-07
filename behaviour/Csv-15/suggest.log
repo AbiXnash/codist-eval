@@ -1,0 +1,78 @@
+## Commit
+[CSV-219] The behavior of quote char using is not similar as Excel does when the first string contains CJK char(s). [CSV-172] Don't quote cells just because they have UTF-8 encoded characters.
+
+## Diff
+```diff
+diff --git a/src/main/java/org/apache/commons/csv/CSVFormat.java b/src/main/java/org/apache/commons/csv/CSVFormat.java
+index 58948fdc..dc7588b1 100644
+--- a/src/main/java/org/apache/commons/csv/CSVFormat.java
++++ b/src/main/java/org/apache/commons/csv/CSVFormat.java
+@@ -1181,20 +1181,17 @@ public final class CSVFormat implements Serializable {
+                 // line. If it were not quoted in that case,
+                 // an empty line has no tokens.
+                 if (newRecord) {
+                     quote = true;
+                 }
+             } else {
+                 char c = value.charAt(pos);
+ 
+-                // RFC4180 (https://tools.ietf.org/html/rfc4180) TEXTDATA =  %x20-21 / %x23-2B / %x2D-7E
+-                if (newRecord && (c < 0x20 || c > 0x21 && c < 0x23 || c > 0x2B && c < 0x2D || c > 0x7E)) {
+-                    quote = true;
+-                } else if (c <= COMMENT) {
++                if (c <= COMMENT) {
+                     // Some other chars at the start of a value caused the parser to fail, so for now
+                     // encapsulate if we start in anything less than '#'. We are being conservative
+                     // by including the default comment char too.
+                     quote = true;
+                 } else {
+                     while (pos < end) {
+                         c = value.charAt(pos);
+                         if (c == LF || c == CR || c == quoteChar || c == delimChar) {
+
+```
+
+## Methods to call (Java signatures)
+- org.apache.commons.csv.CSVFormat#print: public org.apache.commons.csv.CSVPrinter print(java.lang.Appendable) throws java.io.IOException
+- org.apache.commons.csv.CSVFormat#print: public org.apache.commons.csv.CSVPrinter print(java.io.File, java.nio.charset.Charset) throws java.io.IOException
+- org.apache.commons.csv.CSVFormat#print: public org.apache.commons.csv.CSVPrinter print(java.nio.file.Path, java.nio.charset.Charset) throws java.io.IOException
+- org.apache.commons.csv.CSVFormat#print: public void print(java.lang.Object, java.lang.Appendable, boolean) throws java.io.IOException
+- org.apache.commons.csv.CSVFormat#print: private void print(java.lang.Object, java.lang.CharSequence, int, int, java.lang.Appendable, boolean) throws java.io.IOException
+- org.apache.commons.csv.CSVFormat#printAndQuote: private void printAndQuote(java.lang.Object, java.lang.CharSequence, int, int, java.lang.Appendable, boolean) throws java.io.IOException
+
+Reply as {"methods":[{"method":"pkg.Class#name","calls":[[arg, ...], ...]}]}
+
+## Reply
+{
+ "methods": [
+  {
+   "method": "org.apache.commons.csv.CSVFormat#print",
+   "calls": [
+    [
+     "中文,English,123"
+    ],
+    [
+     "English,中文,123"
+    ],
+    [
+     "123,中文,English"
+    ],
+    [
+     "中文,English,123,Special!@#"
+    ],
+    [
+     "English,中文,123,Special!@#"
+    ],
+    [
+     "123,中文,English,Special!@#"
+    ],
+    [
+     "中文,English,123,Special!@#,"
+    ],
+    [
+     "English,中文,123,Special!@#,"
+    ]
+   ]
+  }
+ ]
+}

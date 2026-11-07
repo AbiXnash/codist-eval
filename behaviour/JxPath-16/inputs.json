@@ -1,0 +1,40 @@
+{
+ "org.apache.commons.jxpath.ri.model.dom.DOMNodePointer#testNode": [
+  [
+   {
+    "nodeType": 1
+   },
+   {
+    "nodeType": 9
+   },
+   {
+    "nodeType": 3
+   },
+   {
+    "nodeType": 8
+   },
+   {
+    "nodeType": 7
+   }
+  ]
+ ],
+ "org.apache.commons.jxpath.ri.model.jdom.JDOMNodePointer#testNode": [
+  [
+   {
+    "nodeType": 1
+   },
+   {
+    "nodeType": 9
+   },
+   {
+    "nodeType": 3
+   },
+   {
+    "nodeType": 8
+   },
+   {
+    "nodeType": 7
+   }
+  ]
+ ]
+}

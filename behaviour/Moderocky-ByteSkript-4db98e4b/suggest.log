@@ -1,0 +1,217 @@
+## Commit
+Clean up bootstrapper.
+
+## Diff
+```diff
+diff --git a/src/main/java/org/byteskript/skript/lang/syntax/function/ExprFunction.java b/src/main/java/org/byteskript/skript/lang/syntax/function/ExprFunction.java
+index c97f47e..e9ef387 100644
+--- a/src/main/java/org/byteskript/skript/lang/syntax/function/ExprFunction.java
++++ b/src/main/java/org/byteskript/skript/lang/syntax/function/ExprFunction.java
+@@ -51,19 +51,17 @@ public class ExprFunction extends SimpleExpression {
+         final Matcher matcher = PATTERN.matcher(thing);
+         if (!matcher.find()) return null;
+         final String name = matcher.group("name");
+         final String params = matcher.group("params");
+         final int count = getParams(params);
+         final Matcher dummy = java.util.regex.Pattern.compile(buildDummyPattern(name, count)).matcher(thing);
+         dummy.find();
+         final List<Type> types = new ArrayList<>();
+-        for (int i = 0; i < count; i++) {
+-            types.add(CommonTypes.OBJECT);
+-        }
++        for (int i = 0; i < count; i++) types.add(CommonTypes.OBJECT);
+         return new Pattern.Match(dummy, new FunctionDetails(name, count), types.toArray(new Type[0]));
+     }
+     
+     private int getParams(String params) {
+         if (params.isBlank()) return 0;
+         int nest = 0;
+         int count = 1;
+         for (char c : params.toCharArray()) {
+diff --git a/src/main/java/org/byteskript/skript/runtime/internal/Bootstrapper.java b/src/main/java/org/byteskript/skript/runtime/internal/Bootstrapper.java
+index a90df52..fb8252a 100644
+--- a/src/main/java/org/byteskript/skript/runtime/internal/Bootstrapper.java
++++ b/src/main/java/org/byteskript/skript/runtime/internal/Bootstrapper.java
+@@ -48,56 +48,50 @@ public final class Bootstrapper {
+         else if (Modifier.isPrivate(method.getModifiers())) code = H_INVOKESPECIAL;
+         else code = H_INVOKEVIRTUAL;
+         return new Handle(code, new Type(method.getDeclaringClass()).internalName(), method.getName(), getDescriptor(new Type(method.getReturnType()), Type.of(method.getParameterTypes())), code == H_INVOKEINTERFACE);
+     }
+     
+     private static String getDescriptor(final Type ret, final Type... params) {
+         final StringBuilder builder = new StringBuilder();
+         builder.append("(");
+-        for (Type type : params) {
+-            builder.append(type.descriptorString());
+-        }
++        for (final Type type : params) builder.append(type.descriptorString());
+         builder
+             .append(")")
+             .append(ret.descriptorString());
+         return builder.toString();
+     }
+     
+     @Description("""
+         Gets the handle for a regular method, used for writing a dynamic call-site.
+         """)
+     public static Handle getBootstrap(final boolean isDynamic, final boolean isPrivate) {
++        final String target;
++        if (isPrivate) target = isDynamic ? "bootstrapPrivateDynamic" : "bootstrapPrivate";
++        else target = isDynamic ? "bootstrapDynamic" : "bootstrap";
++        final Class<?>[] array = new Class[] {MethodHandles.Lookup.class, String.class, MethodType.class, Class.class};
++        final Method method;
+         try {
+-            if (isPrivate) {
+-                if (isDynamic)
+-                    return getHandle(Bootstrapper.class.getMethod("bootstrapPrivateDynamic", MethodHandles.Lookup.class, String.class, MethodType.class, Class.class));
+-                return getHandle(Bootstrapper.class.getMethod("bootstrapPrivate", MethodHandles.Lookup.class, String.class, MethodType.class, Class.class));
+-            } else {
+-                if (isDynamic)
+-                    return getHandle(Bootstrapper.class.getMethod("bootstrapDynamic", MethodHandles.Lookup.class, String.class, MethodType.class, Class.class));
+-                return getHandle(Bootstrapper.class.getMethod("bootstrap", MethodHandles.Lookup.class, String.class, MethodType.class, Class.class));
+-            }
++            method = Bootstrapper.class.getMethod(target, array);
+         } catch (Throwable ex) {
+             throw new ScriptBootstrapError(ex);
+         }
++        return Bootstrapper.getHandle(method);
+     }
+     
+     @Description("""
+         This writes the call-site for invoking a Skript function from a script.
+         
+         The metafactory is invoked to create a new bridge stub.
+         """)
+     public static CallSite bootstrapFunction(MethodHandles.Lookup caller, String name, MethodType type, String source, Class<?> owner, String args)
+         throws Exception {
+         final org.objectweb.asm.Type[] types = org.objectweb.asm.Type.getArgumentTypes(args);
+         final Class<?>[] arguments = new Class[types.length];
+-        for (int i = 0; i < types.length; i++) {
+-            arguments[i] = getClass(types[i].getClassName());
+-        }
++        for (int i = 0; i < types.length; i++) arguments[i] = getClass(types[i].getClassName());
+         return Metafactory.createBridge(caller, name, type, source, owner, arguments);
+     }
+     
+     private static Class<?> getClass(String name) throws ClassNotFoundException {
+         return switch (name) {
+             case "boolean" -> boolean.class;
+             case "char" -> char.class;
+             case "void" -> void.class;
+
+```
+
+## Methods to call (Java signatures)
+- org.byteskript.skript.lang.syntax.function.ExprFunction#createMatch: private org.byteskript.skript.compiler.Pattern$Match createMatch(java.lang.String, org.byteskript.skript.compiler.Context)
+- org.byteskript.skript.lang.syntax.function.ExprFunction#match: public org.byteskript.skript.compiler.Pattern$Match match(java.lang.String, org.byteskript.skript.compiler.Context)
+- org.byteskript.skript.lang.syntax.function.ExprFunctionExternal#match: public org.byteskript.skript.compiler.Pattern$Match match(java.lang.String, org.byteskript.skript.compiler.Context)
+- org.byteskript.skript.lang.syntax.function.ExprFunctionProperty#match: public org.byteskript.skript.compiler.Pattern$Match match(java.lang.String, org.byteskript.skript.compiler.Context)
+- org.byteskript.skript.lang.syntax.list.ExprNewArray#match: public org.byteskript.skript.compiler.Pattern$Match match(java.lang.String, org.byteskript.skript.compiler.Context)
+- org.byteskript.skript.runtime.internal.Bootstrapper#bootstrapFunction: public static java.lang.invoke.CallSite bootstrapFunction(java.lang.invoke.MethodHandles$Lookup, java.lang.String, java.lang.invoke.MethodType, java.lang.String, java.lang.Class<?>, java.lang.String) throws java.lang.Exception
+- org.byteskript.skript.runtime.internal.Bootstrapper#getBootstrap: public static org.objectweb.asm.Handle getBootstrap(boolean, boolean)
+- org.byteskript.skript.runtime.internal.Bootstrapper#getDescriptor: private static java.lang.String getDescriptor(mx.kenzie.foundation.Type, mx.kenzie.foundation.Type...)
+- org.byteskript.skript.runtime.internal.Bootstrapper#getHandle: private static org.objectweb.asm.Handle getHandle(java.lang.reflect.Method)
+
+Reply as {"methods":[{"method":"pkg.Class#name","calls":[[arg, ...], ...]}]}
+
+## Reply
+{
+ "methods": [
+  {
+   "method": "org.byteskript.skript.lang.syntax.function.ExprFunction#createMatch",
+   "calls": [
+    [
+     "function(param1, param2)",
+     null
+    ]
+   ]
+  },
+  {
+   "method": "org.byteskript.skript.lang.syntax.function.ExprFunction#match",
+   "calls": [
+    [
+     "function(param1, param2)",
+     null
+    ]
+   ]
+  },
+  {
+   "method": "org.byteskript.skript.lang.syntax.function.ExprFunctionExternal#match",
+   "calls": [
+    [
+     "function(param1, param2)",
+     null
+    ]
+   ]
+  },
+  {
+   "method": "org.byteskript.skript.lang.syntax.function.ExprFunctionProperty#match",
+   "calls": [
+    [
+     "function(param1, param2)",
+     null
+    ]
+   ]
+  },
+  {
+   "method": "org.byteskript.skript.lang.syntax.list.ExprNewArray#match",
+   "calls": [
+    [
+     "new array(param1, param2)",
+     null
+    ]
+   ]
+  },
+  {
+   "method": "org.byteskript.skript.runtime.internal.Bootstrapper#bootstrapFunction",
+   "calls": [
+    [
+     null,
+     "functionName",
+     null,
+     "source",
+     null,
+     "args"
+    ]
+   ]
+  },
+  {
+   "method": "org.byteskript.skript.runtime.internal.Bootstrapper#getBootstrap",
+   "calls": [
+    [
+     true,
+     true
+    ],
+    [
+     true,
+     false
+    ],
+    [
+     false,
+     true
+    ],
+    [
+     false,
+     false
+    ]
+   ]
+  },
+  {
+   "method": "org.byteskript.skript.runtime.internal.Bootstrapper#getDescriptor",
+   "calls": [
+    [
+     null,
+     null
+    ]
+   ]
+  },
+  {
+   "method": "org.byteskript.skript.runtime.internal.Bootstrapper#getHandle",
+   "calls": [
+    [
+     null
+    ]
+   ]
+  }
+ ]
+}

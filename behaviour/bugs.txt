@@ -1,0 +1,10 @@
+Cli-4 apache__commons-cli.git f78959477b
+Csv-15 apache__commons-csv.git 8b3de71fd9
+Csv-4 apache__commons-csv.git 22601f647f
+JxPath-16 apache__commons-jxpath.git 6cf7092809
+Moderocky-ByteSkript-1dce2997 Moderocky__ByteSkript.git 1dce2997df
+crawler-commons-crawler-commons-2c2cb3bf crawler-commons__crawler-commons.git 2c2cb3bf7a
+jhy-jsoup-4a278e9b jhy__jsoup.git 4a278e9b8e
+jitterted-ensembler-0963194c jitterted__ensembler.git 0963194c9e
+klausbrunner-solarpositioning-4d35aecb klausbrunner__solarpositioning.git 4d35aecb48
+w3c-epubcheck-49aacb23 w3c__epubcheck.git 49aacb238c

@@ -1,0 +1,29 @@
+# Labelled by reading each diff before any harness result (2026-11-07). same: should not change behaviour;
+# changes: the commit changes behaviour on purpose although its message says refactor or clean up.
+Moderocky-ByteSkript-450c8d01 same
+Moderocky-ByteSkript-4db98e4b same
+Moderocky-ByteSkript-f83861b9 changes  registers BooleanLiteral instead of DoubleLiteral, drops four statement syntaxes
+apache-commons-cli-4dec263d same
+apache-commons-cli-2fb8cb4e same
+apache-commons-cli-ca6d3362 same
+apache-commons-csv-f25612ff same
+apache-commons-csv-0b0003e3 same  a public setter renamed
+apache-commons-csv-14d31b02 same
+apache-commons-jxpath-9e047325 same
+apache-commons-jxpath-85fcf8c4 same
+apache-commons-jxpath-cdee2636 same
+crawler-commons-crawler-commons-5f1f1e5c changes  resolved URLs are no longer normalized
+crawler-commons-crawler-commons-175b861d same  raw path instead of decoded path could differ on %-encoded paths
+crawler-commons-crawler-commons-4653ced8 same  whitespace only
+jhy-jsoup-cc30aa9a same
+jhy-jsoup-b87fd364 same
+jhy-jsoup-42dbaa00 same
+jitterted-ensembler-463b476c same  HTTP answer unchanged; the Java method now returns void instead of a ResponseEntity
+jitterted-ensembler-9b3f6894 same
+jitterted-ensembler-d159d528 same
+klausbrunner-solarpositioning-378d7a26 same
+klausbrunner-solarpositioning-fff3b166 same
+klausbrunner-solarpositioning-3c46ede1 same
+w3c-epubcheck-1c0b93bd changes  error message text reformatted
+w3c-epubcheck-9d5af07d changes  media types normalized
+w3c-epubcheck-6564cae8 same  formatting, one method removed

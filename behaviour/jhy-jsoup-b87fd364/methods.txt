@@ -1,0 +1,10 @@
+org.jsoup.helper.W3CDom$W3CBuilder#head
+org.jsoup.helper.W3CDom$W3CBuilder#tail
+org.jsoup.parser.HtmlTreeBuilder#insertNoscriptStartTag
+org.jsoup.parser.HtmlTreeBuilder#startNoscript
+org.jsoup.parser.HtmlTreeBuilderState#HandleTextState
+org.jsoup.parser.TreeBuilder#onNodeClosed
+org.jsoup.parser.TreeBuilder#onNodeInserted
+org.jsoup.parser.XmlTreeBuilder#insertElementFor
+org.jsoup.parser.XmlTreeBuilder#process
+org.jsoup.select.NodeTraversor#traverse

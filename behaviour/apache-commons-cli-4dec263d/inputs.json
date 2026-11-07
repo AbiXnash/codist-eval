@@ -1,0 +1,54 @@
+{
+ "org.apache.commons.cli.Options#getMatchingOptions": [
+  [
+   "a"
+  ],
+  [
+   "ab"
+  ],
+  [
+   "abc"
+  ],
+  [
+   "abcd"
+  ],
+  [
+   "abcde"
+  ],
+  [
+   "abcdef"
+  ],
+  [
+   "abcdefg"
+  ],
+  [
+   "abcdefgh"
+  ]
+ ],
+ "org.apache.commons.cli.DefaultParser#getMatchingLongOptions": [
+  [
+   "a"
+  ],
+  [
+   "ab"
+  ],
+  [
+   "abc"
+  ],
+  [
+   "abcd"
+  ],
+  [
+   "abcde"
+  ],
+  [
+   "abcdef"
+  ],
+  [
+   "abcdefg"
+  ],
+  [
+   "abcdefgh"
+  ]
+ ]
+}

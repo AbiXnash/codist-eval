@@ -1,0 +1,58 @@
+{
+ "org.apache.commons.jxpath.FunctionLibrary#functionCache": [
+  []
+ ],
+ "org.apache.commons.jxpath.FunctionLibrary#getFunction": [
+  [
+   "namespace1",
+   "function1",
+   [
+    "arg1",
+    "arg2"
+   ]
+  ],
+  [
+   "namespace2",
+   "function2",
+   [
+    "arg3"
+   ]
+  ],
+  [
+   "namespace3",
+   "function3",
+   []
+  ]
+ ],
+ "org.apache.commons.jxpath.FunctionLibrary#getUsedNamespaces": [
+  []
+ ],
+ "org.apache.commons.jxpath.ri.JXPathContextReferenceImpl#getFunction": [
+  [
+   {
+    "namespace": "namespace1",
+    "name": "function1"
+   },
+   [
+    "arg1",
+    "arg2"
+   ]
+  ],
+  [
+   {
+    "namespace": "namespace2",
+    "name": "function2"
+   },
+   [
+    "arg3"
+   ]
+  ],
+  [
+   {
+    "namespace": "namespace3",
+    "name": "function3"
+   },
+   []
+  ]
+ ]
+}

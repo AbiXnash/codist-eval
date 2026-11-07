@@ -1,0 +1,275 @@
+## Commit
+refactor: normalize media type strings in model objects
+
+## Diff
+```diff
+diff --git a/src/main/java/com/adobe/epubcheck/opf/OPFItem.java b/src/main/java/com/adobe/epubcheck/opf/OPFItem.java
+index 57cede3c..33e0a1c6 100755
+--- a/src/main/java/com/adobe/epubcheck/opf/OPFItem.java
++++ b/src/main/java/com/adobe/epubcheck/opf/OPFItem.java
+@@ -19,16 +19,17 @@
+  *  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  *
+  */
+ 
+ package com.adobe.epubcheck.opf;
+ 
+ import java.util.Set;
+ 
++import org.w3c.epubcheck.util.mime.MIMEType;
+ import org.w3c.epubcheck.util.url.URLUtils;
+ 
+ import com.adobe.epubcheck.api.EPUBLocation;
+ import com.adobe.epubcheck.ocf.OCFContainer;
+ import com.adobe.epubcheck.vocab.EpubCheckVocab;
+ import com.adobe.epubcheck.vocab.PackageVocabs;
+ import com.adobe.epubcheck.vocab.Property;
+ import com.google.common.base.Optional;
+@@ -429,17 +430,17 @@ public class OPFItem
+     public Builder remote(boolean remote)
+     {
+       this.remote = remote;
+       return this;
+     }
+ 
+     public Builder mimetype(String mimetype)
+     {
+-      this.mimetype = Optional.fromNullable(mimetype).or("undefined").trim();
++      this.mimetype = MIMEType.normalize(mimetype);
+       return this;
+     }
+ 
+     public String mimetype()
+     {
+       return mimetype;
+     }
+ 
+diff --git a/src/main/java/org/w3c/epubcheck/core/references/Resource.java b/src/main/java/org/w3c/epubcheck/core/references/Resource.java
+index f259a0a4..2fafbe6a 100644
+--- a/src/main/java/org/w3c/epubcheck/core/references/Resource.java
++++ b/src/main/java/org/w3c/epubcheck/core/references/Resource.java
+@@ -1,10 +1,12 @@
+ package org.w3c.epubcheck.core.references;
+ 
++import org.w3c.epubcheck.util.mime.MIMEType;
++
+ import com.adobe.epubcheck.opf.OPFItem;
+ import com.google.common.base.Optional;
+ import com.google.common.base.Preconditions;
+ 
+ import io.mola.galimatias.URL;
+ 
+ public class Resource
+ {
+@@ -26,17 +28,17 @@ public class Resource
+       this.url = item.getURL();
+       this.item = item;
+       this.mimetype = item.getMimeType();
+       return this;
+     }
+ 
+     public Resource.Builder mimetype(String mimetype)
+     {
+-      this.mimetype = mimetype;
++      this.mimetype = MIMEType.normalize(mimetype);
+       return this;
+     }
+ 
+     public Resource build()
+     {
+       return new Resource(this);
+     }
+   }
+diff --git a/src/main/java/org/w3c/epubcheck/util/mime/MIMEType.java b/src/main/java/org/w3c/epubcheck/util/mime/MIMEType.java
+index 97e699a3..b4e21767 100644
+--- a/src/main/java/org/w3c/epubcheck/util/mime/MIMEType.java
++++ b/src/main/java/org/w3c/epubcheck/util/mime/MIMEType.java
+@@ -130,24 +130,24 @@ public final class MIMEType
+    */
+   @Override
+   public String toString()
+   {
+     return (serialization != null) ? serialization
+         : (serialization = MIMETypeSerializer.serialize(this));
+   }
+ 
+-  public MIMEType filter(String... paramNames)
++  public MIMEType filterParameters(String... paramNames)
+   {
+     if (params.isEmpty()) return this;
+ 
+     Set<String> keys = Arrays.stream(paramNames).filter(p -> !Strings.isNullOrEmpty(p))
+         .collect(Collectors.toSet());
+ 
+-    if (keys.isEmpty()) return this;
++    if (keys.isEmpty()) return of(type,subtype);
+ 
+     Builder builder = new Builder().type(type).subtype(subtype);
+     params.entrySet().stream()
+         .filter(p -> keys.contains(p.getKey()))
+         .forEachOrdered(p -> builder.param(p.getKey(), p.getValue()));
+     return builder.build();
+   }
+ 
+
+```
+
+## Methods to call (Java signatures)
+- com.adobe.epubcheck.opf.OPFItem$Builder#mimetype: public com.adobe.epubcheck.opf.OPFItem$Builder mimetype(java.lang.String)
+- com.adobe.epubcheck.opf.OPFItem$Builder#mimetype: public java.lang.String mimetype()
+- org.w3c.epubcheck.core.references.Resource$Builder#mimetype: public org.w3c.epubcheck.core.references.Resource$Builder mimetype(java.lang.String)
+- org.w3c.epubcheck.util.mime.MIMEType#filterParameters: public org.w3c.epubcheck.util.mime.MIMEType filterParameters(java.lang.String...)
+
+Reply as {"methods":[{"method":"pkg.Class#name","calls":[[arg, ...], ...]}]}
+
+## Reply
+{
+ "methods": [
+  {
+   "method": "com.adobe.epubcheck.opf.OPFItem$Builder#mimetype",
+   "calls": [
+    [
+     "text/html"
+    ],
+    [
+     "application/xhtml+xml"
+    ],
+    [
+     "image/jpeg"
+    ],
+    [
+     "image/png"
+    ],
+    [
+     "application/pdf"
+    ],
+    [
+     "application/epub+zip"
+    ],
+    [
+     "text/css"
+    ],
+    [
+     "application/javascript"
+    ]
+   ]
+  },
+  {
+   "method": "com.adobe.epubcheck.opf.OPFItem$Builder#mimetype",
+   "calls": [
+    [
+     "undefined"
+    ],
+    [
+     "null"
+    ],
+    [
+     "  "
+    ],
+    [
+     "text/html; charset=utf-8"
+    ],
+    [
+     "application/xhtml+xml; charset=UTF-8"
+    ],
+    [
+     "image/jpeg; quality=0.85"
+    ],
+    [
+     "image/png; depth=8"
+    ],
+    [
+     "application/pdf; version=1.7"
+    ]
+   ]
+  },
+  {
+   "method": "org.w3c.epubcheck.core.references.Resource$Builder#mimetype",
+   "calls": [
+    [
+     "text/html"
+    ],
+    [
+     "application/xhtml+xml"
+    ],
+    [
+     "image/jpeg"
+    ],
+    [
+     "image/png"
+    ],
+    [
+     "application/pdf"
+    ],
+    [
+     "application/epub+zip"
+    ],
+    [
+     "text/css"
+    ],
+    [
+     "application/javascript"
+    ]
+   ]
+  },
+  {
+   "method": "org.w3c.epubcheck.core.references.Resource$Builder#mimetype",
+   "calls": [
+    [
+     "undefined"
+    ],
+    [
+     "null"
+    ],
+    [
+     "  "
+    ],
+    [
+     "text/html; charset=utf-8"
+    ],
+    [
+     "application/xhtml+xml; charset=UTF-8"
+    ],
+    [
+     "image/jpeg; quality=0.85"
+    ],
+    [
+     "image/png; depth=8"
+    ],
+    [
+     "application/pdf; version=1.7"
+    ]
+   ]
+  },
+  {
+   "method": "org.w3c.epubcheck.util.mime.MIMEType#filterParameters",
+   "calls": [
+    [
+     "charset"
+    ],
+    [
+     "quality"
+    ],
+    [
+     "depth"
+    ],
+    [
+     "version"
+    ],
+    [
+     "boundary"
+    ],
+    [
+     "name"
+    ],
+    [
+     "filename"
+    ],
+    [
+     "p1",
+     "p2"
+    ]
+   ]
+  }
+ ]
+}

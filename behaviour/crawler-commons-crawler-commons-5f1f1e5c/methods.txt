@@ -1,0 +1,2 @@
+crawlercommons.utils.URLUtils#<field>
+crawlercommons.utils.URLUtils#resolve

@@ -1,0 +1,99 @@
+{
+ "org.jsoup.helper.W3CDom$W3CBuilder#W3CBuilder": [
+  [
+   {}
+  ]
+ ],
+ "org.jsoup.helper.W3CDom$W3CBuilder#head": [
+  [
+   "<html>",
+   0
+  ],
+  [
+   "<body>",
+   1
+  ],
+  [
+   "<div>",
+   2
+  ],
+  [
+   "<span>",
+   3
+  ],
+  [
+   "<a>",
+   4
+  ],
+  [
+   "<img>",
+   5
+  ],
+  [
+   "<p>",
+   6
+  ],
+  [
+   "<h1>",
+   7
+  ]
+ ],
+ "org.jsoup.select.NodeTraversor#traverse": [
+  [
+   {
+    "visitor": {},
+    "root": "<html>"
+   },
+   0
+  ],
+  [
+   {
+    "visitor": {},
+    "root": "<body>"
+   },
+   1
+  ],
+  [
+   {
+    "visitor": {},
+    "root": "<div>"
+   },
+   2
+  ],
+  [
+   {
+    "visitor": {},
+    "root": "<span>"
+   },
+   3
+  ],
+  [
+   {
+    "visitor": {},
+    "root": "<a>"
+   },
+   4
+  ],
+  [
+   {
+    "visitor": {},
+    "root": "<img>"
+   },
+   5
+  ],
+  [
+   {
+    "visitor": {},
+    "root": "<p>"
+   },
+   6
+  ],
+  [
+   {
+    "visitor": {},
+    "root": "<h1>"
+   },
+   7
+  ]
+ ]
+}

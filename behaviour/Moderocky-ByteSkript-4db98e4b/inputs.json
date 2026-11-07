@@ -1,0 +1,71 @@
+{
+ "org.byteskript.skript.lang.syntax.function.ExprFunction#createMatch": [
+  [
+   "function(param1, param2)",
+   null
+  ]
+ ],
+ "org.byteskript.skript.lang.syntax.function.ExprFunction#match": [
+  [
+   "function(param1, param2)",
+   null
+  ]
+ ],
+ "org.byteskript.skript.lang.syntax.function.ExprFunctionExternal#match": [
+  [
+   "function(param1, param2)",
+   null
+  ]
+ ],
+ "org.byteskript.skript.lang.syntax.function.ExprFunctionProperty#match": [
+  [
+   "function(param1, param2)",
+   null
+  ]
+ ],
+ "org.byteskript.skript.lang.syntax.list.ExprNewArray#match": [
+  [
+   "new array(param1, param2)",
+   null
+  ]
+ ],
+ "org.byteskript.skript.runtime.internal.Bootstrapper#bootstrapFunction": [
+  [
+   null,
+   "functionName",
+   null,
+   "source",
+   null,
+   "args"
+  ]
+ ],
+ "org.byteskript.skript.runtime.internal.Bootstrapper#getBootstrap": [
+  [
+   true,
+   true
+  ],
+  [
+   true,
+   false
+  ],
+  [
+   false,
+   true
+  ],
+  [
+   false,
+   false
+  ]
+ ],
+ "org.byteskript.skript.runtime.internal.Bootstrapper#getDescriptor": [
+  [
+   null,
+   null
+  ]
+ ],
+ "org.byteskript.skript.runtime.internal.Bootstrapper#getHandle": [
+  [
+   null
+  ]
+ ]
+}

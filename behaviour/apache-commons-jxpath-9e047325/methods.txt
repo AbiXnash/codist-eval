@@ -1,0 +1,5 @@
+org.apache.commons.jxpath.ExceptionHandler#<field>
+org.apache.commons.jxpath.ExceptionHandler#handle
+org.apache.commons.jxpath.ri.model.NodePointer#handle
+org.apache.commons.jxpath.ri.model.beans.PropertyIterator#getLength
+org.apache.commons.jxpath.ri.model.beans.PropertyIterator#getNodePointer

@@ -1,0 +1,19 @@
+calls=9 ran=9 differ=6 flaky=0 state-only=0 null-only=0
+  estimate(2010-06-15)
+      old: 66.90066782812498 | args [2010-06-15] | state null
+      new: 66.28929166666664 | args [2010-06-15] | state null
+  estimate(2020-02-29)
+      old: 71.667303578125 | args [2020-02-29] | state null
+      new: 69.5924814921875 | args [2020-02-29] | state null
+  estimate(2049-01-01)
+      old: 92.16177420312488 | args [2049-01-01] | state null
+      new: 84.63513631857629 | args [2049-01-01] | state null
+  estimate(2100-01-01)
+      old: 202.8381222222219 | args [2100-01-01] | state null
+      new: 127.36884169357623 | args [2100-01-01] | state null
+  estimate(2200-01-01)
+      old: 442.18133888888855 | args [2200-01-01] | state null
+      new: 271.1904708602428 | args [2200-01-01] | state null
+  estimate(3001-01-01)
+      old: 4443.550138888888 | args [3001-01-01] | state null
+      new: throws java.lang.IllegalArgumentException | state 

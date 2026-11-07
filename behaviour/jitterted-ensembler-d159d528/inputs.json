@@ -1,0 +1,131 @@
+{
+ "com.jitterted.mobreg.adapter.out.websocket.TimerToHtmlTransformer#htmlFor": [
+  [
+   {
+    "ensembleId": {
+     "id": "123"
+    },
+    "status": "WAITING_TO_START",
+    "timeRemaining": 60,
+    "rotation": {
+     "id": "rotation1",
+     "members": [
+      "Alice",
+      "Bob"
+     ]
+    }
+   }
+  ],
+  [
+   {
+    "ensembleId": {
+     "id": "456"
+    },
+    "status": "RUNNING",
+    "timeRemaining": 30,
+    "rotation": {
+     "id": "rotation2",
+     "members": [
+      "Charlie",
+      "David"
+     ]
+    }
+   }
+  ],
+  [
+   {
+    "ensembleId": {
+     "id": "789"
+    },
+    "status": "FINISHED",
+    "timeRemaining": 0,
+    "rotation": {
+     "id": "rotation3",
+     "members": [
+      "Eve",
+      "Frank"
+     ]
+    }
+   }
+  ]
+ ],
+ "com.jitterted.mobreg.adapter.out.websocket.TimerToHtmlTransformer#htmlForTimerControlButton": [
+  [
+   {
+    "ensembleId": {
+     "id": "123"
+    }
+   },
+   "/admin/start-timer",
+   "Start Timer"
+  ],
+  [
+   {
+    "ensembleId": {
+     "id": "456"
+    }
+   },
+   "/admin/stop-timer",
+   "Stop Timer"
+  ],
+  [
+   {
+    "ensembleId": {
+     "id": "789"
+    }
+   },
+   "/admin/pause-timer",
+   "Pause Timer"
+  ]
+ ],
+ "com.jitterted.mobreg.adapter.out.websocket.TimerToHtmlTransformer#htmlForWaitingToStart": [
+  [
+   {
+    "ensembleId": {
+     "id": "123"
+    },
+    "status": "WAITING_TO_START",
+    "timeRemaining": 60,
+    "rotation": {
+     "id": "rotation1",
+     "members": [
+      "Alice",
+      "Bob"
+     ]
+    }
+   }
+  ],
+  [
+   {
+    "ensembleId": {
+     "id": "456"
+    },
+    "status": "WAITING_TO_START",
+    "timeRemaining": 30,
+    "rotation": {
+     "id": "rotation2",
+     "members": [
+      "Charlie",
+      "David"
+     ]
+    }
+   }
+  ],
+  [
+   {
+    "ensembleId": {
+     "id": "789"
+    },
+    "status": "WAITING_TO_START",
+    "timeRemaining": 0,
+    "rotation": {
+     "id": "rotation3",
+     "members": [
+      "Eve",
+      "Frank"
+     ]
+    }
+   }
+  ]
+ ]
+}

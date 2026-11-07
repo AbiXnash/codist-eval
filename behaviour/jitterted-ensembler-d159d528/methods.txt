@@ -1,0 +1,4 @@
+com.jitterted.mobreg.adapter.out.websocket.TimerToHtmlTransformer#<field>
+com.jitterted.mobreg.adapter.out.websocket.TimerToHtmlTransformer#htmlFor
+com.jitterted.mobreg.adapter.out.websocket.TimerToHtmlTransformer#htmlForTimerControlButton
+com.jitterted.mobreg.adapter.out.websocket.TimerToHtmlTransformer#htmlForWaitingToStart
