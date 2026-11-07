@@ -1,0 +1,384 @@
+[
+ {
+  "Bug": "Cli-4",
+  "Without": {
+   "Findings": [
+    {
+     "Path": "src/java/org/apache/commons/cli/Parser.java",
+     "Title": "Empty error message",
+     "Source": "model",
+     "Line": 298,
+     "Located": true
+    }
+   ],
+   "Located": 1,
+   "Took": 18.194041917
+  },
+  "With": {
+   "Findings": [
+    {
+     "Path": "src/java/org/apache/commons/cli/Parser.java",
+     "Title": "Empty error message",
+     "Source": "model",
+     "Line": 298,
+     "Located": true
+    }
+   ],
+   "Located": 1,
+   "Took": 6.688945791
+  },
+  "Targets": {
+   "src/java/org/apache/commons/cli/Parser.java": [
+    298
+   ]
+  }
+ },
+ {
+  "Bug": "Csv-15",
+  "Without": {
+   "Findings": [
+    {
+     "Path": "src/main/java/org/apache/commons/csv/CSVFormat.java",
+     "Title": "printAndQuote() has 29 paths",
+     "Source": "rule",
+     "Line": 1151,
+     "Located": false
+    }
+   ],
+   "Located": 0,
+   "Took": 44.175388416
+  },
+  "With": {
+   "Findings": [
+    {
+     "Path": "src/main/java/org/apache/commons/csv/CSVFormat.java",
+     "Title": "printAndQuote() has 29 paths",
+     "Source": "rule",
+     "Line": 1151,
+     "Located": false
+    }
+   ],
+   "Located": 0,
+   "Took": 98.458899542,
+   "Error": "The model could not review src/main/java/org/apache/commons/csv/CSVFormat.java: the model did not return valid JSON: { \"findings\": [ { \"detail\": \"The code snippet provided is from a Java class that defines various CSV formats, including PostgreSQL text format, RFC4180, and others. The method `printAndQuote` is respo"
+  },
+  "Targets": {
+   "src/main/java/org/apache/commons/csv/CSVFormat.java": [
+    1189,
+    1190,
+    1191,
+    1192
+   ]
+  }
+ },
+ {
+  "Bug": "Csv-4",
+  "Without": {
+   "Findings": [
+    {
+     "Path": "src/main/java/org/apache/commons/csv/CSVParser.java",
+     "Title": "NullPointerException",
+     "Source": "model",
+     "Line": 288,
+     "Located": true
+    }
+   ],
+   "Located": 1,
+   "Took": 19.341219958
+  },
+  "With": {
+   "Findings": [
+    {
+     "Path": "src/main/java/org/apache/commons/csv/CSVParser.java",
+     "Title": "NullPointerException",
+     "Source": "model",
+     "Line": 288,
+     "Located": true
+    }
+   ],
+   "Located": 1,
+   "Took": 9.707599583
+  },
+  "Targets": {
+   "src/main/java/org/apache/commons/csv/CSVParser.java": [
+    284,
+    288
+   ]
+  }
+ },
+ {
+  "Bug": "JxPath-16",
+  "Without": {
+   "Findings": [
+    {
+     "Path": "src/java/org/apache/commons/jxpath/ri/model/dom/DOMNodePointer.java",
+     "Title": "testNode() has 19 paths",
+     "Source": "rule",
+     "Line": 117,
+     "Located": false
+    },
+    {
+     "Path": "src/java/org/apache/commons/jxpath/ri/model/jdom/JDOMNodePointer.java",
+     "Title": "testNode() has 19 paths",
+     "Source": "rule",
+     "Line": 358,
+     "Located": false
+    }
+   ],
+   "Located": 0,
+   "Took": 31.510271333
+  },
+  "With": {
+   "Findings": [
+    {
+     "Path": "src/java/org/apache/commons/jxpath/ri/model/dom/DOMNodePointer.java",
+     "Title": "testNode() has 19 paths",
+     "Source": "rule",
+     "Line": 117,
+     "Located": false
+    },
+    {
+     "Path": "src/java/org/apache/commons/jxpath/ri/model/jdom/JDOMNodePointer.java",
+     "Title": "testNode() has 19 paths",
+     "Source": "rule",
+     "Line": 358,
+     "Located": false
+    }
+   ],
+   "Located": 0,
+   "Took": 35.567443
+  },
+  "Targets": {
+   "src/java/org/apache/commons/jxpath/ri/model/dom/DOMNodePointer.java": [
+    147,
+    148
+   ],
+   "src/java/org/apache/commons/jxpath/ri/model/jdom/JDOMNodePointer.java": [
+    391
+   ]
+  }
+ },
+ {
+  "Bug": "Moderocky-ByteSkript-1dce2997",
+  "Without": {
+   "Findings": [
+    {
+     "Path": "src/main/java/org/byteskript/skript/compiler/DebugSkriptCompiler.java",
+     "Title": "Redundant print statement",
+     "Source": "model",
+     "Line": 44,
+     "Located": true
+    },
+    {
+     "Path": "src/main/java/org/byteskript/skript/compiler/DebugSkriptCompiler.java",
+     "Title": "Redundant print statement",
+     "Source": "model",
+     "Line": 50,
+     "Located": true
+    },
+    {
+     "Path": "src/main/java/org/byteskript/skript/compiler/DebugSkriptCompiler.java",
+     "Title": "Redundant print statement",
+     "Source": "model",
+     "Line": 62,
+     "Located": true
+    }
+   ],
+   "Located": 3,
+   "Took": 30.394226459
+  },
+  "With": {
+   "Findings": [
+    {
+     "Path": "src/main/java/org/byteskript/skript/compiler/DebugSkriptCompiler.java",
+     "Title": "Redundant print calls",
+     "Source": "model",
+     "Line": 44,
+     "Located": true
+    },
+    {
+     "Path": "src/main/java/org/byteskript/skript/compiler/DebugSkriptCompiler.java",
+     "Title": "Redundant print calls",
+     "Source": "model",
+     "Line": 51,
+     "Located": true
+    },
+    {
+     "Path": "src/main/java/org/byteskript/skript/compiler/DebugSkriptCompiler.java",
+     "Title": "Redundant print calls",
+     "Source": "model",
+     "Line": 64,
+     "Located": true
+    }
+   ],
+   "Located": 3,
+   "Took": 39.672816625
+  },
+  "Targets": {
+   "src/main/java/org/byteskript/skript/compiler/DebugSkriptCompiler.java": [
+    44,
+    51,
+    52,
+    62,
+    64
+   ]
+  }
+ },
+ {
+  "Bug": "crawler-commons-crawler-commons-2c2cb3bf",
+  "Without": {
+   "Findings": [
+    {
+     "Path": "src/main/java/crawlercommons/robots/SimpleRobotRulesParser.java",
+     "Title": "parseContent() has 32 paths",
+     "Source": "rule",
+     "Line": 486,
+     "Located": false
+    }
+   ],
+   "Located": 0,
+   "Took": 69.709347708
+  },
+  "With": {
+   "Findings": [
+    {
+     "Path": "src/main/java/crawlercommons/robots/SimpleRobotRulesParser.java",
+     "Title": "parseContent() has 32 paths",
+     "Source": "rule",
+     "Line": 486,
+     "Located": false
+    }
+   ],
+   "Located": 0,
+   "Took": 8.092647416
+  },
+  "Targets": {
+   "src/main/java/crawlercommons/robots/SimpleRobotRulesParser.java": [
+    495
+   ]
+  }
+ },
+ {
+  "Bug": "jhy-jsoup-4a278e9b",
+  "Without": {
+   "Findings": [
+    {
+     "Path": "src/main/java/org/jsoup/helper/W3CDom.java",
+     "Title": "NullPointerException",
+     "Source": "model",
+     "Line": 369,
+     "Located": true
+    }
+   ],
+   "Located": 1,
+   "Took": 26.331846
+  },
+  "With": {
+   "Findings": null,
+   "Located": 0,
+   "Took": 15.302658125
+  },
+  "Targets": {
+   "src/main/java/org/jsoup/helper/W3CDom.java": [
+    353,
+    369,
+    370,
+    371
+   ]
+  }
+ },
+ {
+  "Bug": "jitterted-ensembler-0963194c",
+  "Without": {
+   "Findings": [
+    {
+     "Path": "src/main/java/com/jitterted/mobreg/adapter/in/web/member/EnsembleSummaryView.java",
+     "Title": "Commit message does not match code change",
+     "Source": "model",
+     "Line": 132,
+     "Located": true
+    }
+   ],
+   "Located": 1,
+   "Took": 23.397524833
+  },
+  "With": {
+   "Findings": [
+    {
+     "Path": "src/main/java/com/jitterted/mobreg/adapter/in/web/member/EnsembleSummaryView.java",
+     "Title": "Text change for SPECTATOR case",
+     "Source": "model",
+     "Line": 132,
+     "Located": true
+    }
+   ],
+   "Located": 1,
+   "Took": 11.644979667
+  },
+  "Targets": {
+   "src/main/java/com/jitterted/mobreg/adapter/in/web/member/EnsembleSummaryView.java": [
+    132
+   ]
+  }
+ },
+ {
+  "Bug": "klausbrunner-solarpositioning-4d35aecb",
+  "Without": {
+   "Findings": null,
+   "Located": 0,
+   "Took": 30.368548875
+  },
+  "With": {
+   "Findings": null,
+   "Located": 0,
+   "Took": 8.91188
+  },
+  "Targets": {
+   "src/main/java/net/e175/klaus/solarpositioning/DeltaT.java": [
+    16,
+    66,
+    67,
+    68,
+    69,
+    70,
+    72,
+    73
+   ]
+  }
+ },
+ {
+  "Bug": "w3c-epubcheck-49aacb23",
+  "Without": {
+   "Findings": [
+    {
+     "Path": "src/main/java/com/adobe/epubcheck/tool/EpubChecker.java",
+     "Title": "processArguments() has 90 paths",
+     "Source": "rule",
+     "Line": 478,
+     "Located": false
+    }
+   ],
+   "Located": 0,
+   "Took": 55.670399458
+  },
+  "With": {
+   "Findings": [
+    {
+     "Path": "src/main/java/com/adobe/epubcheck/tool/EpubChecker.java",
+     "Title": "processArguments() has 90 paths",
+     "Source": "rule",
+     "Line": 478,
+     "Located": false
+    }
+   ],
+   "Located": 0,
+   "Took": 10.2459995
+  },
+  "Targets": {
+   "src/main/java/com/adobe/epubcheck/tool/EpubChecker.java": [
+    490,
+    792
+   ]
+  }
+ }
+]
