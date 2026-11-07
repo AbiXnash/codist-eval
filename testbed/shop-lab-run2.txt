@@ -1,0 +1,70 @@
+c39e489 seen-rule        found             lanes=checks                   findings=1 modelRead=False behaviour=skipped  Show order status on the dashboard
+        hit   checks: StatusText.java:9 high Strings compared with ==
+17fd6d1 seen-rule        found             lanes=checks                   findings=1 modelRead=True behaviour=skipped  Look up the customer for an order
+        hit   checks: OrderService.java:31 high Optional.get() without checking it has a value
+60236b3 seen-rule        found             lanes=checks                   findings=1 modelRead=True behaviour=skipped  Mark orders shipped from the warehouse feed
+        hit   checks: ShipmentService.java:17 high @Transactional method catches the error and carries on
+374f48f seen-rule        found             lanes=checks                   findings=1 modelRead=True behaviour=skipped  Price carts from the catalog
+        hit   checks: CartPricer.java:15 medium Database or remote call repeated in a loop
+9cf3135 seen-logic       found             lanes=model,behaviour          findings=1 modelRead=True behaviour=done     Simplify paging
+        hit   model: Paging.java:13 high Incorrect pagination offset calculation
+9d2199a seen-logic       found             lanes=model,behaviour          findings=1 modelRead=True behaviour=done     Accept state codes in any case
+        hit   model: TaxRates.java:13 low NullPointerException on null state
+38591a8 novel            found             lanes=model,behaviour          findings=1 modelRead=True behaviour=done     Let loyalty members use coupons too
+        hit   model: PriceCalculator.java:11 high Discount stacking violation
+6e2c672 novel            found             lanes=model,behaviour          findings=1 modelRead=True behaviour=done     Use one clock for daily reports
+        hit   model: BusinessDay.java:15 high Incorrect business day calculation
+c73bc4b novel            found             lanes=model,behaviour          findings=1 modelRead=True behaviour=done     Make bill splitting simpler
+        hit   model: BillSplitter.java:15 high Bill splitting logic changed
+5be19ec novel            found             lanes=model,behaviour          findings=1 modelRead=True behaviour=done     Tighten the fraud check
+        hit   model: FraudCheck.java:9 high Fraud limit check is exclusive instead of inclusive
+3571d9f novel            found             lanes=model                    findings=1 modelRead=True behaviour=done     Return stock to the shelf on cancel
+        hit   model: OrderService.java:37 high Incorrect stock release on cancel
+1b9cc87 novel            found             lanes=model,behaviour          findings=1 modelRead=True behaviour=done     Show prices in the customer's currency
+        hit   model: CurrencyConverter.java:10 high Incorrect currency conversion
+bf6c915 novel            found             lanes=checks                   findings=1 modelRead=True behaviour=done     Retry payments that time out
+        hit   checks: PaymentService.java:20 medium Database or remote call repeated in a loop
+ac6bbb4 novel            found             lanes=checks                   findings=1 modelRead=True behaviour=done     Keep idempotency keys in milliseconds like the rest of the config
+        hit   checks: PaymentService.java:37 high Seconds passed as milliseconds
+3184f39 novel            found             lanes=model,behaviour          findings=1 modelRead=True behaviour=done     Shorten Redis keys for prices
+        hit   model: PriceCache.java:26 high Currency removed from Redis key
+3747fec novel            found             lanes=model                    findings=1 modelRead=True behaviour=done     Use plural resource names for payments
+        hit   model: PaymentClient.java:9 info Commit message mismatch
+6314b53 novel            found             lanes=model                    findings=1 modelRead=True behaviour=done     Make the settlement run resilient
+        hit   model: SettlementJobConfig.java:64 high Contradicts 'Settlement is all or nothing' rule
+e538089 control-refactor false alarm       lanes=model                    findings=1 modelRead=True behaviour=done     Name the payment request before sending it
+        hit   model: OrderService.java:27 info Commit message does not match code
+ae60f7e control-fix      false alarm       lanes=model                    findings=1 modelRead=True behaviour=done     Compare order status by value
+        hit   model: StatusText.java:9 info Commit message mismatch
+7a40b17 control-feature  false alarm       lanes=model                    findings=2 modelRead=True behaviour=skipped  Add refunds
+        hit   model: RefundService.java:24 medium Negative or zero orderId
+        other model: RefundService.java:30 high NumberFormatException on Redis value
+c7ba802 control-feature  false alarm       lanes=model                    findings=2 modelRead=True behaviour=skipped  Add coupons
+        hit   model: CouponRepository.java:18 low Null or empty coupon code
+        hit   model: CouponRepository.java:24 low Null or empty coupon code
+52cc5d3 control-feature  false alarm       lanes=-                        findings=1 modelRead=True behaviour=skipped  Let customers see their orders
+        other model: OrderRepository.java:27 medium Limit not validated
+802b395 control-feature  false alarm       lanes=model                    findings=2 modelRead=True behaviour=skipped  Stop two settlement runs overlapping
+        hit   model: SettlementLock.java:18 low Null or empty 'owner' value
+        hit   model: SettlementLock.java:23 low Null or empty 'owner' value
+c72bf3e ai-only          found             lanes=model                    findings=1 modelRead=True behaviour=done     Check each refund against the order total
+        hit   model: RefundService.java:21 high Refund amount can exceed paid amount
+40f9c75 ai-only          found             lanes=model                    findings=1 modelRead=True behaviour=done     Tidy the coupon date check
+        hit   model: CouponRepository.java:18 high Coupon validation logic error
+f0cd616 ai-only          found             lanes=model                    findings=1 modelRead=True behaviour=done     Speed up coupon redemption
+        hit   model: CouponRepository.java:24 high Coupon can be redeemed beyond its maximum usage limit
+50dfddc ai-only          missed            lanes=-                        findings=0 modelRead=True behaviour=done     Simplify the order lookup
+89c14f7 ai-only          found             lanes=model                    findings=1 modelRead=True behaviour=done     Tidy the recent orders endpoint
+        hit   model: CustomerOrderController.java:19 high Incorrect parameter order
+78f4d70 ai-only          found             lanes=model                    findings=1 modelRead=True behaviour=done     Hold the settlement lock until the run finishes
+        hit   model: SettlementLock.java:18 high Lock expiration removed
+6a6c1dd ai-only          found             lanes=model                    findings=1 modelRead=True behaviour=done     Always clear the settlement lock when done
+        hit   model: SettlementLock.java:23 high Lock released by unauthorized entity
+
+seen-rule        4/4 found  (checks 4, model 0, behaviour 0)
+seen-logic       2/2 found  (checks 0, model 2, behaviour 2)
+novel            11/11 found  (checks 2, model 9, behaviour 6)
+control-refactor 0/1 found  (checks 0, model 1, behaviour 0)
+control-fix      0/1 found  (checks 0, model 1, behaviour 0)
+control-feature  0/4 found  (checks 0, model 3, behaviour 0)
+ai-only          6/7 found  (checks 0, model 6, behaviour 0)

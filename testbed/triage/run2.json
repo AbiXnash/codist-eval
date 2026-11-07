@@ -1,0 +1,262 @@
+[
+ {
+  "sha": "78f4d70b412b8d1bf1f0aaae04da8ede0b8b4fce",
+  "kind": "ai-only",
+  "severity": "high",
+  "source": "model",
+  "title": "Lock expiration removed",
+  "detail": "The commit message states that the settlement lock should be held until the run finishes, but the code change removes the expiration time from the Redis lock. This means the lock will not be automatically released after 30 minutes if the run crashes or hangs, potentially leading to a deadlock where no other settlement can start.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "89c14f7a60928235cc1c29de2abf15ecccd20ed8",
+  "kind": "ai-only",
+  "severity": "high",
+  "source": "model",
+  "title": "Incorrect parameter order",
+  "detail": "The method `orders.forCustomer(limit, customerId)` is called with the parameters in the wrong order. The method expects `customerId` first and `limit` second, but the parameters are swapped in the call.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "f0cd616ccc8bd7302105e2779b7c3e90b6c3b460",
+  "kind": "ai-only",
+  "severity": "high",
+  "source": "model",
+  "title": "Coupon can be redeemed beyond its maximum usage limit",
+  "detail": "The change removes the condition `AND used < max_uses` from the SQL update statement. This means that even if a coupon has reached its maximum usage limit (`max_uses`), it can still be redeemed. This violates the rule that a coupon should not be redeemable once it has reached its maximum usage limit.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "40f9c75e3f730e9b4dbb19405dce8740eaa1363b",
+  "kind": "ai-only",
+  "severity": "high",
+  "source": "model",
+  "title": "Coupon validation logic error",
+  "detail": "The SQL query now checks if valid_from is greater than or equal to the given day and valid_to is less than or equal to the given day. This change will not return any coupons that are valid on the given day because a coupon cannot be valid from a future date and end on the same day.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "c72bf3ee609961ea6333754702ea941f9771c988",
+  "kind": "ai-only",
+  "severity": "high",
+  "source": "model",
+  "title": "Refund amount can exceed paid amount",
+  "detail": "The change removes the check that ensures the total refunded amount does not exceed the amount paid. This can lead to a situation where the total refunded amount exceeds the paid amount, violating the rule that the total refunded for an order never goes above what was paid.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "802b395de0c31adb67589b897a825535464ed6cd",
+  "kind": "control-feature",
+  "severity": "low",
+  "source": "model",
+  "title": "Null or empty 'owner' value",
+  "detail": "The 'acquire' method does not handle null or empty 'owner' values. If 'owner' is null or empty, it will be stored in Redis, which might lead to unexpected behavior.",
+  "doubt": "Codist could not find where this value becomes null in this code.",
+  "useful": false
+ },
+ {
+  "sha": "802b395de0c31adb67589b897a825535464ed6cd",
+  "kind": "control-feature",
+  "severity": "low",
+  "source": "model",
+  "title": "Null or empty 'owner' value",
+  "detail": "The 'release' method does not handle null or empty 'owner' values. If 'owner' is null or empty, it will always delete the lock, which might lead to unexpected behavior.",
+  "doubt": "Codist could not find where this value becomes null in this code.",
+  "useful": false
+ },
+ {
+  "sha": "52cc5d382080886910de470d950a2be5299da617",
+  "kind": "control-feature",
+  "severity": "medium",
+  "source": "model",
+  "title": "Limit not validated",
+  "detail": "The method forCustomer does not handle the case where the limit is zero or negative, which could lead to unexpected behavior or performance issues.",
+  "doubt": "",
+  "useful": false
+ },
+ {
+  "sha": "c7ba80264a3817d23ffb7293ec1f67affdf3c684",
+  "kind": "control-feature",
+  "severity": "low",
+  "source": "model",
+  "title": "Null or empty coupon code",
+  "detail": "The method `percentOn` does not handle null or empty strings for the `code` parameter. If `code` is null or empty, it will be passed to the SQL query, which could lead to unexpected behavior or errors.",
+  "doubt": "Codist could not find where this value becomes null in this code.",
+  "useful": false
+ },
+ {
+  "sha": "c7ba80264a3817d23ffb7293ec1f67affdf3c684",
+  "kind": "control-feature",
+  "severity": "low",
+  "source": "model",
+  "title": "Null or empty coupon code",
+  "detail": "The method `redeem` does not handle null or empty strings for the `code` parameter. If `code` is null or empty, it will be passed to the SQL query, which could lead to unexpected behavior or errors.",
+  "doubt": "Codist could not find where this value becomes null in this code.",
+  "useful": false
+ },
+ {
+  "sha": "7a40b17972cc183255292b660a7d60bb5c79584c",
+  "kind": "control-feature",
+  "severity": "medium",
+  "source": "model",
+  "title": "Negative or zero orderId",
+  "detail": "The method `refund` does not validate if `orderId` is positive. If `orderId` is negative or zero, it could lead to incorrect key generation in Redis, potentially causing data inconsistency or unexpected behavior.",
+  "doubt": "",
+  "useful": false
+ },
+ {
+  "sha": "7a40b17972cc183255292b660a7d60bb5c79584c",
+  "kind": "control-feature",
+  "severity": "high",
+  "source": "model",
+  "title": "NumberFormatException on Redis value",
+  "detail": "The method `refund` does not handle potential `NumberFormatException` when parsing the refunded amount from Redis. If the value stored in Redis is not a valid long, it will throw an exception.",
+  "doubt": "",
+  "useful": false
+ },
+ {
+  "sha": "ae60f7e347c06c41345aaa7d84ec445cd1864a48",
+  "kind": "control-fix",
+  "severity": "info",
+  "source": "model",
+  "title": "Commit message mismatch",
+  "detail": "The commit message 'Compare order status by value' does not match the actual change made in the code. The code change involves using the `equals` method to compare strings, which is a good practice to avoid `NullPointerException`. However, the commit message does not reflect this improvement or the reason behind it.",
+  "doubt": "",
+  "useful": false
+ },
+ {
+  "sha": "e5380898856c7f831d0cc92bee63013c01cb0f35",
+  "kind": "control-refactor",
+  "severity": "info",
+  "source": "model",
+  "title": "Commit message does not match code",
+  "detail": "The commit message states that the payment request is named before sending it, but the code does not actually name the request. The variable 'request' is created but not used for naming the request.",
+  "doubt": "",
+  "useful": false
+ },
+ {
+  "sha": "6314b53e08ec4fff94a932be41dc122ad55c75d4",
+  "kind": "novel",
+  "severity": "high",
+  "source": "model",
+  "title": "Contradicts 'Settlement is all or nothing' rule",
+  "detail": "The change introduces fault tolerance to the settlement job, allowing it to skip exceptions and continue processing. However, this contradicts the 'Settlement is all or nothing' rule (rule 9) which states that the nightly run should fail if any order cannot be settled.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "3747fecb6184393e311ba717440275c1de73dc15",
+  "kind": "novel",
+  "severity": "info",
+  "source": "model",
+  "title": "Commit message mismatch",
+  "detail": "The commit message states 'Use plural resource names for payments', but the change only renames the endpoint from '/charge' to '/charges'. This does not align with the commit message, which implies a broader change to use plural resource names consistently.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "3184f39bbdf37479f362f480d821104f3f9f5a96",
+  "kind": "novel",
+  "severity": "high",
+  "source": "model",
+  "title": "Currency removed from Redis key",
+  "detail": "The commit message states that Redis keys for prices are being shortened, but the change removes the currency from the key. This violates the Shop Lab rule that 'Cached prices are per currency.' As a result, prices cached for one currency could be served for another, leading to incorrect pricing.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "1b9cc870a750e6df0209b0d928f1ff5b29282d5d",
+  "kind": "novel",
+  "severity": "high",
+  "source": "model",
+  "title": "Incorrect currency conversion",
+  "detail": "The change from division to multiplication in the fromInr method violates the rule that prices are stored in rupees and converting to a foreign currency divides by the rate. This will result in incorrect currency conversion.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "3571d9fc75a5ea7be6db4b0af14f1278d3248430",
+  "kind": "novel",
+  "severity": "high",
+  "source": "model",
+  "title": "Incorrect stock release on cancel",
+  "detail": "The change from 'order.reserved()' to 'order.quantity()' in the stock.release() call does not align with the Shop Lab rule 'Cancelling releases what was reserved.' This rule states that cancelling must give back only what was actually reserved, not the full quantity ordered.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "5be19ecf0f878581ebd773fa400525c740293824",
+  "kind": "novel",
+  "severity": "high",
+  "source": "model",
+  "title": "Fraud limit check is exclusive instead of inclusive",
+  "detail": "The change from '<=' to '<' in the allowed method violates the rule 'The fraud limit is inclusive.' This means that a payment exactly at the customer's limit will now be blocked, which is incorrect according to the rule.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "c73bc4bf446b212c5c5582648b2d2c011e1e953e",
+  "kind": "novel",
+  "severity": "high",
+  "source": "model",
+  "title": "Bill splitting logic changed",
+  "detail": "The change removes the logic that distributes leftover paise among the first people, which violates the 'Bills split exactly' rule. Now, all parts are equal, and the total may not add up to the original totalPaise.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "6e2c672387a16a211a7fe3222e720a00aeabfcb9",
+  "kind": "novel",
+  "severity": "high",
+  "source": "model",
+  "title": "Incorrect business day calculation",
+  "detail": "The change from using 'Asia/Kolkata' to 'UTC' for converting Instant to LocalDate breaks the rule 'The business day is India time.' This will cause orders to be incorrectly associated with the wrong calendar day, leading to incorrect reports, settlement, and daily limits.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "38591a830507331940684f3316c6a7126a2717bb",
+  "kind": "novel",
+  "severity": "high",
+  "source": "model",
+  "title": "Discount stacking violation",
+  "detail": "The change breaks the 'One discount per order' rule. Instead of applying the better of the two discounts, it applies both discounts sequentially.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "9d2199ad7c7da642de4ece24d70d64270ac5841f",
+  "kind": "seen-logic",
+  "severity": "low",
+  "source": "model",
+  "title": "NullPointerException on null state",
+  "detail": "If the input state is null, calling state.toUpperCase() will throw a NullPointerException.",
+  "doubt": "Codist could not find where this value becomes null in this code.",
+  "useful": true
+ },
+ {
+  "sha": "9cf313548a8c947db7f2090c04979687381fa566",
+  "kind": "seen-logic",
+  "severity": "high",
+  "source": "model",
+  "title": "Incorrect pagination offset calculation",
+  "detail": "The change modifies the calculation of the offset for paging. Previously, the offset was calculated as (page - 1) * size, which correctly aligns with the rule that pages are numbered from 1. The new calculation (page * size) will incorrectly calculate the offset, leading to incorrect pagination results.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "6a6c1dd26447a0f3b50c61073a03edeae2086dd7",
+  "kind": "ai-only",
+  "severity": "high",
+  "source": "model",
+  "title": "Lock released by unauthorized entity",
+  "detail": "The change removes the check to ensure the lock is only released by the owner who holds it. This can lead to a situation where a lock is released by an unauthorized entity, potentially causing data inconsistency or security issues.",
+  "doubt": "",
+  "useful": true
+ }
+]

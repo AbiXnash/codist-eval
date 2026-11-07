@@ -1,0 +1,282 @@
+[
+ {
+  "sha": "6a6c1dd26447a0f3b50c61073a03edeae2086dd7",
+  "kind": "ai-only",
+  "severity": "high",
+  "source": "model",
+  "title": "Lock released by unauthorized owner",
+  "detail": "The change removes the check to ensure that the lock is only released if the current owner still holds it. This can lead to unintended lock releases if another owner has acquired the lock in the meantime.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "78f4d70b412b8d1bf1f0aaae04da8ede0b8b4fce",
+  "kind": "ai-only",
+  "severity": "high",
+  "source": "model",
+  "title": "Lock expiration removed",
+  "detail": "The commit message states that the lock should be held until the run finishes, but the code change removes the expiration time from the Redis lock. This means the lock will not be automatically released after 30 minutes if the run crashes or hangs, potentially leading to a deadlock.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "89c14f7a60928235cc1c29de2abf15ecccd20ed8",
+  "kind": "ai-only",
+  "severity": "high",
+  "source": "model",
+  "title": "Incorrect method parameter order",
+  "detail": "The method signature for 'forCustomer' in the 'OrderRepository' class expects the 'customerId' as the first parameter and 'limit' as the second parameter. The change in the controller method swaps these parameters, which will cause a runtime error when the method is called.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "f0cd616ccc8bd7302105e2779b7c3e90b6c3b460",
+  "kind": "ai-only",
+  "severity": "high",
+  "source": "model",
+  "title": "Coupon redemption bypasses max usage limit",
+  "detail": "The change removes the condition `AND used < max_uses` from the SQL update statement. This means that the coupon can be redeemed even if it has reached its maximum usage limit. This could lead to incorrect usage tracking and potential misuse of coupons.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "40f9c75e3f730e9b4dbb19405dce8740eaa1363b",
+  "kind": "ai-only",
+  "severity": "high",
+  "source": "model",
+  "title": "Incorrect date range check",
+  "detail": "The SQL query now incorrectly checks if the valid_from date is greater than or equal to the given day and the valid_to date is less than or equal to the given day. This will not correctly identify valid coupons for the given day.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "c72bf3ee609961ea6333754702ea941f9771c988",
+  "kind": "ai-only",
+  "severity": "critical",
+  "source": "model",
+  "title": "Refund amount can exceed paid amount",
+  "detail": "The change removes the check that ensures the total refunded amount does not exceed the amount paid. This could lead to a refund amount exceeding the paid amount, which is a critical issue.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "802b395de0c31adb67589b897a825535464ed6cd",
+  "kind": "control-feature",
+  "severity": "low",
+  "source": "model",
+  "title": "Null Pointer Exception in acquire method",
+  "detail": "The 'acquire' method does not handle null 'owner' input. If 'owner' is null, it will throw a NullPointerException when calling 'equals' on it.",
+  "doubt": "Codist could not find where this value becomes null in this code.",
+  "useful": false
+ },
+ {
+  "sha": "802b395de0c31adb67589b897a825535464ed6cd",
+  "kind": "control-feature",
+  "severity": "low",
+  "source": "model",
+  "title": "Null Pointer Exception in release method",
+  "detail": "The 'release' method does not handle null 'owner' input. If 'owner' is null, it will throw a NullPointerException when calling 'equals' on it.",
+  "doubt": "Codist could not find where this value becomes null in this code.",
+  "useful": false
+ },
+ {
+  "sha": "52cc5d382080886910de470d950a2be5299da617",
+  "kind": "control-feature",
+  "severity": "high",
+  "source": "model",
+  "title": "Potential security issue with customer ID validation",
+  "detail": "The commit message states 'Let customers see their orders', but the code does not handle the case where the customer ID is invalid or does not exist. This could lead to a security issue where a customer could potentially view orders that do not belong to them by manipulating the customer ID in the URL.",
+  "doubt": "",
+  "useful": false
+ },
+ {
+  "sha": "52cc5d382080886910de470d950a2be5299da617",
+  "kind": "control-feature",
+  "severity": "medium",
+  "source": "model",
+  "title": "Negative customerId handling",
+  "detail": "The method `forCustomer` does not handle the case where `customerId` is negative, which could lead to unexpected results or errors in the database query.",
+  "doubt": "",
+  "useful": false
+ },
+ {
+  "sha": "52cc5d382080886910de470d950a2be5299da617",
+  "kind": "control-feature",
+  "severity": "medium",
+  "source": "model",
+  "title": "Zero limit handling",
+  "detail": "The method `forCustomer` does not handle the case where `limit` is zero, which could lead to unexpected results or errors in the database query.",
+  "doubt": "",
+  "useful": false
+ },
+ {
+  "sha": "c7ba80264a3817d23ffb7293ec1f67affdf3c684",
+  "kind": "control-feature",
+  "severity": "low",
+  "source": "model",
+  "title": "Null or empty `code` input not handled",
+  "detail": "The `percentOn` method does not handle null or empty `code` input, which could lead to a SQL exception.",
+  "doubt": "Codist could not find where this value becomes null in this code.",
+  "useful": false
+ },
+ {
+  "sha": "c7ba80264a3817d23ffb7293ec1f67affdf3c684",
+  "kind": "control-feature",
+  "severity": "low",
+  "source": "model",
+  "title": "Null or empty `code` input not handled",
+  "detail": "The `redeem` method does not handle null or empty `code` input, which could lead to a SQL exception.",
+  "doubt": "Codist could not find where this value becomes null in this code.",
+  "useful": false
+ },
+ {
+  "sha": "7a40b17972cc183255292b660a7d60bb5c79584c",
+  "kind": "control-feature",
+  "severity": "high",
+  "source": "model",
+  "title": "Redis operation failure not handled",
+  "detail": "If the Redis operation fails or the connection is lost, the method will return the incorrect total refunded amount without any indication of failure.",
+  "doubt": "",
+  "useful": false
+ },
+ {
+  "sha": "ae60f7e347c06c41345aaa7d84ec445cd1864a48",
+  "kind": "control-fix",
+  "severity": "low",
+  "source": "model",
+  "title": "NullPointerException on null status",
+  "detail": "If `order.status()` returns null, the `equals` method will throw a NullPointerException.",
+  "doubt": "Codist could not find where this value becomes null in this code.",
+  "useful": false
+ },
+ {
+  "sha": "6314b53e08ec4fff94a932be41dc122ad55c75d4",
+  "kind": "novel",
+  "severity": "high",
+  "source": "model",
+  "title": "Infinite Loop Risk",
+  "detail": "The skipLimit set to Integer.MAX_VALUE can lead to an infinite loop if all items fail, causing the job to hang indefinitely.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "3747fecb6184393e311ba717440275c1de73dc15",
+  "kind": "novel",
+  "severity": "info",
+  "source": "model",
+  "title": "Commit message mismatch",
+  "detail": "The commit message states 'Use plural resource names for payments', but the change only renames the endpoint from '/charge' to '/charges'. This change does not affect the functionality or the data being processed. The commit message does not match the actual change made.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "3184f39bbdf37479f362f480d821104f3f9f5a96",
+  "kind": "novel",
+  "severity": "high",
+  "source": "model",
+  "title": "Key collision due to shortened Redis key",
+  "detail": "The commit message states that Redis keys for prices are being shortened, but the change only removes the currency part from the key. This will lead to key collisions for different currencies of the same product ID, resulting in incorrect price retrieval.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "ac6bbb45d4fc7d37e9373fa58a0ec7eb28d111ca",
+  "kind": "novel",
+  "severity": "high",
+  "source": "model",
+  "title": "Incorrect Duration for Idempotency Key",
+  "detail": "The change sets the expiration time for the idempotency key to 24 milliseconds instead of 24 hours. This is likely a bug as it contradicts the commit message which states 'Keep idempotency keys in milliseconds like the rest of the config'. The correct duration should be 24 * 60 * 60 * 1000 milliseconds to match 24 hours.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "1b9cc870a750e6df0209b0d928f1ff5b29282d5d",
+  "kind": "novel",
+  "severity": "high",
+  "source": "model",
+  "title": "Incorrect currency conversion",
+  "detail": "The change from division to multiplication in the fromInr method will result in incorrect currency conversion. The method is supposed to convert rupee paise to another currency's cents using a conversion rate, but the multiplication will lead to an incorrect result.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "3571d9fc75a5ea7be6db4b0af14f1278d3248430",
+  "kind": "novel",
+  "severity": "high",
+  "source": "model",
+  "title": "NullPointerException risk",
+  "detail": "If the 'order' object is null or does not have a valid 'productId' or 'quantity', a NullPointerException will be thrown when trying to access these fields.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "5be19ecf0f878581ebd773fa400525c740293824",
+  "kind": "novel",
+  "severity": "high",
+  "source": "model",
+  "title": "Commit message contradicts code change",
+  "detail": "The commit message states that the fraud check should 'Tighten the fraud check', but the change in the code actually relaxes the check by allowing amounts equal to the limit. This contradicts the commit message and could lead to unexpected behavior where payments at the limit are allowed instead of being blocked.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "c73bc4bf446b212c5c5582648b2d2c011e1e953e",
+  "kind": "novel",
+  "severity": "high",
+  "source": "model",
+  "title": "Incorrect Bill Splitting",
+  "detail": "The change removes the logic that distributes the remainder of the total amount among the first few people, leading to an incorrect distribution of the bill. The new code assigns an equal share to each person without considering the remainder, which can result in the total not adding up to the original amount.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "6e2c672387a16a211a7fe3222e720a00aeabfcb9",
+  "kind": "novel",
+  "severity": "high",
+  "source": "model",
+  "title": "Incorrect Business Day Calculation",
+  "detail": "The change from using the SHOP_ZONE (Asia/Kolkata) to UTC in the of method will result in incorrect business days being calculated for orders placed outside of UTC. This could lead to wrong results in daily reports.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "38591a830507331940684f3316c6a7126a2717bb",
+  "kind": "novel",
+  "severity": "medium",
+  "source": "model",
+  "title": "Commit message does not match code change",
+  "detail": "The commit message states that loyalty members can now use coupons too, but the code change does not actually implement this feature. The code change only modifies how discounts are applied, but does not add any logic to check if a loyalty member is eligible to use a coupon.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "9d2199ad7c7da642de4ece24d70d64270ac5841f",
+  "kind": "seen-logic",
+  "severity": "low",
+  "source": "model",
+  "title": "NullPointerException on null input",
+  "detail": "If the input 'state' is null, calling 'toUpperCase()' on it will throw a NullPointerException.",
+  "doubt": "Codist could not find where this value becomes null in this code.",
+  "useful": true
+ },
+ {
+  "sha": "9cf313548a8c947db7f2090c04979687381fa566",
+  "kind": "seen-logic",
+  "severity": "high",
+  "source": "model",
+  "title": "Incorrect pagination offset calculation",
+  "detail": "The change alters the calculation of the offset, which could lead to incorrect pagination results. The original code correctly calculates the offset as (page - 1) * size, while the new code calculates it as page * size. This change will cause the first page to start from the second item instead of the first.",
+  "doubt": "",
+  "useful": true
+ },
+ {
+  "sha": "374f48f716ab6b9223b482cb9e7cfb0499da5be7",
+  "kind": "seen-rule",
+  "severity": "low",
+  "source": "model",
+  "title": "Null Pointer Exception",
+  "detail": "If the `productIds` list is null, a NullPointerException will be thrown when iterating over it.",
+  "doubt": "Codist could not find where this value becomes null in this code.",
+  "useful": true
+ }
+]
