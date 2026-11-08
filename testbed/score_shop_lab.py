@@ -1,6 +1,8 @@
 """Scores a running Codist against the shop-lab answer key.
 
-    python3 score_shop_lab.py [http://localhost:8091]
+    python3 score_shop_lab.py [http://localhost:8091] [answer-key.json]
+
+The answer key defaults to shop-lab-truth.json; records-lab-truth.json scores records-lab the same way.
 
 A bug counts as found by a lane when that lane reports a finding in the bug's file within 6 lines of the planted
 line. For the refactor control, any finding is a false alarm; for the fix control, the checks should report nothing
@@ -10,7 +12,7 @@ import json, os, sys, urllib.request
 
 BASE = sys.argv[1] if len(sys.argv) > 1 else "http://localhost:8091"
 HERE = os.path.dirname(os.path.abspath(__file__))
-truth = json.load(open(os.path.join(HERE, "shop-lab-truth.json")))
+truth = json.load(open(os.path.join(HERE, sys.argv[2] if len(sys.argv) > 2 else "shop-lab-truth.json")))
 
 
 def get(path):
@@ -28,7 +30,7 @@ for t in truth:
     c = get(f"/api/commits/{t['sha']}")
     review = c.get("review") or {}
     findings = [dict(f, path=fl["path"]) for fl in review.get("files", []) for f in fl.get("findings", [])]
-    near = [f for f in findings if f["path"] == t["path"] and abs((f.get("line") or 0) - t["line"]) <= 6]
+    near = [f for f in findings if f["path"] == t["path"] and t["line"] and abs((f.get("line") or 0) - t["line"]) <= 6]
     got = {"checks": any(lane(f) == "checks" for f in near), "model": any(lane(f) == "model" for f in near)}
     b = c.get("behaviour") or {}
     bstat = b.get("status", "")

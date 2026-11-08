@@ -1,0 +1,242 @@
+[
+ {
+  "sha": "51409089b3bd22c14d6da6b2163a0771a122d5dc",
+  "message": "Search employees by name",
+  "kind": "seen-rule",
+  "bug": "The search text is joined into the SQL, so a request can change the query (SQL injection; rule 7)",
+  "path": "src/main/java/com/recordslab/db/EmployeeRepository.java",
+  "line": 50,
+  "rule": "sql-concatenation",
+  "behaviourCanSee": false
+ },
+ {
+  "sha": "b45da9fb0b1d33781c67bc0714abb651d9ab8dfd",
+  "message": "Read only the employee's own department for the HR view",
+  "kind": "seen-rule",
+  "bug": "Optional.get() on the department lookup without a check",
+  "path": "src/main/java/com/recordslab/service/Directory.java",
+  "line": 42,
+  "rule": "optional-get",
+  "behaviourCanSee": false
+ },
+ {
+  "sha": "7836468a931f2895d91328cc84be8653b3c1caaa",
+  "message": "Load each employee's department as the export goes",
+  "kind": "seen-rule",
+  "bug": "A database query per employee in a loop (N+1) where the departments were read once before",
+  "path": "src/main/java/com/recordslab/service/Directory.java",
+  "line": 52,
+  "rule": "cost-loop",
+  "behaviourCanSee": false
+ },
+ {
+  "sha": "070f83c1bd00cf010a3b5303060f4b2935d73c8d",
+  "message": "Make the HR check explicit about a missing header",
+  "kind": "seen-rule",
+  "bug": "The role header is compared with == against \"hr\", so a real request's header never matches and HR is always refused",
+  "path": "src/main/java/com/recordslab/security/Access.java",
+  "line": 15,
+  "rule": "string-identity",
+  "behaviourCanSee": false
+ },
+ {
+  "sha": "a5160cea47801b2edc7e06209be818f2c70c773e",
+  "message": "Work out pay after a raise for the HR view",
+  "kind": "seen-rule",
+  "bug": "BigDecimal built from a double, so 1.035 becomes 1.03499999... and some raises round a cent low (rule 2)",
+  "path": "src/main/java/com/recordslab/format/Money.java",
+  "line": 21,
+  "rule": "bigdecimal-double",
+  "behaviourCanSee": true
+ },
+ {
+  "sha": "5b2d1c2b49435fc149b7b22249f7aa0ba116f100",
+  "message": "Stamp each XML export with the time it was made",
+  "kind": "seen-logic",
+  "bug": "One SimpleDateFormat shared by every request is not thread-safe, so parallel exports can get garbled stamps; it also formats in the server's zone while printing Z (rule 3)",
+  "path": "src/main/java/com/recordslab/export/XmlExportController.java",
+  "line": 18,
+  "rule": null,
+  "behaviourCanSee": false
+ },
+ {
+  "sha": "d9bee0f35abd9dca9d4515b160c68abc33a45b6b",
+  "message": "Tidy the email helper",
+  "kind": "seen-logic",
+  "bug": "toLowerCase() without a locale: on a Turkish server EMRE.YILMAZ becomes emre.y\u0131lmaz with a dotless i, so the formats disagree with the stored email (rules 6 and 10)",
+  "path": "src/main/java/com/recordslab/format/Emails.java",
+  "line": 12,
+  "rule": null,
+  "behaviourCanSee": false
+ },
+ {
+  "sha": "7f90a40676f3252bc124581227ee41eb4a5db336",
+  "message": "Show pay in the employee list so managers can plan budgets",
+  "kind": "novel",
+  "bug": "Pay is added to the public view, so the JSON API and anything built on PublicEmployee now shows every salary to anyone (rule 1)",
+  "path": "src/main/java/com/recordslab/view/PublicEmployee.java",
+  "line": 15,
+  "rule": null,
+  "behaviourCanSee": false
+ },
+ {
+  "sha": "15f9abbfe39272d541f2a1e06d4530aaacf669f1",
+  "message": "Simplify the export query",
+  "kind": "novel",
+  "bug": "The deleted_at filter is gone, so the XML and CSV exports include people who were deleted (rule 5)",
+  "path": "src/main/java/com/recordslab/db/EmployeeRepository.java",
+  "line": 45,
+  "rule": null,
+  "behaviourCanSee": false
+ },
+ {
+  "sha": "f2caf58ddf8239c4eafe52ad689e03810c170a79",
+  "message": "Show times with their offset so people can read them",
+  "kind": "novel",
+  "bug": "Times are now in the server's own zone with an offset, not UTC with Z, in every format (rule 3)",
+  "path": "src/main/java/com/recordslab/format/Dates.java",
+  "line": 10,
+  "rule": null,
+  "behaviourCanSee": true
+ },
+ {
+  "sha": "50d96a143b95dbb0bae8c7708755fe48fcb84dc1",
+  "message": "Round money the way people expect",
+  "kind": "novel",
+  "bug": "Half-up rounding instead of half-even: 1200000.005 shows as 1200000.01, not 1200000.00 (rule 2)",
+  "path": "src/main/java/com/recordslab/format/Money.java",
+  "line": 12,
+  "rule": null,
+  "behaviourCanSee": true
+ },
+ {
+  "sha": "5168818d9a6143ad0689022b11b101dbe32b741f",
+  "message": "Keep negative numbers readable in CSV",
+  "kind": "novel",
+  "bug": "'-' no longer counts as a formula start, so a cell like -2+3+cmd|'/C calc'!A0 runs in a spreadsheet (rule 8)",
+  "path": "src/main/java/com/recordslab/format/CsvCell.java",
+  "line": 5,
+  "rule": null,
+  "behaviourCanSee": true
+ },
+ {
+  "sha": "9aa776fd0b47b536ce37b33fcf0862596628715c",
+  "message": "Pass GraphQL paging straight through",
+  "kind": "novel",
+  "bug": "GraphQL skips Paging.of: a size of 100000 is not cut to 100 and page 0 gives a negative offset (rule 4)",
+  "path": "src/main/java/com/recordslab/graphql/DirectoryGraph.java",
+  "line": 32,
+  "rule": null,
+  "behaviourCanSee": false
+ },
+ {
+  "sha": "59b8d019d477438c4c4223091732e15ee8116b0c",
+  "message": "Count everyone in each department",
+  "kind": "novel",
+  "bug": "Head counts now include deleted employees (rule 12)",
+  "path": "src/main/java/com/recordslab/db/EmployeeRepository.java",
+  "line": 62,
+  "rule": null,
+  "behaviourCanSee": false
+ },
+ {
+  "sha": "060818019e34c95bafc1eddec2a93d983cace0db",
+  "message": "Let the database index do the sorting",
+  "kind": "novel",
+  "bug": "Sorting is now case-sensitive with no id tie-break: 'rao' sorts after 'Yilmaz', and equal names can move between pages (rule 9)",
+  "path": "src/main/java/com/recordslab/db/EmployeeRepository.java",
+  "line": 20,
+  "rule": null,
+  "behaviourCanSee": false
+ },
+ {
+  "sha": "32addb0d3172e7823199f3268df36297b776e25a",
+  "message": "Export CSV straight from the tables",
+  "kind": "novel",
+  "bug": "The CSV skips the shared view: emails keep their stored case and times keep fractions, so CSV disagrees with JSON and XML; it also reads outside the export snapshot (rules 6, 10, 11)",
+  "path": "src/main/java/com/recordslab/export/CsvExportController.java",
+  "line": 29,
+  "rule": null,
+  "behaviourCanSee": false
+ },
+ {
+  "sha": "035a5328a4c4c91ebe81256d2f547703e75c978f",
+  "message": "Drop the transaction around exports, they only read",
+  "kind": "ai-only",
+  "bug": "Without the read-only transaction the employees and departments are read separately, so an export can mix data from before and after a change (rule 11)",
+  "path": "src/main/java/com/recordslab/service/Directory.java",
+  "line": 46,
+  "rule": null,
+  "behaviourCanSee": false
+ },
+ {
+  "sha": "6374bbeb6c437167ab4b9a9ab34c79e1a368355e",
+  "message": "Let the admin tool open the HR view without a role",
+  "kind": "ai-only",
+  "bug": "A request with no X-Role header now passes the HR check, so anyone sees pay and national ids (rule 1)",
+  "path": "src/main/java/com/recordslab/security/Access.java",
+  "line": 15,
+  "rule": null,
+  "behaviourCanSee": false
+ },
+ {
+  "sha": "92249678e47e1ef2cd76acc71338d3b5d9032d89",
+  "message": "Tidy the employee list endpoint",
+  "kind": "ai-only",
+  "bug": "page and size are swapped: ?page=2&size=50 returns page 50 of 2 rows",
+  "path": "src/main/java/com/recordslab/api/EmployeeController.java",
+  "line": 31,
+  "rule": null,
+  "behaviourCanSee": false
+ },
+ {
+  "sha": "083c411bd6d9cb6008f5f44c8ad47709c1d509b2",
+  "message": "Move writing one employee into its own method",
+  "kind": "control-refactor",
+  "bug": "No behaviour change; anything reported is a false alarm",
+  "path": "src/main/java/com/recordslab/export/XmlExportController.java",
+  "line": 34,
+  "rule": null,
+  "behaviourCanSee": false
+ },
+ {
+  "sha": "c726b421b65ecfdd2a6820eb0b61f7bc882b56fe",
+  "message": "Bind the search text as a parameter",
+  "kind": "control-fix",
+  "bug": "Fixes the SQL joined from the search text; the checks should report nothing new and the issue should close",
+  "path": "src/main/java/com/recordslab/db/EmployeeRepository.java",
+  "line": 51,
+  "rule": null,
+  "behaviourCanSee": false
+ },
+ {
+  "sha": "24f395428cf5c857b9aa80b21669e1a9bde79e24",
+  "message": "Compare the role by value",
+  "kind": "control-fix",
+  "bug": "Fixes both the identity comparison and the missing-header hole in the HR check",
+  "path": "src/main/java/com/recordslab/security/Access.java",
+  "line": 15,
+  "rule": null,
+  "behaviourCanSee": false
+ },
+ {
+  "sha": "7f4a8bbf49c9d7174c3561404a8b685bac91144b",
+  "message": "Look up a department by its code",
+  "kind": "control-feature",
+  "bug": "New feature, correct; anything reported is a false alarm",
+  "path": "src/main/java/com/recordslab/api/EmployeeController.java",
+  "line": 57,
+  "rule": null,
+  "behaviourCanSee": false
+ },
+ {
+  "sha": "50f54082b44b02eb1de30147d4881b6c10c13e4c",
+  "message": "Search from GraphQL too",
+  "kind": "control-feature",
+  "bug": "New feature, correct; anything reported is a false alarm",
+  "path": "src/main/java/com/recordslab/graphql/DirectoryGraph.java",
+  "line": 42,
+  "rule": null,
+  "behaviourCanSee": false
+ }
+]
