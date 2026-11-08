@@ -25,11 +25,14 @@ def lane(f):
     return "checks" if src in ("rule", "rules", "check", "checks", "static") else "model"
 
 
-rows, totals, rows_findings = [], {}, {}
+rows, totals, rows_findings, rows_notes = [], {}, {}, {}
 for t in truth:
     c = get(f"/api/commits/{t['sha']}")
     review = c.get("review") or {}
-    findings = [dict(f, path=fl["path"]) for fl in review.get("files", []) for f in fl.get("findings", [])]
+    every = [dict(f, path=fl["path"]) for fl in review.get("files", []) for f in fl.get("findings", [])]
+    # A finding Codist doubts is shown as a note, not an alarm; notes are listed but never count as found or as false alarms.
+    findings = [f for f in every if not f.get("doubt")]
+    notes = [f for f in every if f.get("doubt")]
     near = [f for f in findings if f["path"] == t["path"] and t["line"] and abs((f.get("line") or 0) - t["line"]) <= 6]
     got = {"checks": any(lane(f) == "checks" for f in near), "model": any(lane(f) == "model" for f in near)}
     b = c.get("behaviour") or {}
@@ -42,6 +45,7 @@ for t in truth:
         verdict = "found" if any_hit else ("flagged elsewhere" if findings else "missed")
     model_read = bool(review.get("model"))
     rows.append((t, got, bstat, verdict, len(findings), model_read, near))
+    rows_notes[t["sha"]] = notes
     rows_findings[t["sha"]] = findings
     k = totals.setdefault(t["kind"], {"n": 0, "found": 0, "checks": 0, "model": 0, "behaviour": 0})
     k["n"] += 1
@@ -58,6 +62,8 @@ for t, got, bstat, verdict, n, read, near in rows:
         print(f"        hit   {lane(f)}: {f['path'].split('/')[-1]}:{f.get('line')} {f.get('severity', '')} {f.get('title')}")
     for f in others:
         print(f"        other {lane(f)}: {f['path'].split('/')[-1]}:{f.get('line')} {f.get('severity', '')} {f.get('title')}")
+    for f in rows_notes[t["sha"]]:
+        print(f"        note  {lane(f)}: {f['path'].split('/')[-1]}:{f.get('line')} {f.get('title')}")
 print()
 for kind, k in totals.items():
     print(f"{kind:16} {k['found']}/{k['n']} found  (checks {k['checks']}, model {k['model']}, behaviour {k['behaviour']})")

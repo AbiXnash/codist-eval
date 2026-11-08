@@ -1,0 +1,60 @@
+5140908 seen-rule        found             lanes=checks                   findings=1 modelRead=True behaviour=-        Search employees by name
+        hit   checks: EmployeeRepository.java:50 critical SQL built by joining strings
+        note  model: EmployeeController.java:35 Null or empty search query
+        note  model: Directory.java:31 Null or empty text not checked
+b45da9f seen-rule        found             lanes=checks                   findings=1 modelRead=True behaviour=-        Read only the employee's own department for the HR view
+        hit   checks: Directory.java:42 high Optional.get() without checking it has a value
+7836468 seen-rule        found             lanes=checks                   findings=1 modelRead=True behaviour=-        Load each employee's department as the export goes
+        hit   checks: Directory.java:51 medium Database or remote call repeated in a loop
+070f83c seen-rule        found             lanes=checks                   findings=1 modelRead=True behaviour=-        Make the HR check explicit about a missing header
+        hit   checks: Access.java:15 high Strings compared with !=
+a5160ce seen-rule        found             lanes=checks,model             findings=2 modelRead=True behaviour=-        Work out pay after a raise for the HR view
+        hit   model: Money.java:19 high Precision issue with double parameter
+        hit   checks: Money.java:21 medium BigDecimal made from a double
+5b2d1c2 seen-logic       found             lanes=checks                   findings=1 modelRead=True behaviour=-        Stamp each XML export with the time it was made
+        hit   checks: XmlExportController.java:18 high Shared SimpleDateFormat is not thread-safe
+d9bee0f seen-logic       found             lanes=model                    findings=1 modelRead=True behaviour=-        Tidy the email helper
+        hit   model: Emails.java:12 high Email casing inconsistency
+7f90a40 novel            found             lanes=model                    findings=1 modelRead=True behaviour=-        Show pay in the employee list so managers can plan budgets
+        hit   model: PublicEmployee.java:11 critical Violation of rule 1
+15f9abb novel            found             lanes=checks                   findings=1 modelRead=True behaviour=-        Simplify the export query
+        hit   checks: EmployeeRepository.java:45 high Query on employee without deleted_at is null
+f2caf58 novel            found             lanes=model                    findings=1 modelRead=True behaviour=-        Show times with their offset so people can read them
+        hit   model: Dates.java:10 high Rule 3 violation
+50d96a1 novel            found             lanes=model                    findings=1 modelRead=True behaviour=-        Round money the way people expect
+        hit   model: Money.java:12 high Rounding mode changed
+5168818 novel            missed            lanes=-                        findings=0 modelRead=True behaviour=-        Keep negative numbers readable in CSV
+        note  model: CsvCell.java:5 Commit message does not match the change
+9aa776f novel            found             lanes=checks                   findings=1 modelRead=True behaviour=-        Pass GraphQL paging straight through
+        hit   checks: DirectoryGraph.java:32 medium new Paging(...) instead of Paging.of
+59b8d01 novel            found             lanes=checks                   findings=1 modelRead=True behaviour=-        Count everyone in each department
+        hit   checks: EmployeeRepository.java:62 high Query on employee without deleted_at is null
+0608180 novel            found             lanes=model                    findings=1 modelRead=True behaviour=-        Let the database index do the sorting
+        hit   model: EmployeeRepository.java:20 high Sorting rule violation
+32addb0 novel            found             lanes=checks                   findings=2 modelRead=True behaviour=-        Export CSV straight from the tables
+        hit   checks: CsvExportController.java:29 medium email() used without Emails.normal
+        hit   checks: CsvExportController.java:30 medium hiredAt() used without Dates.iso
+035a532 ai-only          found             lanes=model                    findings=1 modelRead=True behaviour=-        Drop the transaction around exports, they only read
+        hit   model: Directory.java:46 high Export reads without transaction
+6374bbe ai-only          found             lanes=checks                   findings=1 modelRead=True behaviour=-        Let the admin tool open the HR view without a role
+        hit   checks: Access.java:15 high Strings compared with !=
+9224967 ai-only          found             lanes=model                    findings=1 modelRead=True behaviour=-        Tidy the employee list endpoint
+        hit   model: EmployeeController.java:31 high Incorrect pagination parameters
+083c411 control-refactor ok                lanes=-                        findings=0 modelRead=True behaviour=-        Move writing one employee into its own method
+c726b42 control-fix      ok                lanes=-                        findings=0 modelRead=True behaviour=-        Bind the search text as a parameter
+        note  model: EmployeeRepository.java:51 Commit message does not match the code change
+24f3954 control-fix      ok                lanes=-                        findings=0 modelRead=True behaviour=-        Compare the role by value
+        note  model: Access.java:15 Null Pointer Exception
+7f4a8bb control-feature  ok                lanes=-                        findings=0 modelRead=True behaviour=-        Look up a department by its code
+        note  model: EmployeeController.java:58 Personal data exposure
+        note  model: Directory.java:56 Null or empty input not handled
+50f5408 control-feature  ok                lanes=-                        findings=0 modelRead=True behaviour=-        Search from GraphQL too
+        note  model: DirectoryGraph.java:42 Null or empty text input not handled
+
+seen-rule        5/5 found  (checks 5, model 1, behaviour 0)
+seen-logic       2/2 found  (checks 1, model 1, behaviour 0)
+novel            8/9 found  (checks 4, model 4, behaviour 0)
+ai-only          3/3 found  (checks 1, model 2, behaviour 0)
+control-refactor 0/1 found  (checks 0, model 0, behaviour 0)
+control-fix      0/2 found  (checks 0, model 0, behaviour 0)
+control-feature  0/2 found  (checks 0, model 0, behaviour 0)
