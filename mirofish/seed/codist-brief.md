@@ -31,7 +31,7 @@ shows its findings in the browser. Nothing leaves the machine: the AI model runs
 ## How it is delivered
 
 One file to install (macOS, Linux, Windows) with a one-line installer; needs git, and optionally Java 21, Maven and a
-local model server. Open source on GitHub (AbiXnash/codist), first release v0.1.0 in November 2026. No account, no
+local model server. Source available on GitHub (AbiXnash/codist), free for noncommercial use, first release v0.1.0 in November 2026. No account, no
 cloud, no subscription.
 
 ## What has been measured (honestly)
