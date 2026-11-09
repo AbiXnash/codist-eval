@@ -1,0 +1,53 @@
+e0f9224 easy             found             lanes=checks                   findings=1 modelRead=True behaviour=done     Do not bother players with high score file errors
+        hit   checks: HighScore.java:35 medium Exception swallowed by an empty catch block
+d810ae4 easy             found             lanes=checks                   findings=1 modelRead=True behaviour=done     Read the pause key by name
+        hit   checks: Input.java:25 high Strings compared with ==
+42a8b42 easy             found             lanes=checks                   findings=1 modelRead=True behaviour=done     Trace frames while tuning the renderer
+        hit   checks: Renderer.java:25 low Printing to the console instead of logging
+32a4ab2 logic            found             lanes=model,behaviour          findings=1 modelRead=True behaviour=done     Simplify the extra life check
+        hit   model: Scoring.java:21 high Incorrect life calculation
+cf24bd5 logic            found             lanes=model,behaviour          findings=1 modelRead=True behaviour=done     Make stuns shorter on later levels
+        hit   model: Stun.java:9 high Stun duration less than 2 seconds on level 5
+99e2ff5 logic            found             lanes=model,behaviour          findings=1 modelRead=True behaviour=done     Let the edges wrap like the tunnel
+        hit   model: Maze.java:70 critical Column wrapping logic changed
+cb34aad logic            found             lanes=model,behaviour          findings=1 modelRead=True behaviour=done     Compare tiles instead of distances
+        hit   model: Collision.java:9 high Collision detection logic changed
+564c749 hard             found             lanes=model,behaviour          findings=1 modelRead=True behaviour=done     Reset the frame timer after each update
+        hit   model: GameLoop.java:30 high Logic runs in fixed steps of 1/60 second
+3a2bbf0 spec             found             lanes=model,behaviour          findings=1 modelRead=True behaviour=done     Reward chaining stuns
+        hit   model: Scoring.java:16 high Incorrect stun bonus calculation
+48b83ba spec             missed            lanes=-                        findings=0 modelRead=True behaviour=skipped  Dim the lantern faster for more tension
+        note  model: Lantern.java:7 Commit message mismatch
+2bbd891 spec             found             lanes=model                    findings=1 modelRead=True behaviour=done     Let players resize the window
+        hit   model: GameWindow.java:25 high Window resizing violates game rules
+c5a8c45 spec             missed            lanes=-                        findings=0 modelRead=True behaviour=done     Use the whole screen for a bigger maze
+        note  model: GameWindow.java:29 Window size violation
+3948d7f spec             missed            lanes=-                        findings=0 modelRead=True behaviour=skipped  Lower CPU use: update at 30 fps
+        note  model: GameLoop.java:5 Commit message mismatch
+b1cec4e spec             found             lanes=model                    findings=1 modelRead=True behaviour=done     Pixel-perfect 16 px tiles
+        hit   model: Renderer.java:23 medium Tile size not pixel-perfect
+54d6d84 spec             found             lanes=model,behaviour          findings=1 modelRead=True behaviour=done     Always keep the last game's score
+        hit   model: HighScore.java:31 high Always writes the last game's score
+e91e785 hard             found             lanes=model,behaviour          findings=1 modelRead=True behaviour=done     Check tile centres exactly
+        hit   model: Movement.java:20 high Precision issue in tile center detection
+76a51c0 hard             found             lanes=model,behaviour          findings=1 modelRead=True behaviour=done     Simplify the distance comparison
+        hit   model: ShadeBrain.java:31 high Incorrect direction choice due to tie-breaking rule violation
+14c09dc hard             found             lanes=model                    findings=1 modelRead=True behaviour=done     Keep the lantern and stun clocks running smoothly
+        hit   model: GameState.java:38 medium Order of updates affects timing logic
+c2a0d45 hard             missed            lanes=-                        findings=0 modelRead=True behaviour=done     Drop a stale turn sooner when blocked
+        note  model: GameState.java:70 Commit message does not match code change
+43551d1 control-feature  false alarm       lanes=-                        findings=1 modelRead=True behaviour=done     Add M to mute
+        other model: Input.java:25 low Redundant code
+        note  model: GameState.java:38 Mute functionality not implemented
+c18ae8a control-fix      false alarm       lanes=checks                   findings=1 modelRead=True behaviour=done     Say when the high score cannot be saved
+        hit   checks: HighScore.java:33 low Printing to the console instead of logging
+2b6baa0 control-refactor ok                lanes=-                        findings=0 modelRead=True behaviour=done     Name the player's tile in the renderer
+        note  model: Renderer.java:26 Commit message does not match code change
+
+easy             3/3 found  (checks 3, model 0, behaviour 0)
+logic            4/4 found  (checks 0, model 4, behaviour 4)
+hard             4/5 found  (checks 0, model 4, behaviour 3)
+spec             4/7 found  (checks 0, model 4, behaviour 2)
+control-feature  0/1 found  (checks 0, model 0, behaviour 0)
+control-fix      0/1 found  (checks 1, model 0, behaviour 0)
+control-refactor 0/1 found  (checks 0, model 0, behaviour 0)
