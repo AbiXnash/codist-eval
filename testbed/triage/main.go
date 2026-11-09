@@ -9,8 +9,8 @@ import (
 	"fmt"
 	"os"
 
-	review "github.com/AbiXnash/codist-review"
-	"github.com/AbiXnash/codist-review/store"
+	review "github.com/abxengg/codist-review"
+	"github.com/abxengg/codist-review/store"
 )
 
 type row struct {

@@ -1,12 +1,12 @@
-module github.com/AbiXnash/codist-eval
+module github.com/abxengg/codist-eval
 
 go 1.26.0
 
 require (
-	github.com/AbiXnash/codist-git v0.1.0
-	github.com/AbiXnash/codist-java v0.2.0
-	github.com/AbiXnash/codist-model v0.3.0
-	github.com/AbiXnash/codist-review v0.3.0
+	github.com/abxengg/codist-git v0.5.0
+	github.com/abxengg/codist-java v0.5.0
+	github.com/abxengg/codist-model v0.5.0
+	github.com/abxengg/codist-review v0.9.0
 )
 
 require (

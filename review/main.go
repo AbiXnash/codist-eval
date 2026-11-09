@@ -18,10 +18,10 @@ import (
 	"strings"
 	"time"
 
-	git "github.com/AbiXnash/codist-git"
-	model "github.com/AbiXnash/codist-model"
-	review "github.com/AbiXnash/codist-review"
-	"github.com/AbiXnash/codist-review/store"
+	git "github.com/abxengg/codist-git"
+	model "github.com/abxengg/codist-model"
+	review "github.com/abxengg/codist-review"
+	"github.com/abxengg/codist-review/store"
 )
 
 const locate = 3

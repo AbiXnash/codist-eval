@@ -2,12 +2,12 @@ module codist-eval/triage
 
 go 1.26.0
 
-require github.com/AbiXnash/codist-review v0.5.0
+require github.com/abxengg/codist-review v0.9.0
 
 require (
-	github.com/AbiXnash/codist-git v0.3.0 // indirect
-	github.com/AbiXnash/codist-java v0.1.0 // indirect
-	github.com/AbiXnash/codist-model v0.3.0 // indirect
+	github.com/abxengg/codist-git v0.5.0 // indirect
+	github.com/abxengg/codist-java v0.5.0 // indirect
+	github.com/abxengg/codist-model v0.5.0 // indirect
 	github.com/dustin/go-humanize v1.1.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/mattn/go-isatty v0.0.24 // indirect
@@ -21,4 +21,4 @@ require (
 	modernc.org/sqlite v1.61.1 // indirect
 )
 
-replace github.com/AbiXnash/codist-review => ../../../codist-review
+replace github.com/abxengg/codist-review => ../../../codist-review

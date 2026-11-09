@@ -14,7 +14,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/AbiXnash/codist-java"
+	"github.com/abxengg/codist-java"
 )
 
 var hunk = regexp.MustCompile(`^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@`)
