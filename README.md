@@ -41,9 +41,9 @@ Codist never sees it.
 
 | Script | Project | Planted bugs | Clean commits |
 |---|---|---|---|
-| `make_records_lab.py` | records-lab: a Spring Boot gateway serving an employee directory as JSON, XML, CSV and GraphQL over JDBC | 19 | 5 |
-| `make_shop_lab.py` | shop-lab: two Spring Boot services (orders, payments) with Feign, Redis, Spring Batch and JDBC | 24 | 6 |
-| `make_maze_lab.py` | maze-lab: Glowmaze, an original maze-chase game in Java 21 Swing, written to a design spec | 19 | 3 |
+| `make_records_lab.py` | [records-lab](https://github.com/AbiXnash/records-lab): a Spring Boot gateway serving an employee directory as JSON, XML, CSV and GraphQL over JDBC | 19 | 5 |
+| `make_shop_lab.py` | [shop-lab](https://github.com/AbiXnash/shop-lab): two Spring Boot services (orders, payments) with Feign, Redis, Spring Batch and JDBC | 24 | 6 |
+| `make_maze_lab.py` | [maze-lab](https://github.com/AbiXnash/maze-lab): Glowmaze, an original maze-chase game in Java 21 Swing, written to a design spec | 19 | 3 |
 
 Bugs come in kinds: known Java mistakes, logic slips, ones that break the project's written rules, and ones only
 careful reading finds. `score_shop_lab.py` scores a running Codist against any answer key: a bug is found when an
