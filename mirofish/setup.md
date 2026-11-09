@@ -1,22 +1,22 @@
 # Running MiroFish on Codist
 
 MiroFish ([666ghj/MiroFish](https://github.com/666ghj/MiroFish), AGPL-3.0) builds a world of AI personas from seed
-documents and simulates how they react. It is cloned at `~/dev/MiroFish`.
+documents and simulates how they react. It is cloned at `~/dev/stolen-with-pride/MiroFish`.
 
 ## 1. Install (once)
 
 Installing runs third-party install scripts, so run it yourself:
 
 ```bash
-cd ~/dev/MiroFish && npm run setup && cd backend && UV_PYTHON=python3.11 uv sync
+cd ~/dev/stolen-with-pride/MiroFish && npm run setup && cd backend && UV_PYTHON=python3.11 uv sync
 ```
 
 Needs Node 18+ (26 is installed), Python 3.11 (installed) and uv (installed).
 
-## 2. Configure `~/dev/MiroFish/.env`
+## 2. Configure `~/dev/stolen-with-pride/MiroFish/.env`
 
 ```bash
-cp ~/dev/MiroFish/.env.example ~/dev/MiroFish/.env
+cp ~/dev/stolen-with-pride/MiroFish/.env.example ~/dev/stolen-with-pride/MiroFish/.env
 ```
 
 **Model, choose one:**
@@ -42,7 +42,7 @@ Remove the `LLM_BOOST_*` lines unless you use a second model.
 ## 3. Run
 
 ```bash
-cd ~/dev/MiroFish && npm run dev
+cd ~/dev/stolen-with-pride/MiroFish && npm run dev
 ```
 
 Open http://localhost:3000, upload `~/dev/codist-eval/mirofish/seed/codist-brief.md`, and paste a question from
